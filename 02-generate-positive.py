@@ -3,6 +3,7 @@
 
 import json
 import os
+import gzip
 from typing import Dict, List, Any
 from rnapolis.parser_v2 import parse_cif_atoms
 
@@ -20,12 +21,13 @@ def parse_mmcif_files(gnra_motifs: Dict[str, List[Dict[str, Any]]]) -> Dict[str,
     parsed_structures = {}
 
     for pdb_id in gnra_motifs.keys():
-        mmcif_file = f"mmcif_files/{pdb_id}.cif"
+        mmcif_file = f"mmcif_files/{pdb_id}.cif.gz"
 
         if os.path.exists(mmcif_file):
             try:
                 print(f"Parsing {mmcif_file}...")
-                parsed_structure = parse_cif_atoms(mmcif_file)
+                with gzip.open(mmcif_file, 'rt') as f:
+                    parsed_structure = parse_cif_atoms(f)
                 parsed_structures[pdb_id] = parsed_structure
                 print(f"  Successfully parsed {pdb_id}")
             except Exception as e:
