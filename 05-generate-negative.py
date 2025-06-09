@@ -242,7 +242,9 @@ def find_negative_regions(
             print(
                 f"    DEBUG: Checking strand5p {strand5p['first']}-{strand5p['last']}"
             )
-            strand_residue_indices = get_strand_residue_indices(strand5p, residues, bpseq_index)
+            strand_residue_indices = get_strand_residue_indices(
+                strand5p, residues, bpseq_index
+            )
             has_overlap = indices_overlap(strand_residue_indices, gnra_indices)
             print(
                 f"    DEBUG: strand5p has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}"
@@ -263,7 +265,9 @@ def find_negative_regions(
             print(
                 f"    DEBUG: Checking strand3p {strand3p['first']}-{strand3p['last']}"
             )
-            strand_residue_indices = get_strand_residue_indices(strand3p, residues, bpseq_index)
+            strand_residue_indices = get_strand_residue_indices(
+                strand3p, residues, bpseq_index
+            )
             has_overlap = indices_overlap(strand_residue_indices, gnra_indices)
             print(
                 f"    DEBUG: strand3p has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}"
@@ -286,7 +290,9 @@ def find_negative_regions(
             print(
                 f"    DEBUG: Checking single strand {strand['first']}-{strand['last']}"
             )
-            strand_residue_indices = get_strand_residue_indices(strand, residues, bpseq_index)
+            strand_residue_indices = get_strand_residue_indices(
+                strand, residues, bpseq_index
+            )
             has_overlap = indices_overlap(strand_residue_indices, gnra_indices)
             print(
                 f"    DEBUG: single strand has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}"
@@ -309,7 +315,9 @@ def find_negative_regions(
             print(
                 f"    DEBUG: Checking hairpin strand {strand['first']}-{strand['last']}"
             )
-            strand_residue_indices = get_strand_residue_indices(strand, residues, bpseq_index)
+            strand_residue_indices = get_strand_residue_indices(
+                strand, residues, bpseq_index
+            )
             has_overlap = indices_overlap(strand_residue_indices, gnra_indices)
             print(
                 f"    DEBUG: hairpin strand has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}"
@@ -332,7 +340,9 @@ def find_negative_regions(
                 print(
                     f"    DEBUG: Checking loop strand {j}: {strand['first']}-{strand['last']}"
                 )
-                strand_residue_indices = get_strand_residue_indices(strand, residues, bpseq_index)
+                strand_residue_indices = get_strand_residue_indices(
+                    strand, residues, bpseq_index
+                )
                 has_overlap = indices_overlap(strand_residue_indices, gnra_indices)
                 print(
                     f"    DEBUG: loop strand has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}"
