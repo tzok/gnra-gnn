@@ -136,6 +136,17 @@ def find_motif_residue_indices(
             )
             continue  # Skip adding this motif to motif_data
 
+        # Check if extended residues are from the same chain as the motif
+        before_residue = residues[min_idx - 1]
+        after_residue = residues[max_idx + 1]
+        motif_chain = residues[sorted_indices[0]].chain_id
+
+        if before_residue.chain_id != motif_chain or after_residue.chain_id != motif_chain:
+            print(
+                f"    Warning: {motif_key} - Cannot extend to 8 residues (chain mismatch: motif={motif_chain}, before={before_residue.chain_id}, after={after_residue.chain_id})"
+            )
+            continue  # Skip adding this motif to motif_data
+
         # Create extended indices and residues
         extended_indices = [min_idx - 1] + sorted_indices + [max_idx + 1]
         extended_residues = [residues[i] for i in extended_indices]

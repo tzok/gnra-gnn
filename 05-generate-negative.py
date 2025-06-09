@@ -186,6 +186,7 @@ def get_strand_residue_indices(
     2. 6 nucleotides long that can be extended to 8 by adding one before and one after
 
     Only processes strands that are in chains containing GNRA motifs.
+    Ensures all 8 nucleotides are consecutive and from the same chain.
     """
     strand_length = strand["last"] - strand["first"] + 1
 
@@ -242,30 +243,45 @@ def get_strand_residue_indices(
         )
         return []
 
+    # Check if strand spans multiple chains
+    if len(strand_chains) > 1:
+        print(
+            f"    DEBUG: Strand spans multiple chains {strand_chains}, skipping"
+        )
+        return []
+
     print(f"    DEBUG: Found {len(base_indices)} base residue indices for strand")
 
-    # If we have 8+ residues, return as is
-    if len(base_indices) >= 8:
-        print(f"    DEBUG: Strand has {len(base_indices)} residues (>=8), using as is")
-        return base_indices
-
-    # If we have exactly 6 residues, try to extend to 8
-    if len(base_indices) == 6:
-        print(f"    DEBUG: Strand has 6 residues, attempting to extend to 8")
-
-        # Check if indices are consecutive
+    # Check if base indices are consecutive
+    if len(base_indices) > 1:
         sorted_indices = sorted(base_indices)
         is_consecutive = all(
-            sorted_indices[i] + 1 == sorted_indices[i + 1] for i in range(5)
+            sorted_indices[i] + 1 == sorted_indices[i + 1] for i in range(len(sorted_indices) - 1)
         )
-
         if not is_consecutive:
             print(
-                f"    DEBUG: Base indices not consecutive: {sorted_indices}, cannot extend"
+                f"    DEBUG: Base indices not consecutive: {sorted_indices}, skipping"
             )
             return []
 
-        # Try to extend by adding one before and one after
+        # Check if all residues are from the same chain
+        chain_ids = [residues[i].chain_id for i in base_indices]
+        if len(set(chain_ids)) > 1:
+            print(
+                f"    DEBUG: Base indices span multiple chains: {set(chain_ids)}, skipping"
+            )
+            return []
+
+    # If we have 8+ residues, take exactly 8 consecutive ones
+    if len(base_indices) >= 8:
+        print(f"    DEBUG: Strand has {len(base_indices)} residues (>=8), taking first 8")
+        return base_indices[:8]
+
+    # If we have exactly 6 residues, try to extend to 8
+    if len(base_indices) == 6:
+        print("    DEBUG: Strand has 6 residues, attempting to extend to 8")
+
+        sorted_indices = sorted(base_indices)
         min_idx = min(sorted_indices)
         max_idx = max(sorted_indices)
 
@@ -273,6 +289,17 @@ def get_strand_residue_indices(
         if min_idx == 0 or max_idx == len(residues) - 1:
             print(
                 f"    DEBUG: Cannot extend - boundary constraints (min_idx={min_idx}, max_idx={max_idx}, total_residues={len(residues)})"
+            )
+            return []
+
+        # Check if extended residues are from the same chain
+        before_residue = residues[min_idx - 1]
+        after_residue = residues[max_idx + 1]
+        base_chain = residues[base_indices[0]].chain_id
+
+        if before_residue.chain_id != base_chain or after_residue.chain_id != base_chain:
+            print(
+                f"    DEBUG: Cannot extend - extended residues not from same chain (base: {base_chain}, before: {before_residue.chain_id}, after: {after_residue.chain_id})"
             )
             return []
 
@@ -484,8 +511,8 @@ def process_all_pdb_files(
     print(f"Processing {len(gnra_motifs)} PDB files using {max_workers} workers...")
     print("DEBUG: Limiting to first 5 files for debugging...")
 
-    # Prepare arguments for parallel processing (limit to 5 for debugging)
-    pdb_args = list(gnra_motifs.items())[:5]
+    # Prepare arguments for parallel processing
+    pdb_args = list(gnra_motifs.items())
 
     with ProcessPoolExecutor(max_workers=max_workers) as executor:
         # Submit all tasks
@@ -593,7 +620,7 @@ def extract_all_negative_regions(negative_regions: List[Dict[str, Any]]) -> None
         except Exception as e:
             print(f"  Error processing {pdb_id}: {e}")
 
-    print(f"\nExtraction complete:")
+    print("\nExtraction complete:")
     print(f"  Total extracted: {total_extracted} negative regions")
     print(f"  Total skipped: {total_skipped} negative regions")
 
