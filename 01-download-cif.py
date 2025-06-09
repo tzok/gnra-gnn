@@ -72,6 +72,52 @@ def process_alignment(alignment: Dict) -> Dict[str, List[UnitID]]:
     return processed_alignment
 
 
+def unit_id_to_dict(unit_id: UnitID) -> Dict:
+    """Convert a UnitID object to a dictionary for JSON serialization"""
+    return {
+        "pdb_id": unit_id.pdb_id,
+        "model_number": unit_id.model_number,
+        "chain_id": unit_id.chain_id,
+        "residue_id": unit_id.residue_id,
+        "residue_number": unit_id.residue_number,
+        "atom_name": unit_id.atom_name,
+        "alternate_id": unit_id.alternate_id,
+        "insertion_code": unit_id.insertion_code,
+        "symmetry_operation": unit_id.symmetry_operation,
+    }
+
+
+def create_gnra_motifs_by_pdb(processed_alignment: Dict[str, List[UnitID]]) -> Dict[str, List[Dict]]:
+    """Create a dictionary of GNRA motifs organized by PDB ID"""
+    gnra_by_pdb = {}
+    
+    for motif_key, unit_ids in processed_alignment.items():
+        for unit_id in unit_ids:
+            pdb_id = unit_id.pdb_id.lower()
+            
+            if pdb_id not in gnra_by_pdb:
+                gnra_by_pdb[pdb_id] = []
+            
+            motif_entry = {
+                "motif_key": motif_key,
+                "unit_id": unit_id_to_dict(unit_id)
+            }
+            
+            gnra_by_pdb[pdb_id].append(motif_entry)
+    
+    return gnra_by_pdb
+
+
+def save_gnra_motifs_json(gnra_by_pdb: Dict[str, List[Dict]], filename: str = "gnra_motifs_by_pdb.json") -> None:
+    """Save the GNRA motifs organized by PDB ID to a JSON file"""
+    try:
+        with open(filename, 'w') as f:
+            json.dump(gnra_by_pdb, f, indent=2)
+        print(f"\nSaved GNRA motifs data to {filename}")
+    except Exception as e:
+        print(f"Error saving JSON file {filename}: {e}")
+
+
 def extract_unique_pdb_ids(processed_alignment: Dict[str, List[UnitID]]) -> Set[str]:
     """Extract unique PDB IDs from the processed alignment data"""
     pdb_ids = set()
@@ -156,6 +202,11 @@ def find_gnra_motif():
                     )
 
                     download_all_mmcif_files(unique_pdb_ids)
+                    
+                    # Create and save GNRA motifs organized by PDB ID
+                    gnra_by_pdb = create_gnra_motifs_by_pdb(processed_alignment)
+                    print(f"\nOrganized GNRA motifs by {len(gnra_by_pdb)} PDB IDs")
+                    save_gnra_motifs_json(gnra_by_pdb)
 
                 return obj
 
