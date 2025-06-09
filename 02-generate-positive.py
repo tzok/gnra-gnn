@@ -74,7 +74,7 @@ def process_structures_and_motifs(
 
     for pdb_id, structure in structures.items():
         print(f"Processing {pdb_id}...")
-        residues = structure.residues()
+        residues = structure.residues
         motifs = gnra_motifs[pdb_id]
 
         motif_indices = find_motif_residue_indices(residues, motifs)
