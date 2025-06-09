@@ -29,7 +29,9 @@ def load_structure_json(pdb_id: str) -> Dict[str, Any]:
         return json.load(f)
 
 
-def parse_and_process_mmcif_file(pdb_id: str, motifs: List[Dict[str, Any]]) -> tuple[bool, Dict[str, Any]]:
+def parse_and_process_mmcif_file(
+    pdb_id: str, motifs: List[Dict[str, Any]]
+) -> tuple[bool, Dict[str, Any]]:
     """Parse mmCIF file for a PDB ID and process its motifs."""
     mmcif_file = f"mmcif_files/{pdb_id}.cif"
 
@@ -68,10 +70,7 @@ def parse_and_process_mmcif_file(pdb_id: str, motifs: List[Dict[str, Any]]) -> t
             print(f"    Loops: {len(negative_regions['loops'])}")
 
             # Add PDB ID to each region for tracking
-            pdb_negative_regions = {
-                "pdb_id": pdb_id,
-                "regions": negative_regions
-            }
+            pdb_negative_regions = {"pdb_id": pdb_id, "regions": negative_regions}
 
             return True, pdb_negative_regions
 
@@ -291,18 +290,24 @@ def process_all_pdb_files(
     print("\nProcessing complete:")
     print(f"  Successfully processed: {successful_count} PDB files")
     print(f"  Failed to process: {failed_count} PDB files")
-    
+
     return all_negative_regions
 
 
-def save_negative_regions(negative_regions: List[Dict[str, Any]], filename: str = "negative_regions.json") -> None:
+def save_negative_regions(
+    negative_regions: List[Dict[str, Any]], filename: str = "negative_regions.json"
+) -> None:
     """Save all negative regions to a JSON file."""
     with open(filename, "w") as f:
         json.dump(negative_regions, f, indent=2)
-    print(f"Saved {len(negative_regions)} PDB structures with negative regions to {filename}")
+    print(
+        f"Saved {len(negative_regions)} PDB structures with negative regions to {filename}"
+    )
 
 
-def load_negative_regions(filename: str = "negative_regions.json") -> List[Dict[str, Any]]:
+def load_negative_regions(
+    filename: str = "negative_regions.json",
+) -> List[Dict[str, Any]]:
     """Load negative regions from a JSON file."""
     with open(filename, "r") as f:
         return json.load(f)
@@ -319,27 +324,29 @@ def print_negative_regions_summary(negative_regions: List[Dict[str, Any]]) -> No
     total_single_strands = 0
     total_hairpins = 0
     total_loops = 0
-    
+
     for pdb_data in negative_regions:
         regions = pdb_data.get("regions", {})
         total_stems += len(regions.get("stems", []))
         total_single_strands += len(regions.get("single_strands", []))
         total_hairpins += len(regions.get("hairpins", []))
         total_loops += len(regions.get("loops", []))
-    
+
     print(f"\nNegative regions summary:")
     print(f"  Total PDB structures: {len(negative_regions)}")
     print(f"  Total stems: {total_stems}")
     print(f"  Total single strands: {total_single_strands}")
     print(f"  Total hairpins: {total_hairpins}")
     print(f"  Total loops: {total_loops}")
-    print(f"  Total negative regions: {total_stems + total_single_strands + total_hairpins + total_loops}")
+    print(
+        f"  Total negative regions: {total_stems + total_single_strands + total_hairpins + total_loops}"
+    )
 
 
 def main():
     """Main function to find negative regions for GNRA motifs."""
     negative_regions_file = "negative_regions.json"
-    
+
     # Check if negative regions file already exists
     if check_negative_regions_exist(negative_regions_file):
         print(f"Negative regions file '{negative_regions_file}' already exists.")
@@ -348,7 +355,7 @@ def main():
         print_negative_regions_summary(negative_regions)
         print("\nTo regenerate, delete the file and run the script again.")
         return
-    
+
     gnra_motifs = load_gnra_motifs()
 
     print(f"Loaded GNRA motifs for {len(gnra_motifs)} PDB structures")
@@ -359,10 +366,10 @@ def main():
 
     print("\nAnalyzing structures for negative regions...")
     negative_regions = process_all_pdb_files(gnra_motifs)
-    
+
     # Save negative regions to file
     save_negative_regions(negative_regions, negative_regions_file)
-    
+
     # Print summary
     print_negative_regions_summary(negative_regions)
 
