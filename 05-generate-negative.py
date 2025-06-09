@@ -163,7 +163,9 @@ def get_strand_residue_indices(
     # Early check: if strand length is less than 8, skip processing
     strand_length = strand["last"] - strand["first"] + 1
     if strand_length < 8:
-        print(f"    DEBUG: Strand {strand['first']}-{strand['last']} too short ({strand_length} < 8), skipping")
+        print(
+            f"    DEBUG: Strand {strand['first']}-{strand['last']} too short ({strand_length} < 8), skipping"
+        )
         return []
 
     indices: List[int] = []
