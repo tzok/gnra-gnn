@@ -6,6 +6,7 @@ import os
 import gzip
 from typing import Dict, List, Any
 from rnapolis.parser_v2 import parse_cif_atoms
+from rnapolis.tertiary_v2 import Structure
 
 
 def load_gnra_motifs(
@@ -16,9 +17,9 @@ def load_gnra_motifs(
         return json.load(f)
 
 
-def parse_mmcif_files(gnra_motifs: Dict[str, List[Dict[str, Any]]]) -> Dict[str, Any]:
-    """Parse mmCIF files for each PDB ID and return parsed structures."""
-    parsed_structures = {}
+def parse_mmcif_files(gnra_motifs: Dict[str, List[Dict[str, Any]]]) -> Dict[str, Structure]:
+    """Parse mmCIF files for each PDB ID and return Structure objects."""
+    structures = {}
 
     for pdb_id in gnra_motifs.keys():
         mmcif_file = f"mmcif_files/{pdb_id}.cif.gz"
@@ -27,15 +28,16 @@ def parse_mmcif_files(gnra_motifs: Dict[str, List[Dict[str, Any]]]) -> Dict[str,
             try:
                 print(f"Parsing {mmcif_file}...")
                 with gzip.open(mmcif_file, "rt") as f:
-                    parsed_structure = parse_cif_atoms(f)
-                parsed_structures[pdb_id] = parsed_structure
+                    atoms_df = parse_cif_atoms(f)
+                structure = Structure(atoms_df)
+                structures[pdb_id] = structure
                 print(f"  Successfully parsed {pdb_id}")
             except Exception as e:
                 print(f"  Error parsing {pdb_id}: {e}")
         else:
             print(f"  Warning: {mmcif_file} not found")
 
-    return parsed_structures
+    return structures
 
 
 def main():
@@ -57,9 +59,9 @@ def main():
             break
 
     print("\nParsing mmCIF files...")
-    parsed_structures = parse_mmcif_files(gnra_motifs)
+    structures = parse_mmcif_files(gnra_motifs)
 
-    print(f"\nSuccessfully parsed {len(parsed_structures)} structures")
+    print(f"\nSuccessfully parsed {len(structures)} structures")
 
 
 if __name__ == "__main__":
