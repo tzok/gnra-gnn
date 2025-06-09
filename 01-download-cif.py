@@ -88,7 +88,7 @@ def download_mmcif_file(pdb_id: str) -> bool:
     # Create subdirectory for mmCIF files
     mmcif_dir = "mmcif_files"
     os.makedirs(mmcif_dir, exist_ok=True)
-    
+
     filename = f"{pdb_id.lower()}.cif.gz"
     filepath = os.path.join(mmcif_dir, filename)
 
