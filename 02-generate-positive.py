@@ -51,7 +51,8 @@ def find_motif_residue_indices(
 
     for motif in motifs:
         indices = []
-        for unit_id_dict in motif:
+        unit_ids = motif.get("unit_ids", [])
+        for unit_id_dict in unit_ids:
             # Find matching residue by comparing unit_id components
             for i, residue in enumerate(residues):
                 if (
