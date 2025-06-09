@@ -92,7 +92,7 @@ def find_motif_residue_indices(
         for unit_id_dict in unit_ids:
             chain_id = unit_id_dict.get("chain_id")
             motif_chain_ids.add(chain_id)
-            
+
             # Find matching residue by comparing unit_id components
             for i, residue in enumerate(residues):
                 unit_insertion_code = unit_id_dict.get("insertion_code", "")

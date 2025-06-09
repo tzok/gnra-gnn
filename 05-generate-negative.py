@@ -91,7 +91,7 @@ def find_motif_residue_indices(
     residues: List[Residue], motifs: List[Dict[str, Any]]
 ) -> tuple[List[Dict[str, Any]], Set[str]]:
     """Find residue indices and residue objects for each motif's unit_ids, extending to 8 residues.
-    
+
     Returns:
         tuple: (motif_data, motif_chains) where motif_chains is the set of chain IDs containing motifs
     """
@@ -110,7 +110,7 @@ def find_motif_residue_indices(
         for unit_id_dict in unit_ids:
             chain_id = unit_id_dict.get("chain_id")
             motif_chain_ids.add(chain_id)
-            
+
             # Find matching residue by comparing unit_id components
             for i, residue in enumerate(residues):
                 unit_insertion_code = unit_id_dict.get("insertion_code", "")
@@ -166,7 +166,7 @@ def find_motif_residue_indices(
                 "chains": motif_chain_ids,
             }
         )
-        
+
         # Add chains to global set
         motif_chains.update(motif_chain_ids)
 
@@ -174,14 +174,17 @@ def find_motif_residue_indices(
 
 
 def get_strand_residue_indices(
-    strand: Dict[str, Any], residues: List[Residue], bpseq_index: Dict[str, Any], motif_chains: Set[str]
+    strand: Dict[str, Any],
+    residues: List[Residue],
+    bpseq_index: Dict[str, Any],
+    motif_chains: Set[str],
 ) -> List[int]:
     """Extract 0-based residue indices from a strand using bpseq_index mapping.
 
     Accepts strands that are either:
     1. 8+ nucleotides long, OR
     2. 6 nucleotides long that can be extended to 8 by adding one before and one after
-    
+
     Only processes strands that are in chains containing GNRA motifs.
     """
     strand_length = strand["last"] - strand["first"] + 1
@@ -200,7 +203,7 @@ def get_strand_residue_indices(
     # Get base strand indices first
     base_indices: List[int] = []
     strand_chains = set()
-    
+
     for pos in range(strand["first"], strand["last"] + 1):
         residue_obj = bpseq_index.get(str(pos))
         if residue_obj is not None:
@@ -208,7 +211,7 @@ def get_strand_residue_indices(
             auth_chain = residue_obj.get("auth", {}).get("chain", None)
             auth_number = residue_obj.get("auth", {}).get("number", None)
             auth_icode = residue_obj.get("auth", {}).get("icode", "") or ""
-            
+
             strand_chains.add(auth_chain)
 
             # Find matching residue by comparing auth values
@@ -231,10 +234,12 @@ def get_strand_residue_indices(
                 )
         else:
             print(f"    DEBUG: No bpseq_index entry for position {pos}")
-    
+
     # Check if this strand is in a chain that contains GNRA motifs
     if not strand_chains.intersection(motif_chains):
-        print(f"    DEBUG: Strand chains {strand_chains} don't overlap with motif chains {motif_chains}, skipping")
+        print(
+            f"    DEBUG: Strand chains {strand_chains} don't overlap with motif chains {motif_chains}, skipping"
+        )
         return []
 
     print(f"    DEBUG: Found {len(base_indices)} base residue indices for strand")
@@ -296,10 +301,13 @@ def indices_overlap(indices1: List[int], indices2: Set[int]) -> bool:
 
 
 def find_negative_regions(
-    structure_data: Dict[str, Any], gnra_indices: Set[int], residues: List[Residue], motif_chains: Set[str]
+    structure_data: Dict[str, Any],
+    gnra_indices: Set[int],
+    residues: List[Residue],
+    motif_chains: Set[str],
 ) -> Dict[str, List[Dict[str, Any]]]:
     """Find individual strands with at least 8 nucleotides that don't overlap with GNRA motifs.
-    
+
     Only considers structural elements in chains that contain GNRA motifs.
     """
     negative_regions: Dict[str, List[Dict[str, Any]]] = {
