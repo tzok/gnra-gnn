@@ -18,10 +18,10 @@ def load_gnra_motifs(
 def parse_mmcif_files(gnra_motifs: Dict[str, List[Dict[str, Any]]]) -> Dict[str, Any]:
     """Parse mmCIF files for each PDB ID and return parsed structures."""
     parsed_structures = {}
-    
+
     for pdb_id in gnra_motifs.keys():
         mmcif_file = f"mmcif_files/{pdb_id}.cif"
-        
+
         if os.path.exists(mmcif_file):
             try:
                 print(f"Parsing {mmcif_file}...")
@@ -32,7 +32,7 @@ def parse_mmcif_files(gnra_motifs: Dict[str, List[Dict[str, Any]]]) -> Dict[str,
                 print(f"  Error parsing {pdb_id}: {e}")
         else:
             print(f"  Warning: {mmcif_file} not found")
-    
+
     return parsed_structures
 
 
@@ -56,7 +56,7 @@ def main():
 
     print("\nParsing mmCIF files...")
     parsed_structures = parse_mmcif_files(gnra_motifs)
-    
+
     print(f"\nSuccessfully parsed {len(parsed_structures)} structures")
 
 
