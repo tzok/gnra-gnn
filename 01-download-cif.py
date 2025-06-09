@@ -4,8 +4,10 @@ Script to parse hl_3.97.json and find the GNRA motif with motif_id HL_37824.7
 """
 
 import json
+import os
+import urllib.request
 from dataclasses import dataclass
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Set
 
 
 @dataclass
@@ -70,6 +72,51 @@ def process_alignment(alignment: Dict) -> Dict[str, List[UnitID]]:
     return processed_alignment
 
 
+def extract_unique_pdb_ids(processed_alignment: Dict[str, List[UnitID]]) -> Set[str]:
+    """Extract unique PDB IDs from the processed alignment data"""
+    pdb_ids = set()
+    
+    for unit_ids in processed_alignment.values():
+        for unit_id in unit_ids:
+            pdb_ids.add(unit_id.pdb_id.lower())  # Store as lowercase for consistency
+    
+    return pdb_ids
+
+
+def download_mmcif_file(pdb_id: str) -> bool:
+    """Download mmCIF file for a given PDB ID if it doesn't already exist"""
+    filename = f"{pdb_id.lower()}.cif.gz"
+    
+    # Check if file already exists
+    if os.path.exists(filename):
+        print(f"File {filename} already exists, skipping download")
+        return True
+    
+    # Construct URL with uppercase PDB ID
+    url = f"http://files.rcsb.org/download/{pdb_id.upper()}.cif.gz"
+    
+    try:
+        print(f"Downloading {filename} from {url}")
+        urllib.request.urlretrieve(url, filename)
+        print(f"Successfully downloaded {filename}")
+        return True
+    except Exception as e:
+        print(f"Error downloading {filename}: {e}")
+        return False
+
+
+def download_all_mmcif_files(pdb_ids: Set[str]) -> None:
+    """Download mmCIF files for all unique PDB IDs"""
+    print(f"\nDownloading mmCIF files for {len(pdb_ids)} unique PDB IDs...")
+    
+    successful_downloads = 0
+    for pdb_id in sorted(pdb_ids):
+        if download_mmcif_file(pdb_id):
+            successful_downloads += 1
+    
+    print(f"\nDownload summary: {successful_downloads}/{len(pdb_ids)} files downloaded successfully")
+
+
 def find_gnra_motif():
     """Parse hl_3.97.json and find the object with motif_id HL_37824.7"""
 
@@ -94,6 +141,12 @@ def find_gnra_motif():
                         print(f"\n{key}:")
                         for i, unit_id in enumerate(unit_ids):
                             print(f"  {i + 1}. {unit_id}")
+                    
+                    # Extract unique PDB IDs and download mmCIF files
+                    unique_pdb_ids = extract_unique_pdb_ids(processed_alignment)
+                    print(f"\nFound {len(unique_pdb_ids)} unique PDB IDs: {sorted(unique_pdb_ids)}")
+                    
+                    download_all_mmcif_files(unique_pdb_ids)
 
                 return obj
 
