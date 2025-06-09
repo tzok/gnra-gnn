@@ -87,31 +87,32 @@ def unit_id_to_dict(unit_id: UnitID) -> Dict:
     }
 
 
-def create_gnra_motifs_by_pdb(processed_alignment: Dict[str, List[UnitID]]) -> Dict[str, List[Dict]]:
+def create_gnra_motifs_by_pdb(
+    processed_alignment: Dict[str, List[UnitID]],
+) -> Dict[str, List[Dict]]:
     """Create a dictionary of GNRA motifs organized by PDB ID"""
     gnra_by_pdb = {}
-    
+
     for motif_key, unit_ids in processed_alignment.items():
         for unit_id in unit_ids:
             pdb_id = unit_id.pdb_id.lower()
-            
+
             if pdb_id not in gnra_by_pdb:
                 gnra_by_pdb[pdb_id] = []
-            
-            motif_entry = {
-                "motif_key": motif_key,
-                "unit_id": unit_id_to_dict(unit_id)
-            }
-            
+
+            motif_entry = {"motif_key": motif_key, "unit_id": unit_id_to_dict(unit_id)}
+
             gnra_by_pdb[pdb_id].append(motif_entry)
-    
+
     return gnra_by_pdb
 
 
-def save_gnra_motifs_json(gnra_by_pdb: Dict[str, List[Dict]], filename: str = "gnra_motifs_by_pdb.json") -> None:
+def save_gnra_motifs_json(
+    gnra_by_pdb: Dict[str, List[Dict]], filename: str = "gnra_motifs_by_pdb.json"
+) -> None:
     """Save the GNRA motifs organized by PDB ID to a JSON file"""
     try:
-        with open(filename, 'w') as f:
+        with open(filename, "w") as f:
             json.dump(gnra_by_pdb, f, indent=2)
         print(f"\nSaved GNRA motifs data to {filename}")
     except Exception as e:
@@ -202,7 +203,7 @@ def find_gnra_motif():
                     )
 
                     download_all_mmcif_files(unique_pdb_ids)
-                    
+
                     # Create and save GNRA motifs organized by PDB ID
                     gnra_by_pdb = create_gnra_motifs_by_pdb(processed_alignment)
                     print(f"\nOrganized GNRA motifs by {len(gnra_by_pdb)} PDB IDs")
