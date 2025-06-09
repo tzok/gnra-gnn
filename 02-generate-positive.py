@@ -45,8 +45,8 @@ def parse_mmcif_files(
 
 def find_motif_residue_indices(
     residues: List[Residue], motifs: List[Dict[str, Any]]
-) -> List[Tuple[Tuple[int, ...], Tuple[Residue, ...]]]:
-    """Find residue indices and residue objects for each motif's unit_ids."""
+) -> List[Dict[str, Any]]:
+    """Find residue indices and residue objects for each motif's unit_ids, extending to 8 residues."""
     motif_data = []
 
     for motif_idx, motif in enumerate(motifs):
@@ -88,7 +88,25 @@ def find_motif_residue_indices(
             )
             continue  # Skip adding this motif to motif_data
 
-        motif_data.append((tuple(indices), tuple(motif_residues)))
+        # Extend to 8 residues (add 1 before and 1 after)
+        min_idx = min(sorted_indices)
+        max_idx = max(sorted_indices)
+        
+        # Check if we can add residues before and after
+        if min_idx == 0 or max_idx == len(residues) - 1:
+            print(
+                f"    Warning: {motif_key} - Cannot extend to 8 residues (boundary constraints)"
+            )
+            continue  # Skip adding this motif to motif_data
+
+        # Create extended indices and residues
+        extended_indices = [min_idx - 1] + sorted_indices + [max_idx + 1]
+        extended_residues = [residues[i] for i in extended_indices]
+
+        motif_data.append({
+            "indices": extended_indices,
+            "residues": extended_residues
+        })
 
     return motif_data
 
@@ -145,7 +163,7 @@ def extract_and_save_motif(
 
 def process_structures_and_motifs(
     structures: Dict[str, Structure], gnra_motifs: Dict[str, List[Dict[str, Any]]]
-) -> Dict[str, List[Tuple[Tuple[int, ...], Tuple[Residue, ...]]]]:
+) -> Dict[str, List[Dict[str, Any]]]:
     """Process structures to find motif residue indices."""
     pdb_motif_data = {}
 
@@ -162,14 +180,14 @@ def process_structures_and_motifs(
 
         # Process valid motifs and extract CIF files
         valid_motif_count = 0
-        for motif, (indices, motif_residues) in zip(motifs, motif_data):
-            if indices:  # Only process motifs that passed validation
-                valid_motif_count += 1
-                motif_key = motif.get("motif_key", f"motif_{valid_motif_count}")
-                print(
-                    f"    Motif {valid_motif_count}: {len(indices)} residues at indices {indices}"
-                )
-                extract_and_save_motif(structure, list(indices), motif_key)
+        for i, motif_dict in enumerate(motif_data):
+            valid_motif_count += 1
+            motif_key = motifs[i].get("motif_key", f"motif_{valid_motif_count}")
+            indices = motif_dict["indices"]
+            print(
+                f"    Motif {valid_motif_count}: {len(indices)} residues at indices {indices}"
+            )
+            extract_and_save_motif(structure, indices, motif_key)
 
     return pdb_motif_data
 
