@@ -29,8 +29,8 @@ if [[ ${#files_to_process[@]} -gt 0 ]]; then
         # Extract PDB ID from filename (remove path and .cif extension)
         pdb_id=$(basename "$cif_file" .cif)
         fr3d_output="mmcif_files/fr3d-${pdb_id}-basepair_detail.txt"    
-        adapter "$cif_file" --external "$fr3d_output" --tool fr3d --json "json_files/${pdb_id}.json"
-    done
+        echo adapter "$cif_file" --external "$fr3d_output" --tool fr3d --json "json_files/${pdb_id}.json"
+    done | parallel --bar
 else
-    echo "All CIF files already have FR3D output. Nothing to process."
+    echo "All CIF files already have JSON output. Nothing to process."
 fi
