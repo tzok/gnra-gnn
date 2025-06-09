@@ -17,7 +17,9 @@ def load_gnra_motifs(
         return json.load(f)
 
 
-def parse_mmcif_files(gnra_motifs: Dict[str, List[Dict[str, Any]]]) -> Dict[str, Structure]:
+def parse_mmcif_files(
+    gnra_motifs: Dict[str, List[Dict[str, Any]]],
+) -> Dict[str, Structure]:
     """Parse mmCIF files for each PDB ID and return Structure objects."""
     structures = {}
 
