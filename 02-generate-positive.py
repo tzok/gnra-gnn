@@ -4,7 +4,7 @@
 import gzip
 import json
 import os
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 from rnapolis.parser_v2 import parse_cif_atoms, write_cif
 from rnapolis.tertiary_v2 import Residue, Structure
@@ -45,12 +45,13 @@ def parse_mmcif_files(
 
 def find_motif_residue_indices(
     residues: List[Residue], motifs: List[Dict[str, Any]]
-) -> List[List[int]]:
-    """Find residue indices for each motif's unit_ids."""
-    motif_indices = []
+) -> List[Tuple[Tuple[int, ...], Tuple[Residue, ...]]]:
+    """Find residue indices and residue objects for each motif's unit_ids."""
+    motif_data = []
 
     for motif_idx, motif in enumerate(motifs):
         indices = []
+        motif_residues = []
         unit_ids = motif.get("unit_ids", [])
         motif_key = motif.get("motif_key", f"motif_{motif_idx}")
 
@@ -66,6 +67,7 @@ def find_motif_residue_indices(
                     and residue_insertion_code == unit_insertion_code
                 ):
                     indices.append(i)
+                    motif_residues.append(residue)
                     break
 
         # Log when we don't find exactly 6 indices
@@ -73,7 +75,7 @@ def find_motif_residue_indices(
             print(
                 f"    Warning: {motif_key} - Expected 6 residues, found {len(indices)}: {indices}"
             )
-            continue  # Skip adding this motif to motif_indices
+            continue  # Skip adding this motif to motif_data
 
         # Log when indices are not consecutive
         sorted_indices = sorted(indices)
@@ -84,11 +86,11 @@ def find_motif_residue_indices(
             print(
                 f"    Warning: {motif_key} - Residues are not consecutive: {sorted_indices}"
             )
-            continue  # Skip adding this motif to motif_indices
+            continue  # Skip adding this motif to motif_data
 
-        motif_indices.append(indices)
+        motif_data.append((tuple(indices), tuple(motif_residues)))
 
-    return motif_indices
+    return motif_data
 
 
 def extract_and_save_motif(
@@ -143,33 +145,33 @@ def extract_and_save_motif(
 
 def process_structures_and_motifs(
     structures: Dict[str, Structure], gnra_motifs: Dict[str, List[Dict[str, Any]]]
-) -> Dict[str, List[List[int]]]:
+) -> Dict[str, List[Tuple[Tuple[int, ...], Tuple[Residue, ...]]]]:
     """Process structures to find motif residue indices."""
-    pdb_motif_indices = {}
+    pdb_motif_data = {}
 
     for pdb_id, structure in structures.items():
         print(f"Processing {pdb_id}...")
         residues = structure.residues
         motifs = gnra_motifs[pdb_id]
 
-        motif_indices = find_motif_residue_indices(residues, motifs)
-        pdb_motif_indices[pdb_id] = motif_indices
+        motif_data = find_motif_residue_indices(residues, motifs)
+        pdb_motif_data[pdb_id] = motif_data
 
         print(f"  Found {len(residues)} residues")
         print(f"  Processed {len(motifs)} motifs")
 
         # Process valid motifs and extract CIF files
         valid_motif_count = 0
-        for motif, indices in zip(motifs, motif_indices):
+        for motif, (indices, motif_residues) in zip(motifs, motif_data):
             if indices:  # Only process motifs that passed validation
                 valid_motif_count += 1
                 motif_key = motif.get("motif_key", f"motif_{valid_motif_count}")
                 print(
                     f"    Motif {valid_motif_count}: {len(indices)} residues at indices {indices}"
                 )
-                extract_and_save_motif(structure, indices, motif_key)
+                extract_and_save_motif(structure, list(indices), motif_key)
 
-    return pdb_motif_indices
+    return pdb_motif_data
 
 
 def main():
