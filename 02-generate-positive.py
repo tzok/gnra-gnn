@@ -53,7 +53,7 @@ def find_motif_residue_indices(
         indices = []
         unit_ids = motif.get("unit_ids", [])
         motif_key = motif.get("motif_key", f"motif_{motif_idx}")
-        
+
         for unit_id_dict in unit_ids:
             # Find matching residue by comparing unit_id components
             for i, residue in enumerate(residues):
@@ -67,18 +67,24 @@ def find_motif_residue_indices(
                 ):
                     indices.append(i)
                     break
-        
+
         # Log when we don't find exactly 6 indices
         if len(indices) != 6:
-            print(f"    Warning: {motif_key} - Expected 6 residues, found {len(indices)}: {indices}")
-        
+            print(
+                f"    Warning: {motif_key} - Expected 6 residues, found {len(indices)}: {indices}"
+            )
+
         # Log when indices are not consecutive
         elif len(indices) == 6:
             sorted_indices = sorted(indices)
-            is_consecutive = all(sorted_indices[i] + 1 == sorted_indices[i + 1] for i in range(5))
+            is_consecutive = all(
+                sorted_indices[i] + 1 == sorted_indices[i + 1] for i in range(5)
+            )
             if not is_consecutive:
-                print(f"    Warning: {motif_key} - Residues are not consecutive: {sorted_indices}")
-        
+                print(
+                    f"    Warning: {motif_key} - Residues are not consecutive: {sorted_indices}"
+                )
+
         motif_indices.append(indices)
 
     return motif_indices
