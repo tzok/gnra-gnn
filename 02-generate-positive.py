@@ -98,42 +98,44 @@ def extract_and_save_motif(
     # Create output directory
     output_dir = "motif_cif_files"
     os.makedirs(output_dir, exist_ok=True)
-    
+
     # Check if file already exists
     output_file = os.path.join(output_dir, f"{motif_key}.cif")
     if os.path.exists(output_file):
         print(f"    File {output_file} already exists, skipping")
         return False
-    
+
     # Get the range of indices (add 1 before and 1 after)
     min_idx = min(indices)
     max_idx = max(indices)
-    
+
     # Check if we can add residues before and after
     if min_idx == 0 or max_idx == len(structure.residues) - 1:
         print(f"    Cannot extract 8 residues for {motif_key} (boundary constraints)")
         return False
-    
+
     # Extract 8 residues: 1 before + 6 motif + 1 after
     extended_indices = [min_idx - 1] + indices + [max_idx + 1]
-    
+
     try:
         # Get atoms for the extended residues
         residue_atoms = []
         for idx in extended_indices:
             residue = structure.residues[idx]
             residue_atoms.extend(residue.atoms)
-        
+
         # Create a new structure with just these atoms
-        atoms_df = structure.atoms.loc[structure.atoms.index.isin([atom.index for atom in residue_atoms])]
-        
+        atoms_df = structure.atoms.loc[
+            structure.atoms.index.isin([atom.index for atom in residue_atoms])
+        ]
+
         # Write to CIF file
-        with open(output_file, 'w') as f:
+        with open(output_file, "w") as f:
             write_cif(atoms_df, f)
-        
+
         print(f"    Saved {motif_key} to {output_file}")
         return True
-        
+
     except Exception as e:
         print(f"    Error saving {motif_key}: {e}")
         return False
@@ -155,14 +157,16 @@ def process_structures_and_motifs(
 
         print(f"  Found {len(residues)} residues")
         print(f"  Processed {len(motifs)} motifs")
-        
+
         # Process valid motifs and extract CIF files
         valid_motif_count = 0
         for motif, indices in zip(motifs, motif_indices):
             if indices:  # Only process motifs that passed validation
                 valid_motif_count += 1
                 motif_key = motif.get("motif_key", f"motif_{valid_motif_count}")
-                print(f"    Motif {valid_motif_count}: {len(indices)} residues at indices {indices}")
+                print(
+                    f"    Motif {valid_motif_count}: {len(indices)} residues at indices {indices}"
+                )
                 extract_and_save_motif(structure, indices, motif_key)
 
     return pdb_motif_indices
