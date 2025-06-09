@@ -35,29 +35,45 @@ def check_motifs_already_processed(pdb_id: str, motifs: List[Dict[str, Any]]) ->
     return True
 
 
-def parse_mmcif_files(
-    gnra_motifs: Dict[str, List[Dict[str, Any]]],
-) -> Dict[str, Structure]:
-    """Parse mmCIF files for each PDB ID and return Structure objects."""
-    structures = {}
+def parse_and_process_mmcif_file(
+    pdb_id: str, motifs: List[Dict[str, Any]]
+) -> bool:
+    """Parse mmCIF file for a PDB ID and immediately process its motifs."""
+    mmcif_file = f"mmcif_files/{pdb_id}.cif.gz"
 
-    for pdb_id in gnra_motifs.keys():
-        mmcif_file = f"mmcif_files/{pdb_id}.cif.gz"
+    if not os.path.exists(mmcif_file):
+        print(f"  Warning: {mmcif_file} not found")
+        return False
 
-        if os.path.exists(mmcif_file):
-            try:
-                print(f"Parsing {mmcif_file}...")
-                with gzip.open(mmcif_file, "rt") as f:
-                    atoms_df = parse_cif_atoms(f)
-                structure = Structure(atoms_df)
-                structures[pdb_id] = structure
-                print(f"  Successfully parsed {pdb_id}")
-            except Exception as e:
-                print(f"  Error parsing {pdb_id}: {e}")
-        else:
-            print(f"  Warning: {mmcif_file} not found")
+    try:
+        print(f"Parsing {mmcif_file}...")
+        with gzip.open(mmcif_file, "rt") as f:
+            atoms_df = parse_cif_atoms(f)
+        structure = Structure(atoms_df)
+        print(f"  Successfully parsed {pdb_id}")
 
-    return structures
+        # Process motifs immediately
+        print(f"Processing motifs for {pdb_id}...")
+        residues = [residue for residue in structure.residues if residue.is_nucleotide]
+        motif_data = find_motif_residue_indices(residues, motifs)
+
+        print(f"  Found {len(residues)} residues")
+        print(f"  Processed {len(motifs)} motifs")
+
+        # Process valid motifs and extract CIF files
+        for motif_dict in motif_data:
+            motif_key = motif_dict["motif_key"]
+            indices = motif_dict["indices"]
+            print(
+                f"    Motif {motif_key}: {len(indices)} residues at indices {indices}"
+            )
+            extract_and_save_motif(motif_dict)
+
+        return True
+
+    except Exception as e:
+        print(f"  Error parsing {pdb_id}: {e}")
+        return False
 
 
 def find_motif_residue_indices(
@@ -165,33 +181,20 @@ def extract_and_save_motif(
         return False
 
 
-def process_structures_and_motifs(
-    structures: Dict[str, Structure], gnra_motifs: Dict[str, List[Dict[str, Any]]]
-) -> Dict[str, List[Dict[str, Any]]]:
-    """Process structures to find motif residue indices."""
-    pdb_motif_data = {}
+def process_all_pdb_files(gnra_motifs: Dict[str, List[Dict[str, Any]]]) -> None:
+    """Process all PDB files and their motifs immediately."""
+    successful_count = 0
+    failed_count = 0
 
-    for pdb_id, structure in structures.items():
-        print(f"Processing {pdb_id}...")
-        residues = [residue for residue in structure.residues if residue.is_nucleotide]
-        motifs = gnra_motifs[pdb_id]
+    for pdb_id, motifs in gnra_motifs.items():
+        if parse_and_process_mmcif_file(pdb_id, motifs):
+            successful_count += 1
+        else:
+            failed_count += 1
 
-        motif_data = find_motif_residue_indices(residues, motifs)
-        pdb_motif_data[pdb_id] = motif_data
-
-        print(f"  Found {len(residues)} residues")
-        print(f"  Processed {len(motifs)} motifs")
-
-        # Process valid motifs and extract CIF files
-        for motif_dict in motif_data:
-            motif_key = motif_dict["motif_key"]
-            indices = motif_dict["indices"]
-            print(
-                f"    Motif {motif_key}: {len(indices)} residues at indices {indices}"
-            )
-            extract_and_save_motif(motif_dict)
-
-    return pdb_motif_data
+    print(f"\nProcessing complete:")
+    print(f"  Successfully processed: {successful_count} PDB files")
+    print(f"  Failed to process: {failed_count} PDB files")
 
 
 def main():
@@ -225,15 +228,8 @@ def main():
 
     gnra_motifs = filtered_gnra_motifs
 
-    print("\nParsing mmCIF files...")
-    structures = parse_mmcif_files(gnra_motifs)
-
-    print(f"\nSuccessfully parsed {len(structures)} structures")
-
-    print("\nProcessing structures and motifs...")
-    pdb_motif_indices = process_structures_and_motifs(structures, gnra_motifs)
-
-    print(f"\nProcessed motifs for {len(pdb_motif_indices)} PDB structures")
+    print("\nParsing mmCIF files and processing motifs...")
+    process_all_pdb_files(gnra_motifs)
 
 
 if __name__ == "__main__":
