@@ -99,7 +99,7 @@ def main():
     print(f"Total number of GNRA motifs: {total_motifs}")
 
     # TODO
-    gnra_motifs = gnra_motifs[:5]  # Limit to first 5 for testing
+    gnra_motifs = dict(list(gnra_motifs.items())[:5])  # Limit to first 5 for testing
 
     print("\nParsing mmCIF files...")
     structures = parse_mmcif_files(gnra_motifs)
