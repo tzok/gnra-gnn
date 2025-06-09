@@ -47,7 +47,7 @@ def find_motif_residue_indices(
 ) -> List[List[int]]:
     """Find residue indices for each motif's unit_ids."""
     motif_indices = []
-    
+
     for motif in motifs:
         indices = []
         for unit_id_dict in motif:
@@ -61,7 +61,7 @@ def find_motif_residue_indices(
                     indices.append(i)
                     break
         motif_indices.append(indices)
-    
+
     return motif_indices
 
 
@@ -70,20 +70,20 @@ def process_structures_and_motifs(
 ) -> Dict[str, List[List[int]]]:
     """Process structures to find motif residue indices."""
     pdb_motif_indices = {}
-    
+
     for pdb_id, structure in structures.items():
         print(f"Processing {pdb_id}...")
         residues = structure.residues()
         motifs = gnra_motifs[pdb_id]
-        
+
         motif_indices = find_motif_residue_indices(residues, motifs)
         pdb_motif_indices[pdb_id] = motif_indices
-        
+
         print(f"  Found {len(residues)} residues")
         print(f"  Processed {len(motifs)} motifs")
         for i, indices in enumerate(motif_indices):
-            print(f"    Motif {i+1}: {len(indices)} residues at indices {indices}")
-    
+            print(f"    Motif {i + 1}: {len(indices)} residues at indices {indices}")
+
     return pdb_motif_indices
 
 
@@ -109,10 +109,10 @@ def main():
     structures = parse_mmcif_files(gnra_motifs)
 
     print(f"\nSuccessfully parsed {len(structures)} structures")
-    
+
     print("\nProcessing structures and motifs...")
     pdb_motif_indices = process_structures_and_motifs(structures, gnra_motifs)
-    
+
     print(f"\nProcessed motifs for {len(pdb_motif_indices)} PDB structures")
 
 
