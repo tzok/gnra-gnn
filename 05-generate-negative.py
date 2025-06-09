@@ -160,6 +160,12 @@ def get_strand_residue_indices(
     strand: Dict[str, Any], residues: List[Residue]
 ) -> List[int]:
     """Extract 0-based residue indices from a strand using bpseq_index mapping."""
+    # Early check: if strand length is less than 8, skip processing
+    strand_length = strand["last"] - strand["first"] + 1
+    if strand_length < 8:
+        print(f"    DEBUG: Strand {strand['first']}-{strand['last']} too short ({strand_length} < 8), skipping")
+        return []
+
     indices: List[int] = []
 
     # Get the bpseq_index mapping
