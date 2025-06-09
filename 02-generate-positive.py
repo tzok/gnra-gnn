@@ -4,6 +4,7 @@
 import gzip
 import json
 import os
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from typing import Any, Dict, List
 
 import pandas as pd
@@ -179,16 +180,42 @@ def extract_and_save_motif(
         return False
 
 
-def process_all_pdb_files(gnra_motifs: Dict[str, List[Dict[str, Any]]]) -> None:
-    """Process all PDB files and their motifs immediately."""
+def process_pdb_wrapper(args):
+    """Wrapper function for parallel processing."""
+    pdb_id, motifs = args
+    return pdb_id, parse_and_process_mmcif_file(pdb_id, motifs)
+
+
+def process_all_pdb_files(gnra_motifs: Dict[str, List[Dict[str, Any]]], max_workers: int = None) -> None:
+    """Process all PDB files and their motifs in parallel."""
     successful_count = 0
     failed_count = 0
-
-    for pdb_id, motifs in gnra_motifs.items():
-        if parse_and_process_mmcif_file(pdb_id, motifs):
-            successful_count += 1
-        else:
-            failed_count += 1
+    
+    # Determine number of workers (default to number of CPU cores)
+    if max_workers is None:
+        max_workers = os.cpu_count()
+    
+    print(f"Processing {len(gnra_motifs)} PDB files using {max_workers} workers...")
+    
+    # Prepare arguments for parallel processing
+    pdb_args = list(gnra_motifs.items())
+    
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        # Submit all tasks
+        future_to_pdb = {executor.submit(process_pdb_wrapper, args): args[0] for args in pdb_args}
+        
+        # Process completed tasks
+        for future in as_completed(future_to_pdb):
+            pdb_id = future_to_pdb[future]
+            try:
+                _, success = future.result()
+                if success:
+                    successful_count += 1
+                else:
+                    failed_count += 1
+            except Exception as e:
+                print(f"  Error processing {pdb_id}: {e}")
+                failed_count += 1
 
     print(f"\nProcessing complete:")
     print(f"  Successfully processed: {successful_count} PDB files")
