@@ -91,7 +91,7 @@ def find_motif_residue_indices(
         # Extend to 8 residues (add 1 before and 1 after)
         min_idx = min(sorted_indices)
         max_idx = max(sorted_indices)
-        
+
         # Check if we can add residues before and after
         if min_idx == 0 or max_idx == len(residues) - 1:
             print(
@@ -103,10 +103,7 @@ def find_motif_residue_indices(
         extended_indices = [min_idx - 1] + sorted_indices + [max_idx + 1]
         extended_residues = [residues[i] for i in extended_indices]
 
-        motif_data.append({
-            "indices": extended_indices,
-            "residues": extended_residues
-        })
+        motif_data.append({"indices": extended_indices, "residues": extended_residues})
 
     return motif_data
 
