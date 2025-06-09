@@ -462,37 +462,41 @@ def process_all_pdb_files(
 
 
 def extract_and_save_negative_region(
-    pdb_id: str, region_data: Dict[str, Any], region_type: str, counter: int, residues: List[Residue]
+    pdb_id: str,
+    region_data: Dict[str, Any],
+    region_type: str,
+    counter: int,
+    residues: List[Residue],
 ) -> bool:
     """Extract residues for a negative region and save as CIF file."""
     indices = region_data["indices"]
-    
+
     # Create output directory
     output_dir = "negative_cif_files"
     os.makedirs(output_dir, exist_ok=True)
-    
+
     # Create filename: type_pdbid_counter.cif
     output_file = os.path.join(output_dir, f"{region_type}_{pdb_id}_{counter:04d}.cif")
-    
+
     # Check if file already exists
     if os.path.exists(output_file):
         print(f"    File {output_file} already exists, skipping")
         return False
-    
+
     try:
         # Get residues for the indices
         region_residues = [residues[i] for i in indices]
-        
+
         # Get atoms for the residues
         atoms_df = pd.concat(residue.atoms for residue in region_residues)
-        
+
         # Write to CIF file
         with open(output_file, "w") as f:
             write_cif(atoms_df, f)
-        
+
         print(f"    Saved {region_type} region to {output_file}")
         return True
-        
+
     except Exception as e:
         print(f"    Error saving {region_type} region: {e}")
         return False
@@ -501,24 +505,26 @@ def extract_and_save_negative_region(
 def extract_all_negative_regions(negative_regions: List[Dict[str, Any]]) -> None:
     """Extract all negative regions as CIF files."""
     print("\nExtracting negative regions as CIF files...")
-    
+
     total_extracted = 0
     total_skipped = 0
-    
+
     for pdb_data in negative_regions:
         pdb_id = pdb_data["pdb_id"]
         regions = pdb_data["regions"]
-        
+
         print(f"Processing negative regions for {pdb_id}...")
-        
+
         # Load the structure to get residues
         try:
             mmcif_file = f"mmcif_files/{pdb_id}.cif"
             with open(mmcif_file, "r") as f:
                 atoms_df = parse_cif_atoms(f)
             structure = Structure(atoms_df)
-            residues = [residue for residue in structure.residues if residue.is_nucleotide]
-            
+            residues = [
+                residue for residue in structure.residues if residue.is_nucleotide
+            ]
+
             # Process each type of region
             for region_type, region_list in regions.items():
                 for i, region_data in enumerate(region_list):
@@ -529,10 +535,10 @@ def extract_all_negative_regions(negative_regions: List[Dict[str, Any]]) -> None
                         total_extracted += 1
                     else:
                         total_skipped += 1
-                        
+
         except Exception as e:
             print(f"  Error processing {pdb_id}: {e}")
-    
+
     print(f"\nExtraction complete:")
     print(f"  Total extracted: {total_extracted} negative regions")
     print(f"  Total skipped: {total_skipped} negative regions")
@@ -596,10 +602,10 @@ def main():
         print(f"Negative regions file '{negative_regions_file}' already exists.")
         print("Loading existing negative regions...")
         negative_regions = load_negative_regions(negative_regions_file)
-        
+
         # Extract negative regions as CIF files
         extract_all_negative_regions(negative_regions)
-        
+
         print_negative_regions_summary(negative_regions)
         print("\nTo regenerate, delete the file and run the script again.")
         return
