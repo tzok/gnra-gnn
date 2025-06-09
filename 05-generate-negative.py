@@ -154,26 +154,20 @@ def find_motif_residue_indices(
     return motif_data
 
 
-def get_region_indices(region: Dict[str, Any]) -> List[int]:
-    """Extract 1-based indices from a region (stem, single_strand, hairpin, or loop)."""
+def get_strand_residue_indices(strand: Dict[str, Any]) -> List[int]:
+    """Extract 0-based residue indices from a strand using bpseq_index mapping."""
     indices: List[int] = []
-
-    if "strand5p" in region and "strand3p" in region:
-        # Stem region
-        strand5p = region["strand5p"]
-        strand3p = region["strand3p"]
-        indices.extend(range(strand5p["first"], strand5p["last"] + 1))
-        indices.extend(range(strand3p["first"], strand3p["last"] + 1))
-    elif "strand" in region:
-        # Single strand or hairpin
-        strand = region["strand"]
-        indices.extend(range(strand["first"], strand["last"] + 1))
-    elif "strands" in region:
-        # Loop with multiple strands
-        for strand in region["strands"]:
-            indices.extend(range(strand["first"], strand["last"] + 1))
-
-    return sorted(set(indices))
+    
+    # Get the bpseq_index mapping
+    bpseq_index = strand.get("bpseq_index", {})
+    
+    # Convert string keys to integers and get all residue indices for this strand
+    for pos in range(strand["first"], strand["last"] + 1):
+        residue_idx = bpseq_index.get(str(pos))
+        if residue_idx is not None:
+            indices.append(residue_idx)
+    
+    return indices
 
 
 def indices_overlap(indices1: List[int], indices2: Set[int]) -> bool:
@@ -192,45 +186,42 @@ def find_negative_regions(
         "loops": [],
     }
 
-    # Convert 0-based GNRA indices to 1-based for comparison with bpseq indices
-    gnra_indices_1based = {idx + 1 for idx in gnra_indices}
-
     # Process stems - check each strand separately
     for stem in structure_data.get("stems", []):
         # Check strand5p
         if "strand5p" in stem:
             strand5p = stem["strand5p"]
-            strand_indices = list(range(strand5p["first"], strand5p["last"] + 1))
-            if len(strand_indices) >= 8 and not indices_overlap(
-                strand_indices, gnra_indices_1based
+            strand_residue_indices = get_strand_residue_indices(strand5p)
+            if len(strand_residue_indices) >= 8 and not indices_overlap(
+                strand_residue_indices, gnra_indices
             ):
                 negative_regions["stems"].append(
-                    {"region": strand5p, "indices": strand_indices, "type": "stem_5p"}
+                    {"region": strand5p, "indices": strand_residue_indices, "type": "stem_5p"}
                 )
 
         # Check strand3p
         if "strand3p" in stem:
             strand3p = stem["strand3p"]
-            strand_indices = list(range(strand3p["first"], strand3p["last"] + 1))
-            if len(strand_indices) >= 8 and not indices_overlap(
-                strand_indices, gnra_indices_1based
+            strand_residue_indices = get_strand_residue_indices(strand3p)
+            if len(strand_residue_indices) >= 8 and not indices_overlap(
+                strand_residue_indices, gnra_indices
             ):
                 negative_regions["stems"].append(
-                    {"region": strand3p, "indices": strand_indices, "type": "stem_3p"}
+                    {"region": strand3p, "indices": strand_residue_indices, "type": "stem_3p"}
                 )
 
     # Process single strands
     for single_strand in structure_data.get("single_strands", []):
         if "strand" in single_strand:
             strand = single_strand["strand"]
-            strand_indices = list(range(strand["first"], strand["last"] + 1))
-            if len(strand_indices) >= 8 and not indices_overlap(
-                strand_indices, gnra_indices_1based
+            strand_residue_indices = get_strand_residue_indices(strand)
+            if len(strand_residue_indices) >= 8 and not indices_overlap(
+                strand_residue_indices, gnra_indices
             ):
                 negative_regions["single_strands"].append(
                     {
                         "region": strand,
-                        "indices": strand_indices,
+                        "indices": strand_residue_indices,
                         "type": "single_strand",
                     }
                 )
@@ -239,24 +230,24 @@ def find_negative_regions(
     for hairpin in structure_data.get("hairpins", []):
         if "strand" in hairpin:
             strand = hairpin["strand"]
-            strand_indices = list(range(strand["first"], strand["last"] + 1))
-            if len(strand_indices) >= 8 and not indices_overlap(
-                strand_indices, gnra_indices_1based
+            strand_residue_indices = get_strand_residue_indices(strand)
+            if len(strand_residue_indices) >= 8 and not indices_overlap(
+                strand_residue_indices, gnra_indices
             ):
                 negative_regions["hairpins"].append(
-                    {"region": strand, "indices": strand_indices, "type": "hairpin"}
+                    {"region": strand, "indices": strand_residue_indices, "type": "hairpin"}
                 )
 
     # Process loops - check each strand separately
     for loop in structure_data.get("loops", []):
         if "strands" in loop:
             for strand in loop["strands"]:
-                strand_indices = list(range(strand["first"], strand["last"] + 1))
-                if len(strand_indices) >= 8 and not indices_overlap(
-                    strand_indices, gnra_indices_1based
+                strand_residue_indices = get_strand_residue_indices(strand)
+                if len(strand_residue_indices) >= 8 and not indices_overlap(
+                    strand_residue_indices, gnra_indices
                 ):
                     negative_regions["loops"].append(
-                        {"region": strand, "indices": strand_indices, "type": "loop"}
+                        {"region": strand, "indices": strand_residue_indices, "type": "loop"}
                     )
 
     return negative_regions
