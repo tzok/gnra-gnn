@@ -159,16 +159,16 @@ def download_mmcif_file(pdb_id: str) -> bool:
     try:
         print(f"Downloading {temp_gz_filepath} from {url}")
         urllib.request.urlretrieve(url, temp_gz_filepath)
-        
+
         # Ungzip the file
         print(f"Uncompressing {temp_gz_filepath} to {filepath}")
-        with gzip.open(temp_gz_filepath, 'rb') as f_in:
-            with open(filepath, 'wb') as f_out:
+        with gzip.open(temp_gz_filepath, "rb") as f_in:
+            with open(filepath, "wb") as f_out:
                 f_out.write(f_in.read())
-        
+
         # Remove the temporary .gz file
         os.remove(temp_gz_filepath)
-        
+
         print(f"Successfully downloaded and uncompressed {filepath}")
         return True
     except Exception as e:
