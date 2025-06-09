@@ -103,11 +103,13 @@ def find_motif_residue_indices(
         extended_indices = [min_idx - 1] + sorted_indices + [max_idx + 1]
         extended_residues = [residues[i] for i in extended_indices]
 
-        motif_data.append({
-            "motif_key": motif_key,
-            "indices": extended_indices, 
-            "residues": extended_residues
-        })
+        motif_data.append(
+            {
+                "motif_key": motif_key,
+                "indices": extended_indices,
+                "residues": extended_residues,
+            }
+        )
 
     return motif_data
 
@@ -183,9 +185,7 @@ def process_structures_and_motifs(
         for i, motif_dict in enumerate(motif_data):
             motif_key = motif_dict["motif_key"]
             indices = motif_dict["indices"]
-            print(
-                f"    Motif {i+1}: {len(indices)} residues at indices {indices}"
-            )
+            print(f"    Motif {i + 1}: {len(indices)} residues at indices {indices}")
             extract_and_save_motif(structure, indices, motif_key)
 
     return pdb_motif_data
