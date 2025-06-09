@@ -1,7 +1,6 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import gzip
 import json
 import os
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -38,7 +37,7 @@ def check_motifs_already_processed(pdb_id: str, motifs: List[Dict[str, Any]]) ->
 
 def parse_and_process_mmcif_file(pdb_id: str, motifs: List[Dict[str, Any]]) -> bool:
     """Parse mmCIF file for a PDB ID and immediately process its motifs."""
-    mmcif_file = f"mmcif_files/{pdb_id}.cif.gz"
+    mmcif_file = f"mmcif_files/{pdb_id}.cif"
 
     if not os.path.exists(mmcif_file):
         print(f"  Warning: {mmcif_file} not found")
@@ -46,7 +45,7 @@ def parse_and_process_mmcif_file(pdb_id: str, motifs: List[Dict[str, Any]]) -> b
 
     try:
         print(f"Parsing {mmcif_file}...")
-        with gzip.open(mmcif_file, "rt") as f:
+        with open(mmcif_file, "r") as f:
             atoms_df = parse_cif_atoms(f)
         structure = Structure(atoms_df)
         print(f"  Successfully parsed {pdb_id}")
