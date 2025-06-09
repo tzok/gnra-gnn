@@ -159,29 +159,34 @@ def find_motif_residue_indices(
 def get_strand_residue_indices(
     strand: Dict[str, Any], residues: List[Residue], bpseq_index: Dict[str, Any]
 ) -> List[int]:
-    """Extract 0-based residue indices from a strand using bpseq_index mapping."""
-    # Early check: if strand length is less than 8, skip processing
+    """Extract 0-based residue indices from a strand using bpseq_index mapping.
+    
+    Accepts strands that are either:
+    1. 8+ nucleotides long, OR
+    2. 6 nucleotides long that can be extended to 8 by adding one before and one after
+    """
     strand_length = strand["last"] - strand["first"] + 1
-    if strand_length < 8:
+    
+    # Early check: if strand length is less than 6, skip processing
+    if strand_length < 6:
         print(
-            f"    DEBUG: Strand {strand['first']}-{strand['last']} too short ({strand_length} < 8), skipping"
+            f"    DEBUG: Strand {strand['first']}-{strand['last']} too short ({strand_length} < 6), skipping"
         )
         return []
 
-    indices: List[int] = []
-
     print(
-        f"    DEBUG: Strand range {strand['first']}-{strand['last']}, bpseq_index has {len(bpseq_index)} entries"
+        f"    DEBUG: Strand range {strand['first']}-{strand['last']} (length {strand_length}), bpseq_index has {len(bpseq_index)} entries"
     )
 
-    # Convert string keys to integers and get all residue indices for this strand
+    # Get base strand indices first
+    base_indices: List[int] = []
     for pos in range(strand["first"], strand["last"] + 1):
         residue_obj = bpseq_index.get(str(pos))
         if residue_obj is not None:
             # Use auth values to find matching residue in structure
-            auth_chain = residue_obj.get("auth_asym_id")
-            auth_number = residue_obj.get("auth_seq_id")
-            auth_icode = residue_obj.get("auth_ins_code", "")
+            auth_chain = residue_obj.get("auth", {}).get("chain", None)
+            auth_number = residue_obj.get("auth", {}).get("number", None)
+            auth_icode = residue_obj.get("auth", {}).get("icode", "") or ""
 
             # Find matching residue by comparing auth values
             found_match = False
@@ -193,7 +198,7 @@ def get_strand_residue_indices(
                     and residue.residue_number == auth_number
                     and residue_insertion_code == auth_icode
                 ):
-                    indices.append(i)
+                    base_indices.append(i)
                     found_match = True
                     break
 
@@ -204,8 +209,44 @@ def get_strand_residue_indices(
         else:
             print(f"    DEBUG: No bpseq_index entry for position {pos}")
 
-    print(f"    DEBUG: Found {len(indices)} residue indices for strand")
-    return indices
+    print(f"    DEBUG: Found {len(base_indices)} base residue indices for strand")
+    
+    # If we have 8+ residues, return as is
+    if len(base_indices) >= 8:
+        print(f"    DEBUG: Strand has {len(base_indices)} residues (>=8), using as is")
+        return base_indices
+    
+    # If we have exactly 6 residues, try to extend to 8
+    if len(base_indices) == 6:
+        print(f"    DEBUG: Strand has 6 residues, attempting to extend to 8")
+        
+        # Check if indices are consecutive
+        sorted_indices = sorted(base_indices)
+        is_consecutive = all(
+            sorted_indices[i] + 1 == sorted_indices[i + 1] for i in range(5)
+        )
+        
+        if not is_consecutive:
+            print(f"    DEBUG: Base indices not consecutive: {sorted_indices}, cannot extend")
+            return []
+        
+        # Try to extend by adding one before and one after
+        min_idx = min(sorted_indices)
+        max_idx = max(sorted_indices)
+        
+        # Check boundary constraints
+        if min_idx == 0 or max_idx == len(residues) - 1:
+            print(f"    DEBUG: Cannot extend - boundary constraints (min_idx={min_idx}, max_idx={max_idx}, total_residues={len(residues)})")
+            return []
+        
+        # Create extended indices
+        extended_indices = [min_idx - 1] + sorted_indices + [max_idx + 1]
+        print(f"    DEBUG: Extended 6-residue strand to 8 residues: {extended_indices}")
+        return extended_indices
+    
+    # For strands with 7 residues or other lengths between 6-7, skip
+    print(f"    DEBUG: Strand has {len(base_indices)} residues (not 6 or >=8), skipping")
+    return []
 
 
 def indices_overlap(indices1: List[int], indices2: Set[int]) -> bool:
@@ -249,7 +290,7 @@ def find_negative_regions(
             print(
                 f"    DEBUG: strand5p has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}"
             )
-            if len(strand_residue_indices) >= 8 and not has_overlap:
+            if len(strand_residue_indices) == 8 and not has_overlap:
                 negative_regions["stems"].append(
                     {
                         "region": strand5p,
@@ -272,7 +313,7 @@ def find_negative_regions(
             print(
                 f"    DEBUG: strand3p has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}"
             )
-            if len(strand_residue_indices) >= 8 and not has_overlap:
+            if len(strand_residue_indices) == 8 and not has_overlap:
                 negative_regions["stems"].append(
                     {
                         "region": strand3p,
@@ -297,7 +338,7 @@ def find_negative_regions(
             print(
                 f"    DEBUG: single strand has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}"
             )
-            if len(strand_residue_indices) >= 8 and not has_overlap:
+            if len(strand_residue_indices) == 8 and not has_overlap:
                 negative_regions["single_strands"].append(
                     {
                         "region": strand,
@@ -347,7 +388,7 @@ def find_negative_regions(
                 print(
                     f"    DEBUG: loop strand has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}"
                 )
-                if len(strand_residue_indices) >= 8 and not has_overlap:
+                if len(strand_residue_indices) == 8 and not has_overlap:
                     negative_regions["loops"].append(
                         {
                             "region": strand,
