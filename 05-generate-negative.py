@@ -6,8 +6,7 @@ import os
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from typing import Any, Dict, List, Set
 
-import pandas as pd
-from rnapolis.parser_v2 import parse_cif_atoms, write_cif
+from rnapolis.parser_v2 import parse_cif_atoms
 from rnapolis.tertiary_v2 import Residue, Structure
 
 
@@ -30,13 +29,13 @@ def load_structure_json(pdb_id: str) -> Dict[str, Any]:
         return json.load(f)
 
 
-def parse_and_process_mmcif_file(pdb_id: str, motifs: List[Dict[str, Any]]) -> bool:
+def parse_and_process_mmcif_file(pdb_id: str, motifs: List[Dict[str, Any]]) -> tuple[bool, Dict[str, Any]]:
     """Parse mmCIF file for a PDB ID and process its motifs."""
     mmcif_file = f"mmcif_files/{pdb_id}.cif"
 
     if not os.path.exists(mmcif_file):
         print(f"  Warning: {mmcif_file} not found")
-        return False
+        return False, {}
 
     try:
         print(f"Parsing {mmcif_file}...")
@@ -62,21 +61,27 @@ def parse_and_process_mmcif_file(pdb_id: str, motifs: List[Dict[str, Any]]) -> b
             structure_data = load_structure_json(pdb_id)
             negative_regions = find_negative_regions(structure_data, gnra_indices)
 
-            print(f"  Found negative regions:")
+            print("  Found negative regions:")
             print(f"    Stems: {len(negative_regions['stems'])}")
             print(f"    Single strands: {len(negative_regions['single_strands'])}")
             print(f"    Hairpins: {len(negative_regions['hairpins'])}")
             print(f"    Loops: {len(negative_regions['loops'])}")
 
+            # Add PDB ID to each region for tracking
+            pdb_negative_regions = {
+                "pdb_id": pdb_id,
+                "regions": negative_regions
+            }
+
+            return True, pdb_negative_regions
+
         except FileNotFoundError as e:
             print(f"  Warning: {e}")
-            return False
-
-        return True
+            return False, {}
 
     except Exception as e:
         print(f"  Error parsing {pdb_id}: {e}")
-        return False
+        return False, {}
 
 
 def find_motif_residue_indices(
@@ -86,7 +91,7 @@ def find_motif_residue_indices(
     motif_data = []
 
     for motif_idx, motif in enumerate(motifs):
-        indices = []
+        indices: List[int] = []
         motif_residues = []
         unit_ids = motif.get("unit_ids", [])
         motif_key = motif.get("motif_key", f"motif_{motif_idx}")
@@ -152,7 +157,7 @@ def find_motif_residue_indices(
 
 def get_region_indices(region: Dict[str, Any]) -> List[int]:
     """Extract 1-based indices from a region (stem, single_strand, hairpin, or loop)."""
-    indices = []
+    indices: List[int] = []
 
     if "strand5p" in region and "strand3p" in region:
         # Stem region
@@ -181,7 +186,12 @@ def find_negative_regions(
     structure_data: Dict[str, Any], gnra_indices: Set[int]
 ) -> Dict[str, List[Dict[str, Any]]]:
     """Find stems, single_strands, hairpins, and loops with at least 8 nucleotides that don't overlap with GNRA motifs."""
-    negative_regions = {"stems": [], "single_strands": [], "hairpins": [], "loops": []}
+    negative_regions: Dict[str, List[Dict[str, Any]]] = {
+        "stems": [],
+        "single_strands": [],
+        "hairpins": [],
+        "loops": [],
+    }
 
     # Convert 0-based GNRA indices to 1-based for comparison with bpseq indices
     gnra_indices_1based = {idx + 1 for idx in gnra_indices}
@@ -236,15 +246,17 @@ def find_negative_regions(
 def process_pdb_wrapper(args):
     """Wrapper function for parallel processing."""
     pdb_id, motifs = args
-    return pdb_id, parse_and_process_mmcif_file(pdb_id, motifs)
+    success, negative_regions = parse_and_process_mmcif_file(pdb_id, motifs)
+    return pdb_id, success, negative_regions
 
 
 def process_all_pdb_files(
     gnra_motifs: Dict[str, List[Dict[str, Any]]], max_workers: int = None
-) -> None:
+) -> List[Dict[str, Any]]:
     """Process all PDB files and their motifs in parallel."""
     successful_count = 0
     failed_count = 0
+    all_negative_regions = []
 
     # Determine number of workers (default to number of CPU cores)
     if max_workers is None:
@@ -265,9 +277,11 @@ def process_all_pdb_files(
         for future in as_completed(future_to_pdb):
             pdb_id = future_to_pdb[future]
             try:
-                _, success = future.result()
+                _, success, negative_regions = future.result()
                 if success:
                     successful_count += 1
+                    if negative_regions:
+                        all_negative_regions.append(negative_regions)
                 else:
                     failed_count += 1
             except Exception as e:
@@ -277,10 +291,64 @@ def process_all_pdb_files(
     print("\nProcessing complete:")
     print(f"  Successfully processed: {successful_count} PDB files")
     print(f"  Failed to process: {failed_count} PDB files")
+    
+    return all_negative_regions
+
+
+def save_negative_regions(negative_regions: List[Dict[str, Any]], filename: str = "negative_regions.json") -> None:
+    """Save all negative regions to a JSON file."""
+    with open(filename, "w") as f:
+        json.dump(negative_regions, f, indent=2)
+    print(f"Saved {len(negative_regions)} PDB structures with negative regions to {filename}")
+
+
+def load_negative_regions(filename: str = "negative_regions.json") -> List[Dict[str, Any]]:
+    """Load negative regions from a JSON file."""
+    with open(filename, "r") as f:
+        return json.load(f)
+
+
+def check_negative_regions_exist(filename: str = "negative_regions.json") -> bool:
+    """Check if negative regions file already exists."""
+    return os.path.exists(filename)
+
+
+def print_negative_regions_summary(negative_regions: List[Dict[str, Any]]) -> None:
+    """Print summary statistics of negative regions."""
+    total_stems = 0
+    total_single_strands = 0
+    total_hairpins = 0
+    total_loops = 0
+    
+    for pdb_data in negative_regions:
+        regions = pdb_data.get("regions", {})
+        total_stems += len(regions.get("stems", []))
+        total_single_strands += len(regions.get("single_strands", []))
+        total_hairpins += len(regions.get("hairpins", []))
+        total_loops += len(regions.get("loops", []))
+    
+    print(f"\nNegative regions summary:")
+    print(f"  Total PDB structures: {len(negative_regions)}")
+    print(f"  Total stems: {total_stems}")
+    print(f"  Total single strands: {total_single_strands}")
+    print(f"  Total hairpins: {total_hairpins}")
+    print(f"  Total loops: {total_loops}")
+    print(f"  Total negative regions: {total_stems + total_single_strands + total_hairpins + total_loops}")
 
 
 def main():
     """Main function to find negative regions for GNRA motifs."""
+    negative_regions_file = "negative_regions.json"
+    
+    # Check if negative regions file already exists
+    if check_negative_regions_exist(negative_regions_file):
+        print(f"Negative regions file '{negative_regions_file}' already exists.")
+        print("Loading existing negative regions...")
+        negative_regions = load_negative_regions(negative_regions_file)
+        print_negative_regions_summary(negative_regions)
+        print("\nTo regenerate, delete the file and run the script again.")
+        return
+    
     gnra_motifs = load_gnra_motifs()
 
     print(f"Loaded GNRA motifs for {len(gnra_motifs)} PDB structures")
@@ -290,7 +358,13 @@ def main():
     print(f"Total number of GNRA motifs: {total_motifs}")
 
     print("\nAnalyzing structures for negative regions...")
-    process_all_pdb_files(gnra_motifs)
+    negative_regions = process_all_pdb_files(gnra_motifs)
+    
+    # Save negative regions to file
+    save_negative_regions(negative_regions, negative_regions_file)
+    
+    # Print summary
+    print_negative_regions_summary(negative_regions)
 
 
 if __name__ == "__main__":
