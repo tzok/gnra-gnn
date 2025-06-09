@@ -61,7 +61,7 @@ def parse_and_process_mmcif_file(
         # Load and analyze structure JSON
         try:
             structure_data = load_structure_json(pdb_id)
-            negative_regions = find_negative_regions(structure_data, gnra_indices)
+            negative_regions = find_negative_regions(structure_data, gnra_indices, residues)
 
             print("  Found negative strands:")
             print(f"    Stem strands: {len(negative_regions['stems'])}")
@@ -154,7 +154,7 @@ def find_motif_residue_indices(
     return motif_data
 
 
-def get_strand_residue_indices(strand: Dict[str, Any]) -> List[int]:
+def get_strand_residue_indices(strand: Dict[str, Any], residues: List[Residue]) -> List[int]:
     """Extract 0-based residue indices from a strand using bpseq_index mapping."""
     indices: List[int] = []
 
@@ -163,9 +163,24 @@ def get_strand_residue_indices(strand: Dict[str, Any]) -> List[int]:
 
     # Convert string keys to integers and get all residue indices for this strand
     for pos in range(strand["first"], strand["last"] + 1):
-        residue_idx = bpseq_index.get(str(pos))
-        if residue_idx is not None:
-            indices.append(residue_idx)
+        residue_obj = bpseq_index.get(str(pos))
+        if residue_obj is not None:
+            # Use auth values to find matching residue in structure
+            auth_chain = residue_obj.get("auth_asym_id")
+            auth_number = residue_obj.get("auth_seq_id")
+            auth_icode = residue_obj.get("auth_ins_code", "")
+
+            # Find matching residue by comparing auth values
+            for i, residue in enumerate(residues):
+                residue_insertion_code = residue.insertion_code or ""
+
+                if (
+                    residue.chain_id == auth_chain
+                    and residue.residue_number == auth_number
+                    and residue_insertion_code == auth_icode
+                ):
+                    indices.append(i)
+                    break
 
     return indices
 
@@ -176,7 +191,7 @@ def indices_overlap(indices1: List[int], indices2: Set[int]) -> bool:
 
 
 def find_negative_regions(
-    structure_data: Dict[str, Any], gnra_indices: Set[int]
+    structure_data: Dict[str, Any], gnra_indices: Set[int], residues: List[Residue]
 ) -> Dict[str, List[Dict[str, Any]]]:
     """Find individual strands with at least 8 nucleotides that don't overlap with GNRA motifs."""
     negative_regions: Dict[str, List[Dict[str, Any]]] = {
@@ -191,7 +206,7 @@ def find_negative_regions(
         # Check strand5p
         if "strand5p" in stem:
             strand5p = stem["strand5p"]
-            strand_residue_indices = get_strand_residue_indices(strand5p)
+            strand_residue_indices = get_strand_residue_indices(strand5p, residues)
             if len(strand_residue_indices) >= 8 and not indices_overlap(
                 strand_residue_indices, gnra_indices
             ):
@@ -206,7 +221,7 @@ def find_negative_regions(
         # Check strand3p
         if "strand3p" in stem:
             strand3p = stem["strand3p"]
-            strand_residue_indices = get_strand_residue_indices(strand3p)
+            strand_residue_indices = get_strand_residue_indices(strand3p, residues)
             if len(strand_residue_indices) >= 8 and not indices_overlap(
                 strand_residue_indices, gnra_indices
             ):
@@ -222,7 +237,7 @@ def find_negative_regions(
     for single_strand in structure_data.get("single_strands", []):
         if "strand" in single_strand:
             strand = single_strand["strand"]
-            strand_residue_indices = get_strand_residue_indices(strand)
+            strand_residue_indices = get_strand_residue_indices(strand, residues)
             if len(strand_residue_indices) >= 8 and not indices_overlap(
                 strand_residue_indices, gnra_indices
             ):
@@ -238,7 +253,7 @@ def find_negative_regions(
     for hairpin in structure_data.get("hairpins", []):
         if "strand" in hairpin:
             strand = hairpin["strand"]
-            strand_residue_indices = get_strand_residue_indices(strand)
+            strand_residue_indices = get_strand_residue_indices(strand, residues)
             if len(strand_residue_indices) >= 8 and not indices_overlap(
                 strand_residue_indices, gnra_indices
             ):
@@ -254,7 +269,7 @@ def find_negative_regions(
     for loop in structure_data.get("loops", []):
         if "strands" in loop:
             for strand in loop["strands"]:
-                strand_residue_indices = get_strand_residue_indices(strand)
+                strand_residue_indices = get_strand_residue_indices(strand, residues)
                 if len(strand_residue_indices) >= 8 and not indices_overlap(
                     strand_residue_indices, gnra_indices
                 ):
