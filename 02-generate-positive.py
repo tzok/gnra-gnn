@@ -1,12 +1,13 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import gzip
 import json
 import os
-import gzip
-from typing import Dict, List, Any, Optional
+from typing import Any, Dict, List
+
 from rnapolis.parser_v2 import parse_cif_atoms
-from rnapolis.tertiary_v2 import Structure, Residue
+from rnapolis.tertiary_v2 import Residue, Structure
 
 
 def load_gnra_motifs(
@@ -97,13 +98,8 @@ def main():
     total_motifs = sum(len(motifs) for motifs in gnra_motifs.values())
     print(f"Total number of GNRA motifs: {total_motifs}")
 
-    # Show first few PDB IDs and their motif counts
-    for i, (pdb_id, motifs) in enumerate(gnra_motifs.items()):
-        if i < 5:  # Show first 5
-            print(f"  {pdb_id}: {len(motifs)} motifs")
-        elif i == 5:
-            print("  ...")
-            break
+    # TODO
+    gnra_motifs = gnra_motifs[:5]  # Limit to first 5 for testing
 
     print("\nParsing mmCIF files...")
     structures = parse_mmcif_files(gnra_motifs)
