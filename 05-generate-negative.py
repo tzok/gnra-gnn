@@ -61,7 +61,9 @@ def parse_and_process_mmcif_file(
         # Load and analyze structure JSON
         try:
             structure_data = load_structure_json(pdb_id)
-            negative_regions = find_negative_regions(structure_data, gnra_indices, residues)
+            negative_regions = find_negative_regions(
+                structure_data, gnra_indices, residues
+            )
 
             print("  Found negative strands:")
             print(f"    Stem strands: {len(negative_regions['stems'])}")
@@ -154,7 +156,9 @@ def find_motif_residue_indices(
     return motif_data
 
 
-def get_strand_residue_indices(strand: Dict[str, Any], residues: List[Residue]) -> List[int]:
+def get_strand_residue_indices(
+    strand: Dict[str, Any], residues: List[Residue]
+) -> List[int]:
     """Extract 0-based residue indices from a strand using bpseq_index mapping."""
     indices: List[int] = []
 
