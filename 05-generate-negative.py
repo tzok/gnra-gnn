@@ -22,10 +22,10 @@ def load_gnra_motifs(
 def load_structure_json(pdb_id: str) -> Dict[str, Any]:
     """Load structure JSON file for a PDB ID."""
     json_file = f"json_files/{pdb_id}.json"
-    
+
     if not os.path.exists(json_file):
         raise FileNotFoundError(f"JSON file not found: {json_file}")
-    
+
     with open(json_file, "r") as f:
         return json.load(f)
 
@@ -61,13 +61,13 @@ def parse_and_process_mmcif_file(pdb_id: str, motifs: List[Dict[str, Any]]) -> b
         try:
             structure_data = load_structure_json(pdb_id)
             negative_regions = find_negative_regions(structure_data, gnra_indices)
-            
+
             print(f"  Found negative regions:")
             print(f"    Stems: {len(negative_regions['stems'])}")
             print(f"    Single strands: {len(negative_regions['single_strands'])}")
             print(f"    Hairpins: {len(negative_regions['hairpins'])}")
             print(f"    Loops: {len(negative_regions['loops'])}")
-            
+
         except FileNotFoundError as e:
             print(f"  Warning: {e}")
             return False
@@ -153,7 +153,7 @@ def find_motif_residue_indices(
 def get_region_indices(region: Dict[str, Any]) -> List[int]:
     """Extract 1-based indices from a region (stem, single_strand, hairpin, or loop)."""
     indices = []
-    
+
     if "strand5p" in region and "strand3p" in region:
         # Stem region
         strand5p = region["strand5p"]
@@ -168,7 +168,7 @@ def get_region_indices(region: Dict[str, Any]) -> List[int]:
         # Loop with multiple strands
         for strand in region["strands"]:
             indices.extend(range(strand["first"], strand["last"] + 1))
-    
+
     return sorted(set(indices))
 
 
@@ -177,58 +177,59 @@ def indices_overlap(indices1: List[int], indices2: Set[int]) -> bool:
     return any(idx in indices2 for idx in indices1)
 
 
-def find_negative_regions(structure_data: Dict[str, Any], gnra_indices: Set[int]) -> Dict[str, List[Dict[str, Any]]]:
+def find_negative_regions(
+    structure_data: Dict[str, Any], gnra_indices: Set[int]
+) -> Dict[str, List[Dict[str, Any]]]:
     """Find stems, single_strands, hairpins, and loops with at least 8 nucleotides that don't overlap with GNRA motifs."""
-    negative_regions = {
-        "stems": [],
-        "single_strands": [],
-        "hairpins": [],
-        "loops": []
-    }
-    
+    negative_regions = {"stems": [], "single_strands": [], "hairpins": [], "loops": []}
+
     # Convert 0-based GNRA indices to 1-based for comparison with bpseq indices
     gnra_indices_1based = {idx + 1 for idx in gnra_indices}
-    
+
     # Process stems
     for stem in structure_data.get("stems", []):
         region_indices = get_region_indices(stem)
-        if len(region_indices) >= 8 and not indices_overlap(region_indices, gnra_indices_1based):
-            negative_regions["stems"].append({
-                "region": stem,
-                "indices": region_indices,
-                "type": "stem"
-            })
-    
+        if len(region_indices) >= 8 and not indices_overlap(
+            region_indices, gnra_indices_1based
+        ):
+            negative_regions["stems"].append(
+                {"region": stem, "indices": region_indices, "type": "stem"}
+            )
+
     # Process single strands
     for single_strand in structure_data.get("single_strands", []):
         region_indices = get_region_indices(single_strand)
-        if len(region_indices) >= 8 and not indices_overlap(region_indices, gnra_indices_1based):
-            negative_regions["single_strands"].append({
-                "region": single_strand,
-                "indices": region_indices,
-                "type": "single_strand"
-            })
-    
+        if len(region_indices) >= 8 and not indices_overlap(
+            region_indices, gnra_indices_1based
+        ):
+            negative_regions["single_strands"].append(
+                {
+                    "region": single_strand,
+                    "indices": region_indices,
+                    "type": "single_strand",
+                }
+            )
+
     # Process hairpins
     for hairpin in structure_data.get("hairpins", []):
         region_indices = get_region_indices(hairpin)
-        if len(region_indices) >= 8 and not indices_overlap(region_indices, gnra_indices_1based):
-            negative_regions["hairpins"].append({
-                "region": hairpin,
-                "indices": region_indices,
-                "type": "hairpin"
-            })
-    
+        if len(region_indices) >= 8 and not indices_overlap(
+            region_indices, gnra_indices_1based
+        ):
+            negative_regions["hairpins"].append(
+                {"region": hairpin, "indices": region_indices, "type": "hairpin"}
+            )
+
     # Process loops
     for loop in structure_data.get("loops", []):
         region_indices = get_region_indices(loop)
-        if len(region_indices) >= 8 and not indices_overlap(region_indices, gnra_indices_1based):
-            negative_regions["loops"].append({
-                "region": loop,
-                "indices": region_indices,
-                "type": "loop"
-            })
-    
+        if len(region_indices) >= 8 and not indices_overlap(
+            region_indices, gnra_indices_1based
+        ):
+            negative_regions["loops"].append(
+                {"region": loop, "indices": region_indices, "type": "loop"}
+            )
+
     return negative_regions
 
 
