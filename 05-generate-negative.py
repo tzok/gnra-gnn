@@ -245,9 +245,7 @@ def get_strand_residue_indices(
 
     # Check if strand spans multiple chains
     if len(strand_chains) > 1:
-        print(
-            f"    DEBUG: Strand spans multiple chains {strand_chains}, skipping"
-        )
+        print(f"    DEBUG: Strand spans multiple chains {strand_chains}, skipping")
         return []
 
     print(f"    DEBUG: Found {len(base_indices)} base residue indices for strand")
@@ -256,7 +254,8 @@ def get_strand_residue_indices(
     if len(base_indices) > 1:
         sorted_indices = sorted(base_indices)
         is_consecutive = all(
-            sorted_indices[i] + 1 == sorted_indices[i + 1] for i in range(len(sorted_indices) - 1)
+            sorted_indices[i] + 1 == sorted_indices[i + 1]
+            for i in range(len(sorted_indices) - 1)
         )
         if not is_consecutive:
             print(
@@ -274,7 +273,9 @@ def get_strand_residue_indices(
 
     # If we have 8+ residues, take exactly 8 consecutive ones
     if len(base_indices) >= 8:
-        print(f"    DEBUG: Strand has {len(base_indices)} residues (>=8), taking first 8")
+        print(
+            f"    DEBUG: Strand has {len(base_indices)} residues (>=8), taking first 8"
+        )
         return base_indices[:8]
 
     # If we have exactly 6 residues, try to extend to 8
@@ -297,7 +298,10 @@ def get_strand_residue_indices(
         after_residue = residues[max_idx + 1]
         base_chain = residues[base_indices[0]].chain_id
 
-        if before_residue.chain_id != base_chain or after_residue.chain_id != base_chain:
+        if (
+            before_residue.chain_id != base_chain
+            or after_residue.chain_id != base_chain
+        ):
             print(
                 f"    DEBUG: Cannot extend - extended residues not from same chain (base: {base_chain}, before: {before_residue.chain_id}, after: {after_residue.chain_id})"
             )

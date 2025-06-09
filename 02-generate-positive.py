@@ -141,7 +141,10 @@ def find_motif_residue_indices(
         after_residue = residues[max_idx + 1]
         motif_chain = residues[sorted_indices[0]].chain_id
 
-        if before_residue.chain_id != motif_chain or after_residue.chain_id != motif_chain:
+        if (
+            before_residue.chain_id != motif_chain
+            or after_residue.chain_id != motif_chain
+        ):
             print(
                 f"    Warning: {motif_key} - Cannot extend to 8 residues (chain mismatch: motif={motif_chain}, before={before_residue.chain_id}, after={after_residue.chain_id})"
             )
