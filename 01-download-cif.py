@@ -85,23 +85,28 @@ def extract_unique_pdb_ids(processed_alignment: Dict[str, List[UnitID]]) -> Set[
 
 def download_mmcif_file(pdb_id: str) -> bool:
     """Download mmCIF file for a given PDB ID if it doesn't already exist"""
+    # Create subdirectory for mmCIF files
+    mmcif_dir = "mmcif_files"
+    os.makedirs(mmcif_dir, exist_ok=True)
+    
     filename = f"{pdb_id.lower()}.cif.gz"
+    filepath = os.path.join(mmcif_dir, filename)
 
     # Check if file already exists
-    if os.path.exists(filename):
-        print(f"File {filename} already exists, skipping download")
+    if os.path.exists(filepath):
+        print(f"File {filepath} already exists, skipping download")
         return True
 
     # Construct URL with uppercase PDB ID
     url = f"http://files.rcsb.org/download/{pdb_id.upper()}.cif.gz"
 
     try:
-        print(f"Downloading {filename} from {url}")
-        urllib.request.urlretrieve(url, filename)
-        print(f"Successfully downloaded {filename}")
+        print(f"Downloading {filepath} from {url}")
+        urllib.request.urlretrieve(url, filepath)
+        print(f"Successfully downloaded {filepath}")
         return True
     except Exception as e:
-        print(f"Error downloading {filename}: {e}")
+        print(f"Error downloading {filepath}: {e}")
         return False
 
 
