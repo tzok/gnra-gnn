@@ -63,11 +63,11 @@ def parse_and_process_mmcif_file(
             structure_data = load_structure_json(pdb_id)
             negative_regions = find_negative_regions(structure_data, gnra_indices)
 
-            print("  Found negative regions:")
-            print(f"    Stems: {len(negative_regions['stems'])}")
+            print("  Found negative strands:")
+            print(f"    Stem strands: {len(negative_regions['stems'])}")
             print(f"    Single strands: {len(negative_regions['single_strands'])}")
-            print(f"    Hairpins: {len(negative_regions['hairpins'])}")
-            print(f"    Loops: {len(negative_regions['loops'])}")
+            print(f"    Hairpin strands: {len(negative_regions['hairpins'])}")
+            print(f"    Loop strands: {len(negative_regions['loops'])}")
 
             # Add PDB ID to each region for tracking
             pdb_negative_regions = {"pdb_id": pdb_id, "regions": negative_regions}
@@ -184,7 +184,7 @@ def indices_overlap(indices1: List[int], indices2: Set[int]) -> bool:
 def find_negative_regions(
     structure_data: Dict[str, Any], gnra_indices: Set[int]
 ) -> Dict[str, List[Dict[str, Any]]]:
-    """Find stems, single_strands, hairpins, and loops with at least 8 nucleotides that don't overlap with GNRA motifs."""
+    """Find individual strands with at least 8 nucleotides that don't overlap with GNRA motifs."""
     negative_regions: Dict[str, List[Dict[str, Any]]] = {
         "stems": [],
         "single_strands": [],
@@ -195,49 +195,69 @@ def find_negative_regions(
     # Convert 0-based GNRA indices to 1-based for comparison with bpseq indices
     gnra_indices_1based = {idx + 1 for idx in gnra_indices}
 
-    # Process stems
+    # Process stems - check each strand separately
     for stem in structure_data.get("stems", []):
-        region_indices = get_region_indices(stem)
-        if len(region_indices) >= 8 and not indices_overlap(
-            region_indices, gnra_indices_1based
-        ):
-            negative_regions["stems"].append(
-                {"region": stem, "indices": region_indices, "type": "stem"}
-            )
+        # Check strand5p
+        if "strand5p" in stem:
+            strand5p = stem["strand5p"]
+            strand_indices = list(range(strand5p["first"], strand5p["last"] + 1))
+            if len(strand_indices) >= 8 and not indices_overlap(
+                strand_indices, gnra_indices_1based
+            ):
+                negative_regions["stems"].append(
+                    {"region": strand5p, "indices": strand_indices, "type": "stem_5p"}
+                )
+        
+        # Check strand3p
+        if "strand3p" in stem:
+            strand3p = stem["strand3p"]
+            strand_indices = list(range(strand3p["first"], strand3p["last"] + 1))
+            if len(strand_indices) >= 8 and not indices_overlap(
+                strand_indices, gnra_indices_1based
+            ):
+                negative_regions["stems"].append(
+                    {"region": strand3p, "indices": strand_indices, "type": "stem_3p"}
+                )
 
     # Process single strands
     for single_strand in structure_data.get("single_strands", []):
-        region_indices = get_region_indices(single_strand)
-        if len(region_indices) >= 8 and not indices_overlap(
-            region_indices, gnra_indices_1based
-        ):
-            negative_regions["single_strands"].append(
-                {
-                    "region": single_strand,
-                    "indices": region_indices,
-                    "type": "single_strand",
-                }
-            )
+        if "strand" in single_strand:
+            strand = single_strand["strand"]
+            strand_indices = list(range(strand["first"], strand["last"] + 1))
+            if len(strand_indices) >= 8 and not indices_overlap(
+                strand_indices, gnra_indices_1based
+            ):
+                negative_regions["single_strands"].append(
+                    {
+                        "region": strand,
+                        "indices": strand_indices,
+                        "type": "single_strand",
+                    }
+                )
 
     # Process hairpins
     for hairpin in structure_data.get("hairpins", []):
-        region_indices = get_region_indices(hairpin)
-        if len(region_indices) >= 8 and not indices_overlap(
-            region_indices, gnra_indices_1based
-        ):
-            negative_regions["hairpins"].append(
-                {"region": hairpin, "indices": region_indices, "type": "hairpin"}
-            )
+        if "strand" in hairpin:
+            strand = hairpin["strand"]
+            strand_indices = list(range(strand["first"], strand["last"] + 1))
+            if len(strand_indices) >= 8 and not indices_overlap(
+                strand_indices, gnra_indices_1based
+            ):
+                negative_regions["hairpins"].append(
+                    {"region": strand, "indices": strand_indices, "type": "hairpin"}
+                )
 
-    # Process loops
+    # Process loops - check each strand separately
     for loop in structure_data.get("loops", []):
-        region_indices = get_region_indices(loop)
-        if len(region_indices) >= 8 and not indices_overlap(
-            region_indices, gnra_indices_1based
-        ):
-            negative_regions["loops"].append(
-                {"region": loop, "indices": region_indices, "type": "loop"}
-            )
+        if "strands" in loop:
+            for strand in loop["strands"]:
+                strand_indices = list(range(strand["first"], strand["last"] + 1))
+                if len(strand_indices) >= 8 and not indices_overlap(
+                    strand_indices, gnra_indices_1based
+                ):
+                    negative_regions["loops"].append(
+                        {"region": strand, "indices": strand_indices, "type": "loop"}
+                    )
 
     return negative_regions
 
@@ -319,7 +339,7 @@ def check_negative_regions_exist(filename: str = "negative_regions.json") -> boo
 
 
 def print_negative_regions_summary(negative_regions: List[Dict[str, Any]]) -> None:
-    """Print summary statistics of negative regions."""
+    """Print summary statistics of negative strands."""
     total_stems = 0
     total_single_strands = 0
     total_hairpins = 0
@@ -332,14 +352,14 @@ def print_negative_regions_summary(negative_regions: List[Dict[str, Any]]) -> No
         total_hairpins += len(regions.get("hairpins", []))
         total_loops += len(regions.get("loops", []))
 
-    print(f"\nNegative regions summary:")
+    print(f"\nNegative strands summary:")
     print(f"  Total PDB structures: {len(negative_regions)}")
-    print(f"  Total stems: {total_stems}")
+    print(f"  Total stem strands: {total_stems}")
     print(f"  Total single strands: {total_single_strands}")
-    print(f"  Total hairpins: {total_hairpins}")
-    print(f"  Total loops: {total_loops}")
+    print(f"  Total hairpin strands: {total_hairpins}")
+    print(f"  Total loop strands: {total_loops}")
     print(
-        f"  Total negative regions: {total_stems + total_single_strands + total_hairpins + total_loops}"
+        f"  Total negative strands: {total_stems + total_single_strands + total_hairpins + total_loops}"
     )
 
 
@@ -364,7 +384,7 @@ def main():
     total_motifs = sum(len(motifs) for motifs in gnra_motifs.values())
     print(f"Total number of GNRA motifs: {total_motifs}")
 
-    print("\nAnalyzing structures for negative regions...")
+    print("\nAnalyzing structures for negative strands...")
     negative_regions = process_all_pdb_files(gnra_motifs)
 
     # Save negative regions to file
