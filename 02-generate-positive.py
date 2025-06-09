@@ -26,7 +26,7 @@ def parse_mmcif_files(gnra_motifs: Dict[str, List[Dict[str, Any]]]) -> Dict[str,
         if os.path.exists(mmcif_file):
             try:
                 print(f"Parsing {mmcif_file}...")
-                with gzip.open(mmcif_file, 'rt') as f:
+                with gzip.open(mmcif_file, "rt") as f:
                     parsed_structure = parse_cif_atoms(f)
                 parsed_structures[pdb_id] = parsed_structure
                 print(f"  Successfully parsed {pdb_id}")
