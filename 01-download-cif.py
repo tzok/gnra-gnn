@@ -3,6 +3,7 @@
 Script to parse hl_3.97.json and find the GNRA motif with motif_id HL_37824.7
 """
 
+import gzip
 import json
 import os
 import urllib.request
@@ -143,7 +144,7 @@ def download_mmcif_file(pdb_id: str) -> bool:
     mmcif_dir = "mmcif_files"
     os.makedirs(mmcif_dir, exist_ok=True)
 
-    filename = f"{pdb_id.lower()}.cif.gz"
+    filename = f"{pdb_id.lower()}.cif"
     filepath = os.path.join(mmcif_dir, filename)
 
     # Check if file already exists
@@ -153,14 +154,28 @@ def download_mmcif_file(pdb_id: str) -> bool:
 
     # Construct URL with uppercase PDB ID
     url = f"http://files.rcsb.org/download/{pdb_id.upper()}.cif.gz"
+    temp_gz_filepath = filepath + ".gz"
 
     try:
-        print(f"Downloading {filepath} from {url}")
-        urllib.request.urlretrieve(url, filepath)
-        print(f"Successfully downloaded {filepath}")
+        print(f"Downloading {temp_gz_filepath} from {url}")
+        urllib.request.urlretrieve(url, temp_gz_filepath)
+        
+        # Ungzip the file
+        print(f"Uncompressing {temp_gz_filepath} to {filepath}")
+        with gzip.open(temp_gz_filepath, 'rb') as f_in:
+            with open(filepath, 'wb') as f_out:
+                f_out.write(f_in.read())
+        
+        # Remove the temporary .gz file
+        os.remove(temp_gz_filepath)
+        
+        print(f"Successfully downloaded and uncompressed {filepath}")
         return True
     except Exception as e:
         print(f"Error downloading {filepath}: {e}")
+        # Clean up temporary file if it exists
+        if os.path.exists(temp_gz_filepath):
+            os.remove(temp_gz_filepath)
         return False
 
 
