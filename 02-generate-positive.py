@@ -186,24 +186,28 @@ def process_pdb_wrapper(args):
     return pdb_id, parse_and_process_mmcif_file(pdb_id, motifs)
 
 
-def process_all_pdb_files(gnra_motifs: Dict[str, List[Dict[str, Any]]], max_workers: int = None) -> None:
+def process_all_pdb_files(
+    gnra_motifs: Dict[str, List[Dict[str, Any]]], max_workers: int = None
+) -> None:
     """Process all PDB files and their motifs in parallel."""
     successful_count = 0
     failed_count = 0
-    
+
     # Determine number of workers (default to number of CPU cores)
     if max_workers is None:
         max_workers = os.cpu_count()
-    
+
     print(f"Processing {len(gnra_motifs)} PDB files using {max_workers} workers...")
-    
+
     # Prepare arguments for parallel processing
     pdb_args = list(gnra_motifs.items())
-    
+
     with ProcessPoolExecutor(max_workers=max_workers) as executor:
         # Submit all tasks
-        future_to_pdb = {executor.submit(process_pdb_wrapper, args): args[0] for args in pdb_args}
-        
+        future_to_pdb = {
+            executor.submit(process_pdb_wrapper, args): args[0] for args in pdb_args
+        }
+
         # Process completed tasks
         for future in as_completed(future_to_pdb):
             pdb_id = future_to_pdb[future]
