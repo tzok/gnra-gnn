@@ -86,14 +86,20 @@ def find_motif_residue_indices(
         unit_ids = motif.get("unit_ids", [])
         motif_key = motif.get("motif_key", f"motif_{motif_idx}")
 
+        # Track chains for this motif
+        motif_chain_ids = set()
+
         for unit_id_dict in unit_ids:
+            chain_id = unit_id_dict.get("chain_id")
+            motif_chain_ids.add(chain_id)
+            
             # Find matching residue by comparing unit_id components
             for i, residue in enumerate(residues):
                 unit_insertion_code = unit_id_dict.get("insertion_code", "")
                 residue_insertion_code = residue.insertion_code or ""
 
                 if (
-                    residue.chain_id == unit_id_dict.get("chain_id")
+                    residue.chain_id == chain_id
                     and residue.residue_number == unit_id_dict.get("residue_number")
                     and residue_insertion_code == unit_insertion_code
                 ):
@@ -139,6 +145,7 @@ def find_motif_residue_indices(
                 "motif_key": motif_key,
                 "indices": extended_indices,
                 "residues": extended_residues,
+                "chains": motif_chain_ids,
             }
         )
 
