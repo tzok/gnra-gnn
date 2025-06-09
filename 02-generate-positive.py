@@ -35,9 +35,7 @@ def check_motifs_already_processed(pdb_id: str, motifs: List[Dict[str, Any]]) ->
     return True
 
 
-def parse_and_process_mmcif_file(
-    pdb_id: str, motifs: List[Dict[str, Any]]
-) -> bool:
+def parse_and_process_mmcif_file(pdb_id: str, motifs: List[Dict[str, Any]]) -> bool:
     """Parse mmCIF file for a PDB ID and immediately process its motifs."""
     mmcif_file = f"mmcif_files/{pdb_id}.cif.gz"
 
