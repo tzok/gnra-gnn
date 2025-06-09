@@ -103,7 +103,11 @@ def find_motif_residue_indices(
         extended_indices = [min_idx - 1] + sorted_indices + [max_idx + 1]
         extended_residues = [residues[i] for i in extended_indices]
 
-        motif_data.append({"indices": extended_indices, "residues": extended_residues})
+        motif_data.append({
+            "motif_key": motif_key,
+            "indices": extended_indices, 
+            "residues": extended_residues
+        })
 
     return motif_data
 
@@ -176,13 +180,11 @@ def process_structures_and_motifs(
         print(f"  Processed {len(motifs)} motifs")
 
         # Process valid motifs and extract CIF files
-        valid_motif_count = 0
         for i, motif_dict in enumerate(motif_data):
-            valid_motif_count += 1
-            motif_key = motifs[i].get("motif_key", f"motif_{valid_motif_count}")
+            motif_key = motif_dict["motif_key"]
             indices = motif_dict["indices"]
             print(
-                f"    Motif {valid_motif_count}: {len(indices)} residues at indices {indices}"
+                f"    Motif {i+1}: {len(indices)} residues at indices {indices}"
             )
             extract_and_save_motif(structure, indices, motif_key)
 
