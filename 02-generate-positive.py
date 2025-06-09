@@ -119,15 +119,15 @@ def extract_and_save_motif(
 
     try:
         # Get atoms for the extended residues
-        residue_atoms = []
+        all_atom_indices = []
         for idx in extended_indices:
             residue = structure.residues[idx]
-            residue_atoms.extend(residue.atoms)
+            # Use the atoms field from the residue to get atom indices
+            atom_indices = [atom.index for atom in residue.atoms]
+            all_atom_indices.extend(atom_indices)
 
-        # Create a new structure with just these atoms
-        atoms_df = structure.atoms.loc[
-            structure.atoms.index.isin([atom.index for atom in residue_atoms])
-        ]
+        # Create a new dataframe with just these atoms
+        atoms_df = structure.atoms.loc[all_atom_indices]
 
         # Write to CIF file
         with open(output_file, "w") as f:
