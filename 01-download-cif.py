@@ -101,17 +101,14 @@ def create_gnra_motifs_by_pdb(
             if pdb_id not in pdb_groups:
                 pdb_groups[pdb_id] = []
             pdb_groups[pdb_id].append(unit_id_to_dict(unit_id))
-        
+
         # Add motif entries to each PDB ID
         for pdb_id, unit_id_dicts in pdb_groups.items():
             if pdb_id not in gnra_by_pdb:
                 gnra_by_pdb[pdb_id] = []
-            
-            motif_entry = {
-                "motif_key": motif_key,
-                "unit_ids": unit_id_dicts
-            }
-            
+
+            motif_entry = {"motif_key": motif_key, "unit_ids": unit_id_dicts}
+
             gnra_by_pdb[pdb_id].append(motif_entry)
 
     return gnra_by_pdb
