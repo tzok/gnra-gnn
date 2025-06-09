@@ -245,7 +245,7 @@ def find_negative_regions(
                         "type": "stem_5p",
                     }
                 )
-                print(f"    DEBUG: Added stem_5p to negative regions")
+                print("    DEBUG: Added stem_5p to negative regions")
 
         # Check strand3p
         if "strand3p" in stem:
@@ -266,7 +266,7 @@ def find_negative_regions(
                         "type": "stem_3p",
                     }
                 )
-                print(f"    DEBUG: Added stem_3p to negative regions")
+                print("    DEBUG: Added stem_3p to negative regions")
 
     # Process single strands
     for i, single_strand in enumerate(structure_data.get("single_strands", [])):
@@ -289,7 +289,7 @@ def find_negative_regions(
                         "type": "single_strand",
                     }
                 )
-                print(f"    DEBUG: Added single_strand to negative regions")
+                print("    DEBUG: Added single_strand to negative regions")
 
     # Process hairpins
     for i, hairpin in enumerate(structure_data.get("hairpins", [])):
@@ -312,7 +312,7 @@ def find_negative_regions(
                         "type": "hairpin",
                     }
                 )
-                print(f"    DEBUG: Added hairpin to negative regions")
+                print("    DEBUG: Added hairpin to negative regions")
 
     # Process loops - check each strand separately
     for i, loop in enumerate(structure_data.get("loops", [])):
@@ -335,7 +335,7 @@ def find_negative_regions(
                             "type": "loop",
                         }
                     )
-                    print(f"    DEBUG: Added loop strand to negative regions")
+                    print("    DEBUG: Added loop strand to negative regions")
 
     return negative_regions
 
@@ -360,9 +360,10 @@ def process_all_pdb_files(
         max_workers = os.cpu_count()
 
     print(f"Processing {len(gnra_motifs)} PDB files using {max_workers} workers...")
+    print("DEBUG: Limiting to first 5 files for debugging...")
 
-    # Prepare arguments for parallel processing
-    pdb_args = list(gnra_motifs.items())
+    # Prepare arguments for parallel processing (limit to 5 for debugging)
+    pdb_args = list(gnra_motifs.items())[:5]
 
     with ProcessPoolExecutor(max_workers=max_workers) as executor:
         # Submit all tasks
