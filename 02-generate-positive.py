@@ -4,7 +4,7 @@
 import json
 import os
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import pandas as pd
 from rnapolis.parser_v2 import parse_cif_atoms, write_cif
@@ -186,7 +186,7 @@ def process_pdb_wrapper(args):
 
 
 def process_all_pdb_files(
-    gnra_motifs: Dict[str, List[Dict[str, Any]]], max_workers: int = None
+    gnra_motifs: Dict[str, List[Dict[str, Any]]], max_workers: Optional[int] = None
 ) -> None:
     """Process all PDB files and their motifs in parallel."""
     successful_count = 0
