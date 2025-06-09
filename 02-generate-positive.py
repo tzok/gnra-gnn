@@ -151,7 +151,7 @@ def extract_and_save_motif(
 ) -> bool:
     """Extract 8 residues (6 motif + 1 before + 1 after) and save as CIF file."""
     motif_key = motif_dict["motif_key"]
-    indices = motif_dict["indices"]
+    motif_dict["indices"]
     residues = motif_dict["residues"]
 
     # Create output directory
@@ -221,7 +221,7 @@ def process_all_pdb_files(
                 print(f"  Error processing {pdb_id}: {e}")
                 failed_count += 1
 
-    print(f"\nProcessing complete:")
+    print("\nProcessing complete:")
     print(f"  Successfully processed: {successful_count} PDB files")
     print(f"  Failed to process: {failed_count} PDB files")
 
