@@ -157,7 +157,7 @@ def find_motif_residue_indices(
 
 
 def get_strand_residue_indices(
-    strand: Dict[str, Any], residues: List[Residue]
+    strand: Dict[str, Any], residues: List[Residue], bpseq_index: Dict[str, Any]
 ) -> List[int]:
     """Extract 0-based residue indices from a strand using bpseq_index mapping."""
     # Early check: if strand length is less than 8, skip processing
@@ -170,8 +170,6 @@ def get_strand_residue_indices(
 
     indices: List[int] = []
 
-    # Get the bpseq_index mapping
-    bpseq_index = strand.get("bpseq_index", {})
     print(
         f"    DEBUG: Strand range {strand['first']}-{strand['last']}, bpseq_index has {len(bpseq_index)} entries"
     )
@@ -226,6 +224,10 @@ def find_negative_regions(
         "loops": [],
     }
 
+    # Get the bpseq_index mapping from the structure data
+    bpseq_index = structure_data.get("bpseq_index", {})
+    print(f"  DEBUG: Structure bpseq_index has {len(bpseq_index)} entries")
+
     print(f"  DEBUG: GNRA indices: {sorted(gnra_indices)}")
     print(
         f"  DEBUG: Structure has {len(structure_data.get('stems', []))} stems, {len(structure_data.get('single_strands', []))} single_strands, {len(structure_data.get('hairpins', []))} hairpins, {len(structure_data.get('loops', []))} loops"
@@ -240,7 +242,7 @@ def find_negative_regions(
             print(
                 f"    DEBUG: Checking strand5p {strand5p['first']}-{strand5p['last']}"
             )
-            strand_residue_indices = get_strand_residue_indices(strand5p, residues)
+            strand_residue_indices = get_strand_residue_indices(strand5p, residues, bpseq_index)
             has_overlap = indices_overlap(strand_residue_indices, gnra_indices)
             print(
                 f"    DEBUG: strand5p has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}"
@@ -261,7 +263,7 @@ def find_negative_regions(
             print(
                 f"    DEBUG: Checking strand3p {strand3p['first']}-{strand3p['last']}"
             )
-            strand_residue_indices = get_strand_residue_indices(strand3p, residues)
+            strand_residue_indices = get_strand_residue_indices(strand3p, residues, bpseq_index)
             has_overlap = indices_overlap(strand_residue_indices, gnra_indices)
             print(
                 f"    DEBUG: strand3p has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}"
@@ -284,7 +286,7 @@ def find_negative_regions(
             print(
                 f"    DEBUG: Checking single strand {strand['first']}-{strand['last']}"
             )
-            strand_residue_indices = get_strand_residue_indices(strand, residues)
+            strand_residue_indices = get_strand_residue_indices(strand, residues, bpseq_index)
             has_overlap = indices_overlap(strand_residue_indices, gnra_indices)
             print(
                 f"    DEBUG: single strand has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}"
@@ -307,7 +309,7 @@ def find_negative_regions(
             print(
                 f"    DEBUG: Checking hairpin strand {strand['first']}-{strand['last']}"
             )
-            strand_residue_indices = get_strand_residue_indices(strand, residues)
+            strand_residue_indices = get_strand_residue_indices(strand, residues, bpseq_index)
             has_overlap = indices_overlap(strand_residue_indices, gnra_indices)
             print(
                 f"    DEBUG: hairpin strand has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}"
@@ -330,7 +332,7 @@ def find_negative_regions(
                 print(
                     f"    DEBUG: Checking loop strand {j}: {strand['first']}-{strand['last']}"
                 )
-                strand_residue_indices = get_strand_residue_indices(strand, residues)
+                strand_residue_indices = get_strand_residue_indices(strand, residues, bpseq_index)
                 has_overlap = indices_overlap(strand_residue_indices, gnra_indices)
                 print(
                     f"    DEBUG: loop strand has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}"
