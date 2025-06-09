@@ -160,13 +160,13 @@ def get_strand_residue_indices(
     strand: Dict[str, Any], residues: List[Residue], bpseq_index: Dict[str, Any]
 ) -> List[int]:
     """Extract 0-based residue indices from a strand using bpseq_index mapping.
-    
+
     Accepts strands that are either:
     1. 8+ nucleotides long, OR
     2. 6 nucleotides long that can be extended to 8 by adding one before and one after
     """
     strand_length = strand["last"] - strand["first"] + 1
-    
+
     # Early check: if strand length is less than 6, skip processing
     if strand_length < 6:
         print(
@@ -210,42 +210,48 @@ def get_strand_residue_indices(
             print(f"    DEBUG: No bpseq_index entry for position {pos}")
 
     print(f"    DEBUG: Found {len(base_indices)} base residue indices for strand")
-    
+
     # If we have 8+ residues, return as is
     if len(base_indices) >= 8:
         print(f"    DEBUG: Strand has {len(base_indices)} residues (>=8), using as is")
         return base_indices
-    
+
     # If we have exactly 6 residues, try to extend to 8
     if len(base_indices) == 6:
         print(f"    DEBUG: Strand has 6 residues, attempting to extend to 8")
-        
+
         # Check if indices are consecutive
         sorted_indices = sorted(base_indices)
         is_consecutive = all(
             sorted_indices[i] + 1 == sorted_indices[i + 1] for i in range(5)
         )
-        
+
         if not is_consecutive:
-            print(f"    DEBUG: Base indices not consecutive: {sorted_indices}, cannot extend")
+            print(
+                f"    DEBUG: Base indices not consecutive: {sorted_indices}, cannot extend"
+            )
             return []
-        
+
         # Try to extend by adding one before and one after
         min_idx = min(sorted_indices)
         max_idx = max(sorted_indices)
-        
+
         # Check boundary constraints
         if min_idx == 0 or max_idx == len(residues) - 1:
-            print(f"    DEBUG: Cannot extend - boundary constraints (min_idx={min_idx}, max_idx={max_idx}, total_residues={len(residues)})")
+            print(
+                f"    DEBUG: Cannot extend - boundary constraints (min_idx={min_idx}, max_idx={max_idx}, total_residues={len(residues)})"
+            )
             return []
-        
+
         # Create extended indices
         extended_indices = [min_idx - 1] + sorted_indices + [max_idx + 1]
         print(f"    DEBUG: Extended 6-residue strand to 8 residues: {extended_indices}")
         return extended_indices
-    
+
     # For strands with 7 residues or other lengths between 6-7, skip
-    print(f"    DEBUG: Strand has {len(base_indices)} residues (not 6 or >=8), skipping")
+    print(
+        f"    DEBUG: Strand has {len(base_indices)} residues (not 6 or >=8), skipping"
+    )
     return []
 
 
