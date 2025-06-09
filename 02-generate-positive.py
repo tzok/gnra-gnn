@@ -4,8 +4,9 @@
 import gzip
 import json
 import os
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
+import pandas as pd
 from rnapolis.parser_v2 import parse_cif_atoms, write_cif
 from rnapolis.tertiary_v2 import Residue, Structure
 
@@ -115,9 +116,13 @@ def find_motif_residue_indices(
 
 
 def extract_and_save_motif(
-    structure: Structure, indices: List[int], motif_key: str
+    motif_dict: Dict[str, Any],
 ) -> bool:
     """Extract 8 residues (6 motif + 1 before + 1 after) and save as CIF file."""
+    motif_key = motif_dict["motif_key"]
+    indices = motif_dict["indices"]
+    residues = motif_dict["residues"]
+
     # Create output directory
     output_dir = "motif_cif_files"
     os.makedirs(output_dir, exist_ok=True)
@@ -128,29 +133,9 @@ def extract_and_save_motif(
         print(f"    File {output_file} already exists, skipping")
         return False
 
-    # Get the range of indices (add 1 before and 1 after)
-    min_idx = min(indices)
-    max_idx = max(indices)
-
-    # Check if we can add residues before and after
-    if min_idx == 0 or max_idx == len(structure.residues) - 1:
-        print(f"    Cannot extract 8 residues for {motif_key} (boundary constraints)")
-        return False
-
-    # Extract 8 residues: 1 before + 6 motif + 1 after
-    extended_indices = [min_idx - 1] + indices + [max_idx + 1]
-
     try:
         # Get atoms for the extended residues
-        all_atom_indices = []
-        for idx in extended_indices:
-            residue = structure.residues[idx]
-            # Use the atoms field from the residue to get atom indices
-            atom_indices = [atom.index for atom in residue.atoms]
-            all_atom_indices.extend(atom_indices)
-
-        # Create a new dataframe with just these atoms
-        atoms_df = structure.atoms.loc[all_atom_indices]
+        atoms_df = pd.concat(residue.atoms for residue in residues)
 
         # Write to CIF file
         with open(output_file, "w") as f:
@@ -172,7 +157,7 @@ def process_structures_and_motifs(
 
     for pdb_id, structure in structures.items():
         print(f"Processing {pdb_id}...")
-        residues = structure.residues
+        residues = [residue for residue in structure.residues if residue.is_nucleotide]
         motifs = gnra_motifs[pdb_id]
 
         motif_data = find_motif_residue_indices(residues, motifs)
@@ -182,11 +167,13 @@ def process_structures_and_motifs(
         print(f"  Processed {len(motifs)} motifs")
 
         # Process valid motifs and extract CIF files
-        for i, motif_dict in enumerate(motif_data):
+        for motif_dict in motif_data:
             motif_key = motif_dict["motif_key"]
             indices = motif_dict["indices"]
-            print(f"    Motif {i + 1}: {len(indices)} residues at indices {indices}")
-            extract_and_save_motif(structure, indices, motif_key)
+            print(
+                f"    Motif {motif_key}: {len(indices)} residues at indices {indices}"
+            )
+            extract_and_save_motif(motif_dict)
 
     return pdb_motif_data
 

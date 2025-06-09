@@ -1,2 +1,4 @@
 .aider*
+.venv
 mmcif_files
+motif_cif_files
