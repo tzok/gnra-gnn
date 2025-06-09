@@ -73,17 +73,18 @@ def find_motif_residue_indices(
             print(
                 f"    Warning: {motif_key} - Expected 6 residues, found {len(indices)}: {indices}"
             )
+            continue  # Skip adding this motif to motif_indices
 
         # Log when indices are not consecutive
-        elif len(indices) == 6:
-            sorted_indices = sorted(indices)
-            is_consecutive = all(
-                sorted_indices[i] + 1 == sorted_indices[i + 1] for i in range(5)
+        sorted_indices = sorted(indices)
+        is_consecutive = all(
+            sorted_indices[i] + 1 == sorted_indices[i + 1] for i in range(5)
+        )
+        if not is_consecutive:
+            print(
+                f"    Warning: {motif_key} - Residues are not consecutive: {sorted_indices}"
             )
-            if not is_consecutive:
-                print(
-                    f"    Warning: {motif_key} - Residues are not consecutive: {sorted_indices}"
-                )
+            continue  # Skip adding this motif to motif_indices
 
         motif_indices.append(indices)
 
