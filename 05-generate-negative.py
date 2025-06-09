@@ -4,7 +4,7 @@
 import json
 import os
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from typing import Any, Dict, List, Set
+from typing import Any, Dict, List, Optional, Set
 
 from rnapolis.parser_v2 import parse_cif_atoms
 from rnapolis.tertiary_v2 import Residue, Structure
@@ -164,6 +164,7 @@ def get_strand_residue_indices(
 
     # Get the bpseq_index mapping
     bpseq_index = strand.get("bpseq_index", {})
+    print(f"    DEBUG: Strand range {strand['first']}-{strand['last']}, bpseq_index has {len(bpseq_index)} entries")
 
     # Convert string keys to integers and get all residue indices for this strand
     for pos in range(strand["first"], strand["last"] + 1):
@@ -175,6 +176,7 @@ def get_strand_residue_indices(
             auth_icode = residue_obj.get("auth_ins_code", "")
 
             # Find matching residue by comparing auth values
+            found_match = False
             for i, residue in enumerate(residues):
                 residue_insertion_code = residue.insertion_code or ""
 
@@ -184,8 +186,15 @@ def get_strand_residue_indices(
                     and residue_insertion_code == auth_icode
                 ):
                     indices.append(i)
+                    found_match = True
                     break
+            
+            if not found_match:
+                print(f"    DEBUG: No match found for pos {pos}: auth_chain={auth_chain}, auth_number={auth_number}, auth_icode='{auth_icode}'")
+        else:
+            print(f"    DEBUG: No bpseq_index entry for position {pos}")
 
+    print(f"    DEBUG: Found {len(indices)} residue indices for strand")
     return indices
 
 
@@ -205,15 +214,20 @@ def find_negative_regions(
         "loops": [],
     }
 
+    print(f"  DEBUG: GNRA indices: {sorted(gnra_indices)}")
+    print(f"  DEBUG: Structure has {len(structure_data.get('stems', []))} stems, {len(structure_data.get('single_strands', []))} single_strands, {len(structure_data.get('hairpins', []))} hairpins, {len(structure_data.get('loops', []))} loops")
+
     # Process stems - check each strand separately
-    for stem in structure_data.get("stems", []):
+    for i, stem in enumerate(structure_data.get("stems", [])):
+        print(f"  DEBUG: Processing stem {i}")
         # Check strand5p
         if "strand5p" in stem:
             strand5p = stem["strand5p"]
+            print(f"    DEBUG: Checking strand5p {strand5p['first']}-{strand5p['last']}")
             strand_residue_indices = get_strand_residue_indices(strand5p, residues)
-            if len(strand_residue_indices) >= 8 and not indices_overlap(
-                strand_residue_indices, gnra_indices
-            ):
+            has_overlap = indices_overlap(strand_residue_indices, gnra_indices)
+            print(f"    DEBUG: strand5p has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}")
+            if len(strand_residue_indices) >= 8 and not has_overlap:
                 negative_regions["stems"].append(
                     {
                         "region": strand5p,
@@ -221,14 +235,16 @@ def find_negative_regions(
                         "type": "stem_5p",
                     }
                 )
+                print(f"    DEBUG: Added stem_5p to negative regions")
 
         # Check strand3p
         if "strand3p" in stem:
             strand3p = stem["strand3p"]
+            print(f"    DEBUG: Checking strand3p {strand3p['first']}-{strand3p['last']}")
             strand_residue_indices = get_strand_residue_indices(strand3p, residues)
-            if len(strand_residue_indices) >= 8 and not indices_overlap(
-                strand_residue_indices, gnra_indices
-            ):
+            has_overlap = indices_overlap(strand_residue_indices, gnra_indices)
+            print(f"    DEBUG: strand3p has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}")
+            if len(strand_residue_indices) >= 8 and not has_overlap:
                 negative_regions["stems"].append(
                     {
                         "region": strand3p,
@@ -236,15 +252,18 @@ def find_negative_regions(
                         "type": "stem_3p",
                     }
                 )
+                print(f"    DEBUG: Added stem_3p to negative regions")
 
     # Process single strands
-    for single_strand in structure_data.get("single_strands", []):
+    for i, single_strand in enumerate(structure_data.get("single_strands", [])):
+        print(f"  DEBUG: Processing single_strand {i}")
         if "strand" in single_strand:
             strand = single_strand["strand"]
+            print(f"    DEBUG: Checking single strand {strand['first']}-{strand['last']}")
             strand_residue_indices = get_strand_residue_indices(strand, residues)
-            if len(strand_residue_indices) >= 8 and not indices_overlap(
-                strand_residue_indices, gnra_indices
-            ):
+            has_overlap = indices_overlap(strand_residue_indices, gnra_indices)
+            print(f"    DEBUG: single strand has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}")
+            if len(strand_residue_indices) >= 8 and not has_overlap:
                 negative_regions["single_strands"].append(
                     {
                         "region": strand,
@@ -252,15 +271,18 @@ def find_negative_regions(
                         "type": "single_strand",
                     }
                 )
+                print(f"    DEBUG: Added single_strand to negative regions")
 
     # Process hairpins
-    for hairpin in structure_data.get("hairpins", []):
+    for i, hairpin in enumerate(structure_data.get("hairpins", [])):
+        print(f"  DEBUG: Processing hairpin {i}")
         if "strand" in hairpin:
             strand = hairpin["strand"]
+            print(f"    DEBUG: Checking hairpin strand {strand['first']}-{strand['last']}")
             strand_residue_indices = get_strand_residue_indices(strand, residues)
-            if len(strand_residue_indices) >= 8 and not indices_overlap(
-                strand_residue_indices, gnra_indices
-            ):
+            has_overlap = indices_overlap(strand_residue_indices, gnra_indices)
+            print(f"    DEBUG: hairpin strand has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}")
+            if len(strand_residue_indices) >= 8 and not has_overlap:
                 negative_regions["hairpins"].append(
                     {
                         "region": strand,
@@ -268,15 +290,18 @@ def find_negative_regions(
                         "type": "hairpin",
                     }
                 )
+                print(f"    DEBUG: Added hairpin to negative regions")
 
     # Process loops - check each strand separately
-    for loop in structure_data.get("loops", []):
+    for i, loop in enumerate(structure_data.get("loops", [])):
+        print(f"  DEBUG: Processing loop {i}")
         if "strands" in loop:
-            for strand in loop["strands"]:
+            for j, strand in enumerate(loop["strands"]):
+                print(f"    DEBUG: Checking loop strand {j}: {strand['first']}-{strand['last']}")
                 strand_residue_indices = get_strand_residue_indices(strand, residues)
-                if len(strand_residue_indices) >= 8 and not indices_overlap(
-                    strand_residue_indices, gnra_indices
-                ):
+                has_overlap = indices_overlap(strand_residue_indices, gnra_indices)
+                print(f"    DEBUG: loop strand has {len(strand_residue_indices)} residues, overlap with GNRA: {has_overlap}")
+                if len(strand_residue_indices) >= 8 and not has_overlap:
                     negative_regions["loops"].append(
                         {
                             "region": strand,
@@ -284,6 +309,7 @@ def find_negative_regions(
                             "type": "loop",
                         }
                     )
+                    print(f"    DEBUG: Added loop strand to negative regions")
 
     return negative_regions
 
@@ -296,7 +322,7 @@ def process_pdb_wrapper(args):
 
 
 def process_all_pdb_files(
-    gnra_motifs: Dict[str, List[Dict[str, Any]]], max_workers: int = None
+    gnra_motifs: Dict[str, List[Dict[str, Any]]], max_workers: Optional[int] = None
 ) -> List[Dict[str, Any]]:
     """Process all PDB files and their motifs in parallel."""
     successful_count = 0
@@ -378,7 +404,7 @@ def print_negative_regions_summary(negative_regions: List[Dict[str, Any]]) -> No
         total_hairpins += len(regions.get("hairpins", []))
         total_loops += len(regions.get("loops", []))
 
-    print(f"\nNegative strands summary:")
+    print("\nNegative strands summary:")
     print(f"  Total PDB structures: {len(negative_regions)}")
     print(f"  Total stem strands: {total_stems}")
     print(f"  Total single strands: {total_single_strands}")
