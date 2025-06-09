@@ -157,16 +157,16 @@ def find_motif_residue_indices(
 def get_strand_residue_indices(strand: Dict[str, Any]) -> List[int]:
     """Extract 0-based residue indices from a strand using bpseq_index mapping."""
     indices: List[int] = []
-    
+
     # Get the bpseq_index mapping
     bpseq_index = strand.get("bpseq_index", {})
-    
+
     # Convert string keys to integers and get all residue indices for this strand
     for pos in range(strand["first"], strand["last"] + 1):
         residue_idx = bpseq_index.get(str(pos))
         if residue_idx is not None:
             indices.append(residue_idx)
-    
+
     return indices
 
 
@@ -196,7 +196,11 @@ def find_negative_regions(
                 strand_residue_indices, gnra_indices
             ):
                 negative_regions["stems"].append(
-                    {"region": strand5p, "indices": strand_residue_indices, "type": "stem_5p"}
+                    {
+                        "region": strand5p,
+                        "indices": strand_residue_indices,
+                        "type": "stem_5p",
+                    }
                 )
 
         # Check strand3p
@@ -207,7 +211,11 @@ def find_negative_regions(
                 strand_residue_indices, gnra_indices
             ):
                 negative_regions["stems"].append(
-                    {"region": strand3p, "indices": strand_residue_indices, "type": "stem_3p"}
+                    {
+                        "region": strand3p,
+                        "indices": strand_residue_indices,
+                        "type": "stem_3p",
+                    }
                 )
 
     # Process single strands
@@ -235,7 +243,11 @@ def find_negative_regions(
                 strand_residue_indices, gnra_indices
             ):
                 negative_regions["hairpins"].append(
-                    {"region": strand, "indices": strand_residue_indices, "type": "hairpin"}
+                    {
+                        "region": strand,
+                        "indices": strand_residue_indices,
+                        "type": "hairpin",
+                    }
                 )
 
     # Process loops - check each strand separately
@@ -247,7 +259,11 @@ def find_negative_regions(
                     strand_residue_indices, gnra_indices
                 ):
                     negative_regions["loops"].append(
-                        {"region": strand, "indices": strand_residue_indices, "type": "loop"}
+                        {
+                            "region": strand,
+                            "indices": strand_residue_indices,
+                            "type": "loop",
+                        }
                     )
 
     return negative_regions
