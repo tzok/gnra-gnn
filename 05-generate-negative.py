@@ -207,7 +207,7 @@ def find_negative_regions(
                 negative_regions["stems"].append(
                     {"region": strand5p, "indices": strand_indices, "type": "stem_5p"}
                 )
-        
+
         # Check strand3p
         if "strand3p" in stem:
             strand3p = stem["strand3p"]
