@@ -57,7 +57,7 @@ def find_motif_residue_indices(
             for i, residue in enumerate(residues):
                 if (
                     residue.chain_id == unit_id_dict.get("chain_id")
-                    and residue.number == unit_id_dict.get("residue_number")
+                    and residue.residue_number == unit_id_dict.get("residue_number")
                     and residue.insertion_code == unit_id_dict.get("insertion_code", "")
                 ):
                     indices.append(i)
