@@ -19,6 +19,22 @@ def load_gnra_motifs(
         return json.load(f)
 
 
+def check_motifs_already_processed(pdb_id: str, motifs: List[Dict[str, Any]]) -> bool:
+    """Check if all motifs for a PDB ID are already processed (CIF files exist)."""
+    output_dir = "motif_cif_files"
+    
+    if not os.path.exists(output_dir):
+        return False
+    
+    for motif_idx, motif in enumerate(motifs):
+        motif_key = motif.get("motif_key", f"motif_{motif_idx}")
+        output_file = os.path.join(output_dir, f"{motif_key}.cif")
+        if not os.path.exists(output_file):
+            return False
+    
+    return True
+
+
 def parse_mmcif_files(
     gnra_motifs: Dict[str, List[Dict[str, Any]]],
 ) -> Dict[str, Structure]:
@@ -188,8 +204,26 @@ def main():
     total_motifs = sum(len(motifs) for motifs in gnra_motifs.values())
     print(f"Total number of GNRA motifs: {total_motifs}")
 
-    # TODO
-    gnra_motifs = dict(list(gnra_motifs.items())[:5])  # Limit to first 5 for testing
+    # Filter out PDB IDs that are already fully processed
+    print("\nChecking for already processed motifs...")
+    filtered_gnra_motifs = {}
+    skipped_count = 0
+    
+    for pdb_id, motifs in gnra_motifs.items():
+        if check_motifs_already_processed(pdb_id, motifs):
+            print(f"  Skipping {pdb_id} - all {len(motifs)} motifs already processed")
+            skipped_count += 1
+        else:
+            filtered_gnra_motifs[pdb_id] = motifs
+    
+    print(f"Skipped {skipped_count} PDB structures that are already fully processed")
+    print(f"Will process {len(filtered_gnra_motifs)} PDB structures")
+    
+    if not filtered_gnra_motifs:
+        print("All motifs are already processed. Nothing to do.")
+        return
+
+    gnra_motifs = filtered_gnra_motifs
 
     print("\nParsing mmCIF files...")
     structures = parse_mmcif_files(gnra_motifs)
