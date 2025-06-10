@@ -5,6 +5,7 @@ import math
 import os
 from pathlib import Path
 from typing import List, Tuple
+from itertools import combinations
 
 import numpy as np
 import pandas as pd
@@ -115,6 +116,52 @@ def calculate_torsion_angle(
     torsion_angle = math.atan2(sin_angle, cos_angle)
 
     return torsion_angle
+
+
+def calculate_geometric_features(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Calculate all geometric features from a dataframe with exactly 8 C1' atoms.
+    
+    Args:
+        df: DataFrame with 8 rows containing C1' atoms with coordinates
+        
+    Returns:
+        Single-row DataFrame with all geometric features:
+        - source_file: original filename
+        - d{i}{j}: distances between atoms i and j
+        - a{i}{j}{k}: planar angles for triplets i,j,k (angle at j)
+        - t{i}{j}{k}{l}: torsion angles for quadruplets i,j,k,l
+    """
+    if len(df) != 8:
+        raise ValueError(f"Expected exactly 8 atoms, got {len(df)}")
+    
+    # Extract coordinates and source file
+    coords = []
+    for _, row in df.iterrows():
+        coords.append((row['Cartn_x'], row['Cartn_y'], row['Cartn_z']))
+    
+    source_file = df['source_file'].iloc[0]
+    
+    # Initialize result dictionary
+    result = {'source_file': source_file}
+    
+    # Calculate all pairwise distances (28 pairs for 8 atoms)
+    for i, j in combinations(range(8), 2):
+        distance = calculate_distance(coords[i], coords[j])
+        result[f'd{i}{j}'] = distance
+    
+    # Calculate all planar angles (56 triplets for 8 atoms)
+    for i, j, k in combinations(range(8), 3):
+        angle = calculate_planar_angle(coords[i], coords[j], coords[k])
+        result[f'a{i}{j}{k}'] = angle
+    
+    # Calculate all torsion angles (70 quadruplets for 8 atoms)
+    for i, j, k, l in combinations(range(8), 4):
+        torsion = calculate_torsion_angle(coords[i], coords[j], coords[k], coords[l])
+        result[f't{i}{j}{k}{l}'] = torsion
+    
+    # Return as single-row DataFrame
+    return pd.DataFrame([result])
 
 
 def process_cif_files_for_c1_prime(directory: str) -> List[pd.DataFrame]:
