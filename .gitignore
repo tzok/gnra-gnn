@@ -1,4 +1,6 @@
 .aider*
 .venv
+json_files
 mmcif_files
 motif_cif_files
+negative_cif_files

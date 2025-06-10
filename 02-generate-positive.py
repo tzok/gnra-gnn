@@ -1,11 +1,10 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import gzip
 import json
 import os
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import pandas as pd
 from rnapolis.parser_v2 import parse_cif_atoms, write_cif
@@ -38,7 +37,7 @@ def check_motifs_already_processed(pdb_id: str, motifs: List[Dict[str, Any]]) ->
 
 def parse_and_process_mmcif_file(pdb_id: str, motifs: List[Dict[str, Any]]) -> bool:
     """Parse mmCIF file for a PDB ID and immediately process its motifs."""
-    mmcif_file = f"mmcif_files/{pdb_id}.cif.gz"
+    mmcif_file = f"mmcif_files/{pdb_id}.cif"
 
     if not os.path.exists(mmcif_file):
         print(f"  Warning: {mmcif_file} not found")
@@ -46,7 +45,7 @@ def parse_and_process_mmcif_file(pdb_id: str, motifs: List[Dict[str, Any]]) -> b
 
     try:
         print(f"Parsing {mmcif_file}...")
-        with gzip.open(mmcif_file, "rt") as f:
+        with open(mmcif_file, "r") as f:
             atoms_df = parse_cif_atoms(f)
         structure = Structure(atoms_df)
         print(f"  Successfully parsed {pdb_id}")
@@ -87,14 +86,20 @@ def find_motif_residue_indices(
         unit_ids = motif.get("unit_ids", [])
         motif_key = motif.get("motif_key", f"motif_{motif_idx}")
 
+        # Track chains for this motif
+        motif_chain_ids = set()
+
         for unit_id_dict in unit_ids:
+            chain_id = unit_id_dict.get("chain_id")
+            motif_chain_ids.add(chain_id)
+
             # Find matching residue by comparing unit_id components
             for i, residue in enumerate(residues):
                 unit_insertion_code = unit_id_dict.get("insertion_code", "")
                 residue_insertion_code = residue.insertion_code or ""
 
                 if (
-                    residue.chain_id == unit_id_dict.get("chain_id")
+                    residue.chain_id == chain_id
                     and residue.residue_number == unit_id_dict.get("residue_number")
                     and residue_insertion_code == unit_insertion_code
                 ):
@@ -131,6 +136,20 @@ def find_motif_residue_indices(
             )
             continue  # Skip adding this motif to motif_data
 
+        # Check if extended residues are from the same chain as the motif
+        before_residue = residues[min_idx - 1]
+        after_residue = residues[max_idx + 1]
+        motif_chain = residues[sorted_indices[0]].chain_id
+
+        if (
+            before_residue.chain_id != motif_chain
+            or after_residue.chain_id != motif_chain
+        ):
+            print(
+                f"    Warning: {motif_key} - Cannot extend to 8 residues (chain mismatch: motif={motif_chain}, before={before_residue.chain_id}, after={after_residue.chain_id})"
+            )
+            continue  # Skip adding this motif to motif_data
+
         # Create extended indices and residues
         extended_indices = [min_idx - 1] + sorted_indices + [max_idx + 1]
         extended_residues = [residues[i] for i in extended_indices]
@@ -140,6 +159,7 @@ def find_motif_residue_indices(
                 "motif_key": motif_key,
                 "indices": extended_indices,
                 "residues": extended_residues,
+                "chains": motif_chain_ids,
             }
         )
 
@@ -187,7 +207,7 @@ def process_pdb_wrapper(args):
 
 
 def process_all_pdb_files(
-    gnra_motifs: Dict[str, List[Dict[str, Any]]], max_workers: int = None
+    gnra_motifs: Dict[str, List[Dict[str, Any]]], max_workers: Optional[int] = None
 ) -> None:
     """Process all PDB files and their motifs in parallel."""
     successful_count = 0
