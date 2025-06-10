@@ -1,3 +1,4 @@
 git+https://github.com/tzok/cli2rest-bio
 rnapolis==0.9.1
 scikit-learn==1.7.0
+tensorflow==2.19.0
