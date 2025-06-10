@@ -68,18 +68,24 @@ classifiers = {
     "SVM": SVC(random_state=42),
 }
 
+
 # Create neural network model
 def create_neural_network(input_dim):
-    model = keras.Sequential([
-        keras.layers.Dense(50, activation="relu", input_shape=(input_dim,), name="input_layer"),
-        keras.layers.Dropout(rate=0.5),
-        keras.layers.Dense(32, activation="relu", name="hidden_layer_1"),
-        keras.layers.Dense(16, activation="relu", name="hidden_layer_2"),
-        keras.layers.Dense(1, activation='sigmoid', name="output_layer"),
-    ])
-    
-    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    model = keras.Sequential(
+        [
+            keras.layers.Dense(
+                50, activation="relu", input_shape=(input_dim,), name="input_layer"
+            ),
+            keras.layers.Dropout(rate=0.5),
+            keras.layers.Dense(32, activation="relu", name="hidden_layer_1"),
+            keras.layers.Dense(16, activation="relu", name="hidden_layer_2"),
+            keras.layers.Dense(1, activation="sigmoid", name="output_layer"),
+        ]
+    )
+
+    model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
     return model
+
 
 # Train and evaluate each classifier
 results = {}
@@ -129,22 +135,18 @@ nn_model = create_neural_network(X_train_scaled.shape[1])
 
 # Set up checkpoint callback
 checkpoint = keras.callbacks.ModelCheckpoint(
-    'best_model_gnra', 
-    save_best_only=True, 
-    monitor='loss', 
-    mode='min', 
-    verbose=0
+    "best_model_gnra", save_best_only=True, monitor="loss", mode="min", verbose=0
 )
 
 # Train the model
 history = nn_model.fit(
-    X_train_scaled, 
-    y_train, 
-    epochs=50, 
+    X_train_scaled,
+    y_train,
+    epochs=50,
     batch_size=32,
     validation_split=0.2,
     callbacks=[checkpoint],
-    verbose=0
+    verbose=0,
 )
 
 # Make predictions
