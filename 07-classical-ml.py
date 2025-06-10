@@ -82,6 +82,20 @@ for name, classifier in classifiers.items():
     print(classification_report(y_test, y_pred))
     print("\nConfusion Matrix:")
     print(confusion_matrix(y_test, y_pred))
+    
+    # Find misclassified instances
+    misclassified_mask = y_test != y_pred
+    misclassified_indices = y_test[misclassified_mask].index
+    
+    if len(misclassified_indices) > 0:
+        print(f"\nMisclassified instances ({len(misclassified_indices)} total):")
+        for idx in misclassified_indices:
+            true_label = y_test.loc[idx]
+            pred_label = y_pred[y_test.index.get_loc(idx)]
+            source_file = df.loc[idx, 'source_file']
+            print(f"  Index {idx}: {source_file} - True: {true_label}, Predicted: {pred_label}")
+    else:
+        print("\nNo misclassified instances!")
 
 # Summary of results
 print(f"\n{'=' * 50}")
