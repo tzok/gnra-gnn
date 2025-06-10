@@ -11,103 +11,109 @@ import pandas as pd
 from rnapolis.parser_v2 import parse_cif_atoms
 
 
-def calculate_distance(p1: Tuple[float, float, float], p2: Tuple[float, float, float]) -> float:
+def calculate_distance(
+    p1: Tuple[float, float, float], p2: Tuple[float, float, float]
+) -> float:
     """
     Calculate Euclidean distance between two 3D points.
-    
+
     Args:
         p1: First point as (x, y, z) tuple
         p2: Second point as (x, y, z) tuple
-        
+
     Returns:
         Distance between the two points
     """
-    return math.sqrt((p2[0] - p1[0])**2 + (p2[1] - p1[1])**2 + (p2[2] - p1[2])**2)
+    return math.sqrt((p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2 + (p2[2] - p1[2]) ** 2)
 
 
-def calculate_planar_angle(p1: Tuple[float, float, float], 
-                          p2: Tuple[float, float, float], 
-                          p3: Tuple[float, float, float]) -> float:
+def calculate_planar_angle(
+    p1: Tuple[float, float, float],
+    p2: Tuple[float, float, float],
+    p3: Tuple[float, float, float],
+) -> float:
     """
     Calculate planar angle between three points (angle at p2).
-    
+
     Args:
         p1: First point as (x, y, z) tuple
-        p2: Vertex point as (x, y, z) tuple  
+        p2: Vertex point as (x, y, z) tuple
         p3: Third point as (x, y, z) tuple
-        
+
     Returns:
         Angle in degrees (0-180)
     """
     # Convert to numpy arrays for easier vector operations
     v1 = np.array(p1) - np.array(p2)  # Vector from p2 to p1
     v2 = np.array(p3) - np.array(p2)  # Vector from p2 to p3
-    
+
     # Calculate dot product and magnitudes
     dot_product = np.dot(v1, v2)
     magnitude_v1 = np.linalg.norm(v1)
     magnitude_v2 = np.linalg.norm(v2)
-    
+
     # Avoid division by zero
     if magnitude_v1 == 0 or magnitude_v2 == 0:
         return 0.0
-    
+
     # Calculate cosine of angle
     cos_angle = dot_product / (magnitude_v1 * magnitude_v2)
-    
+
     # Clamp to valid range for arccos to avoid numerical errors
     cos_angle = np.clip(cos_angle, -1.0, 1.0)
-    
+
     # Return angle in degrees
     return math.degrees(math.acos(cos_angle))
 
 
-def calculate_torsion_angle(p1: Tuple[float, float, float],
-                           p2: Tuple[float, float, float], 
-                           p3: Tuple[float, float, float],
-                           p4: Tuple[float, float, float]) -> float:
+def calculate_torsion_angle(
+    p1: Tuple[float, float, float],
+    p2: Tuple[float, float, float],
+    p3: Tuple[float, float, float],
+    p4: Tuple[float, float, float],
+) -> float:
     """
     Calculate torsion (dihedral) angle between four points.
-    
+
     Args:
         p1: First point as (x, y, z) tuple
         p2: Second point as (x, y, z) tuple
         p3: Third point as (x, y, z) tuple
         p4: Fourth point as (x, y, z) tuple
-        
+
     Returns:
         Torsion angle in degrees (-180 to 180)
     """
     # Convert to numpy arrays
     p1, p2, p3, p4 = map(np.array, [p1, p2, p3, p4])
-    
+
     # Calculate vectors
     v1 = p2 - p1
     v2 = p3 - p2
     v3 = p4 - p3
-    
+
     # Calculate normal vectors to the planes
     n1 = np.cross(v1, v2)
     n2 = np.cross(v2, v3)
-    
+
     # Normalize the normal vectors
     n1_norm = np.linalg.norm(n1)
     n2_norm = np.linalg.norm(n2)
-    
+
     # Avoid division by zero
     if n1_norm == 0 or n2_norm == 0:
         return 0.0
-    
+
     n1 = n1 / n1_norm
     n2 = n2 / n2_norm
-    
+
     # Calculate the torsion angle
     cos_angle = np.dot(n1, n2)
     sin_angle = np.dot(np.cross(n1, n2), v2 / np.linalg.norm(v2))
-    
+
     # Use atan2 to get the correct sign and full range
     torsion_angle = math.degrees(math.atan2(sin_angle, cos_angle))
-    
+
     return torsion_angle
 
 
