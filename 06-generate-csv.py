@@ -155,14 +155,18 @@ def calculate_geometric_features(df: pd.DataFrame) -> pd.DataFrame:
 
     # Calculate all planar angles (56 triplets for 8 atoms)
     for i, j, k in combinations(range(8), 3):
-        angle, sin_angle, cos_angle = calculate_planar_angle(coords[i], coords[j], coords[k])
+        angle, sin_angle, cos_angle = calculate_planar_angle(
+            coords[i], coords[j], coords[k]
+        )
         result[f"a{i}{j}{k}"] = angle
         result[f"as{i}{j}{k}"] = sin_angle
         result[f"aa{i}{j}{k}"] = cos_angle
 
     # Calculate all torsion angles (70 quadruplets for 8 atoms)
     for i, j, k, l in combinations(range(8), 4):
-        torsion, sin_torsion, cos_torsion = calculate_torsion_angle(coords[i], coords[j], coords[k], coords[l])
+        torsion, sin_torsion, cos_torsion = calculate_torsion_angle(
+            coords[i], coords[j], coords[k], coords[l]
+        )
         result[f"t{i}{j}{k}{l}"] = torsion
         result[f"ts{i}{j}{k}{l}"] = sin_torsion
         result[f"ta{i}{j}{k}{l}"] = cos_torsion
