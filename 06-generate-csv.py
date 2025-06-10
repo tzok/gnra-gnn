@@ -32,7 +32,7 @@ def calculate_planar_angle(
     p1: Tuple[float, float, float],
     p2: Tuple[float, float, float],
     p3: Tuple[float, float, float],
-) -> float:
+) -> Tuple[float, float, float]:
     """
     Calculate planar angle between three points (angle at p2).
 
@@ -42,7 +42,7 @@ def calculate_planar_angle(
         p3: Third point as (x, y, z) tuple
 
     Returns:
-        Angle in radians (0-π)
+        Tuple of (angle_radians, sin_angle, cos_angle)
     """
     # Convert to numpy arrays for easier vector operations
     v1 = np.array(p1) - np.array(p2)  # Vector from p2 to p1
@@ -55,7 +55,7 @@ def calculate_planar_angle(
 
     # Avoid division by zero
     if magnitude_v1 == 0 or magnitude_v2 == 0:
-        return 0.0
+        return 0.0, 0.0, 1.0
 
     # Calculate cosine of angle
     cos_angle = dot_product / (magnitude_v1 * magnitude_v2)
@@ -63,8 +63,11 @@ def calculate_planar_angle(
     # Clamp to valid range for arccos to avoid numerical errors
     cos_angle = np.clip(cos_angle, -1.0, 1.0)
 
-    # Return angle in radians
-    return math.acos(cos_angle)
+    # Calculate angle and sine
+    angle = math.acos(cos_angle)
+    sin_angle = math.sin(angle)
+
+    return angle, sin_angle, cos_angle
 
 
 def calculate_torsion_angle(
@@ -72,7 +75,7 @@ def calculate_torsion_angle(
     p2: Tuple[float, float, float],
     p3: Tuple[float, float, float],
     p4: Tuple[float, float, float],
-) -> float:
+) -> Tuple[float, float, float]:
     """
     Calculate torsion (dihedral) angle between four points.
 
@@ -83,7 +86,7 @@ def calculate_torsion_angle(
         p4: Fourth point as (x, y, z) tuple
 
     Returns:
-        Torsion angle in radians (-π to π)
+        Tuple of (angle_radians, sin_angle, cos_angle)
     """
     # Convert to numpy arrays
     p1, p2, p3, p4 = map(np.array, [p1, p2, p3, p4])
@@ -103,7 +106,7 @@ def calculate_torsion_angle(
 
     # Avoid division by zero
     if n1_norm == 0 or n2_norm == 0:
-        return 0.0
+        return 0.0, 0.0, 1.0
 
     n1 = n1 / n1_norm
     n2 = n2 / n2_norm
@@ -115,7 +118,7 @@ def calculate_torsion_angle(
     # Use atan2 to get the correct sign and full range
     torsion_angle = math.atan2(sin_angle, cos_angle)
 
-    return torsion_angle
+    return torsion_angle, sin_angle, cos_angle
 
 
 def calculate_geometric_features(df: pd.DataFrame) -> pd.DataFrame:
@@ -152,17 +155,17 @@ def calculate_geometric_features(df: pd.DataFrame) -> pd.DataFrame:
 
     # Calculate all planar angles (56 triplets for 8 atoms)
     for i, j, k in combinations(range(8), 3):
-        angle = calculate_planar_angle(coords[i], coords[j], coords[k])
+        angle, sin_angle, cos_angle = calculate_planar_angle(coords[i], coords[j], coords[k])
         result[f"a{i}{j}{k}"] = angle
-        result[f"as{i}{j}{k}"] = math.sin(angle)
-        result[f"aa{i}{j}{k}"] = math.cos(angle)
+        result[f"as{i}{j}{k}"] = sin_angle
+        result[f"aa{i}{j}{k}"] = cos_angle
 
     # Calculate all torsion angles (70 quadruplets for 8 atoms)
     for i, j, k, l in combinations(range(8), 4):
-        torsion = calculate_torsion_angle(coords[i], coords[j], coords[k], coords[l])
+        torsion, sin_torsion, cos_torsion = calculate_torsion_angle(coords[i], coords[j], coords[k], coords[l])
         result[f"t{i}{j}{k}{l}"] = torsion
-        result[f"ts{i}{j}{k}{l}"] = math.sin(torsion)
-        result[f"ta{i}{j}{k}{l}"] = math.cos(torsion)
+        result[f"ts{i}{j}{k}{l}"] = sin_torsion
+        result[f"ta{i}{j}{k}{l}"] = cos_torsion
 
     # Return as single-row DataFrame
     return pd.DataFrame([result])
