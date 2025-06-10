@@ -180,7 +180,7 @@ def process_cif_files_for_c1_prime(directory: str) -> List[pd.DataFrame]:
 
     # Find all .cif files in the directory
     cif_pattern = os.path.join(directory, "*.cif")
-    cif_files = glob.glob(cif_pattern)
+    cif_files = sorted(glob.glob(cif_pattern))
 
     print(f"Found {len(cif_files)} .cif files in {directory}")
 
@@ -231,6 +231,46 @@ def process_cif_files_for_c1_prime(directory: str) -> List[pd.DataFrame]:
 
 
 if __name__ == "__main__":
-    # Example usage
-    directory = "negative_cif_files"  # Replace with actual directory path
-    dfs = process_cif_files_for_c1_prime(directory)
+    # Process positive examples (GNRA motifs)
+    print("Processing positive examples from motif_cif_files...")
+    positive_dfs = process_cif_files_for_c1_prime("motif_cif_files")
+    
+    positive_features = []
+    for df in positive_dfs:
+        if not df.empty:
+            features = calculate_geometric_features(df)
+            features["gnra"] = True
+            positive_features.append(features)
+    
+    # Process negative examples
+    print("\nProcessing negative examples from negative_cif_files...")
+    negative_dfs = process_cif_files_for_c1_prime("negative_cif_files")
+    
+    negative_features = []
+    for df in negative_dfs:
+        if not df.empty:
+            features = calculate_geometric_features(df)
+            features["gnra"] = False
+            negative_features.append(features)
+    
+    # Combine all features
+    all_features = []
+    if positive_features:
+        all_features.extend(positive_features)
+    if negative_features:
+        all_features.extend(negative_features)
+    
+    if all_features:
+        # Concatenate all feature dataframes
+        final_df = pd.concat(all_features, ignore_index=True)
+        
+        # Save to CSV
+        output_file = "geometric_features.csv"
+        final_df.to_csv(output_file, index=False)
+        
+        print(f"\nSaved {len(final_df)} samples to {output_file}")
+        print(f"Positive samples: {len(positive_features)}")
+        print(f"Negative samples: {len(negative_features)}")
+        print(f"Total features per sample: {len(final_df.columns)}")
+    else:
+        print("\nNo valid samples found to process")
