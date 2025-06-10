@@ -176,6 +176,21 @@ The pipeline generates a comprehensive comparison of different classification al
 - **Evaluation Metrics**: Accuracy, Precision, Recall, F1-Score
 - **Misclassification Analysis**: Detailed reporting of incorrectly classified instances
 
+### Current Performance Results
+
+```
+Classifier           Accuracy   Precision  Recall     F1-Score
+----------------------------------------------------------------------
+Naive Bayes          0.9934     0.9688     0.9841     0.9764
+Logistic Regression  0.9934     0.9839     0.9683     0.9760
+Neural Network       0.9934     0.9688     0.9841     0.9764
+Random Forest        0.9913     0.9683     0.9683     0.9683
+Decision Tree        0.9825     0.9365     0.9365     0.9365
+SVM                  0.9803     0.8750     1.0000     0.9333
+```
+
+The results show excellent performance across all classifiers, with Naive Bayes, Logistic Regression, and Neural Network achieving the highest accuracy of 99.34%. The SVM achieves perfect recall (100%) but with lower precision, while other methods show more balanced precision-recall trade-offs.
+
 ## Notes
 
 - The pipeline is designed to handle large datasets efficiently
