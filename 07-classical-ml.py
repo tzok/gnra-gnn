@@ -3,7 +3,6 @@
 from itertools import combinations
 
 import pandas as pd
-import tensorflow as tf
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
@@ -73,13 +72,11 @@ classifiers = {
 def create_neural_network(input_dim):
     model = keras.Sequential(
         [
-            keras.layers.Dense(
-                50, activation="relu", input_shape=(input_dim,), name="input_layer"
-            ),
+            keras.layers.Dense(50, activation="relu", input_shape=(input_dim,)),
             keras.layers.Dropout(rate=0.5),
-            keras.layers.Dense(32, activation="relu", name="hidden_layer_1"),
-            keras.layers.Dense(16, activation="relu", name="hidden_layer_2"),
-            keras.layers.Dense(1, activation="sigmoid", name="output_layer"),
+            keras.layers.Dense(32, activation="relu"),
+            keras.layers.Dense(16, activation="relu"),
+            keras.layers.Dense(1, activation="sigmoid"),
         ]
     )
 
