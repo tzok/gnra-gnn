@@ -1,8 +1,10 @@
-import os
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
 import glob
-import pandas as pd
+import os
 from pathlib import Path
-from typing import Optional
+
+import pandas as pd
 from rnapolis.parser_v2 import parse_cif_atoms
 
 
@@ -29,10 +31,11 @@ def process_cif_files_for_c1_prime(directory: str) -> pd.DataFrame:
     for cif_file in cif_files:
         try:
             # Parse the CIF file
-            atoms_df = parse_cif_atoms(cif_file)
+            with open(cif_file, "r") as fd:
+                atoms_df = parse_cif_atoms(fd)
 
             # Filter for C1' atoms only
-            c1_prime_atoms = atoms_df[atoms_df["atom_name"] == "C1'"]
+            c1_prime_atoms = atoms_df[atoms_df["auth_atom_id"] == "C1'"]
 
             # Check if we have exactly 8 C1' atoms
             if len(c1_prime_atoms) == 8:
@@ -68,7 +71,7 @@ def process_cif_files_for_c1_prime(directory: str) -> pd.DataFrame:
 
 if __name__ == "__main__":
     # Example usage
-    directory = "path/to/cif/files"  # Replace with actual directory path
+    directory = "motif_cif_files"  # Replace with actual directory path
     df = process_cif_files_for_c1_prime(directory)
 
     if not df.empty:
