@@ -5,7 +5,7 @@ from itertools import combinations
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, precision_score, recall_score, f1_score
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.preprocessing import StandardScaler
@@ -97,9 +97,17 @@ for name, classifier in classifiers.items():
     # Make predictions
     y_pred = classifier.predict(X_test)
 
-    # Calculate accuracy
+    # Calculate metrics
     accuracy = accuracy_score(y_test, y_pred)
-    results[name] = accuracy
+    precision = precision_score(y_test, y_pred)
+    recall = recall_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
+    results[name] = {
+        'accuracy': accuracy,
+        'precision': precision,
+        'recall': recall,
+        'f1': f1
+    }
 
     print(f"Accuracy: {accuracy:.4f}")
     print("\nClassification Report:")
@@ -132,7 +140,7 @@ nn_model = create_neural_network(X_train_scaled.shape[1])
 
 # Set up checkpoint callback
 checkpoint = keras.callbacks.ModelCheckpoint(
-    "best_model_gnra", save_best_only=True, monitor="loss", mode="min", verbose=0
+    "best_model_gnra.keras", save_best_only=True, monitor="loss", mode="min", verbose=0
 )
 
 # Train the model
@@ -150,9 +158,17 @@ history = nn_model.fit(
 y_pred_proba = nn_model.predict(X_test_scaled, verbose=0)
 y_pred_nn = (y_pred_proba > 0.5).astype(int).flatten()
 
-# Calculate accuracy
+# Calculate metrics
 nn_accuracy = accuracy_score(y_test, y_pred_nn)
-results["Neural Network"] = nn_accuracy
+nn_precision = precision_score(y_test, y_pred_nn)
+nn_recall = recall_score(y_test, y_pred_nn)
+nn_f1 = f1_score(y_test, y_pred_nn)
+results["Neural Network"] = {
+    'accuracy': nn_accuracy,
+    'precision': nn_precision,
+    'recall': nn_recall,
+    'f1': nn_f1
+}
 
 print(f"Accuracy: {nn_accuracy:.4f}")
 print("\nClassification Report:")
@@ -180,5 +196,7 @@ else:
 print(f"\n{'=' * 50}")
 print("SUMMARY OF RESULTS")
 print(f"{'=' * 50}")
-for name, accuracy in sorted(results.items(), key=lambda x: x[1], reverse=True):
-    print(f"{name:<20}: {accuracy:.4f}")
+print(f"{'Classifier':<20} {'Accuracy':<10} {'Precision':<10} {'Recall':<10} {'F1-Score':<10}")
+print("-" * 70)
+for name, metrics in sorted(results.items(), key=lambda x: x[1]['accuracy'], reverse=True):
+    print(f"{name:<20} {metrics['accuracy']:<10.4f} {metrics['precision']:<10.4f} {metrics['recall']:<10.4f} {metrics['f1']:<10.4f}")
