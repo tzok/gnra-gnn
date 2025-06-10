@@ -40,12 +40,12 @@ def process_cif_files_for_c1_prime(directory: str) -> pd.DataFrame:
             # Handle alternate conformations - keep only atoms with empty label_alt_id (first conformation)
             # parse_cif_atoms sets empty alt_id to None
             c1_prime_atoms = c1_prime_atoms[c1_prime_atoms["label_alt_id"].isna()]
-            
+
             # Remove duplicate C1' atoms within the same residue - keep only the first occurrence
             # Group by residue identifiers and take the first occurrence of each group
             c1_prime_atoms = c1_prime_atoms.drop_duplicates(
-                subset=["auth_asym_id", "auth_seq_id", "pdbx_PDB_ins_code"], 
-                keep="first"
+                subset=["auth_asym_id", "auth_seq_id", "pdbx_PDB_ins_code"],
+                keep="first",
             )
 
             # Check if we have exactly 8 C1' atoms
