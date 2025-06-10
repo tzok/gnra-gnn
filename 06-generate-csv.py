@@ -234,40 +234,40 @@ if __name__ == "__main__":
     # Process positive examples (GNRA motifs)
     print("Processing positive examples from motif_cif_files...")
     positive_dfs = process_cif_files_for_c1_prime("motif_cif_files")
-    
+
     positive_features = []
     for df in positive_dfs:
         if not df.empty:
             features = calculate_geometric_features(df)
             features["gnra"] = True
             positive_features.append(features)
-    
+
     # Process negative examples
     print("\nProcessing negative examples from negative_cif_files...")
     negative_dfs = process_cif_files_for_c1_prime("negative_cif_files")
-    
+
     negative_features = []
     for df in negative_dfs:
         if not df.empty:
             features = calculate_geometric_features(df)
             features["gnra"] = False
             negative_features.append(features)
-    
+
     # Combine all features
     all_features = []
     if positive_features:
         all_features.extend(positive_features)
     if negative_features:
         all_features.extend(negative_features)
-    
+
     if all_features:
         # Concatenate all feature dataframes
         final_df = pd.concat(all_features, ignore_index=True)
-        
+
         # Save to CSV
         output_file = "geometric_features.csv"
         final_df.to_csv(output_file, index=False)
-        
+
         print(f"\nSaved {len(final_df)} samples to {output_file}")
         print(f"Positive samples: {len(positive_features)}")
         print(f"Negative samples: {len(negative_features)}")
