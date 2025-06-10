@@ -64,19 +64,19 @@ classifiers = {
 results = {}
 
 for name, classifier in classifiers.items():
-    print(f"\n{'='*50}")
+    print(f"\n{'=' * 50}")
     print(f"Training {name}...")
-    
+
     # Train the classifier
     classifier.fit(X_train, y_train)
-    
+
     # Make predictions
     y_pred = classifier.predict(X_test)
-    
+
     # Calculate accuracy
     accuracy = accuracy_score(y_test, y_pred)
     results[name] = accuracy
-    
+
     print(f"Accuracy: {accuracy:.4f}")
     print(f"\nClassification Report:")
     print(classification_report(y_test, y_pred))
@@ -84,8 +84,8 @@ for name, classifier in classifiers.items():
     print(confusion_matrix(y_test, y_pred))
 
 # Summary of results
-print(f"\n{'='*50}")
+print(f"\n{'=' * 50}")
 print("SUMMARY OF RESULTS")
-print(f"{'='*50}")
+print(f"{'=' * 50}")
 for name, accuracy in sorted(results.items(), key=lambda x: x[1], reverse=True):
     print(f"{name:<20}: {accuracy:.4f}")
