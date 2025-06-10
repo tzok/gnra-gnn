@@ -41,7 +41,7 @@ def calculate_planar_angle(
         p3: Third point as (x, y, z) tuple
 
     Returns:
-        Angle in degrees (0-180)
+        Angle in radians (0-π)
     """
     # Convert to numpy arrays for easier vector operations
     v1 = np.array(p1) - np.array(p2)  # Vector from p2 to p1
@@ -62,8 +62,8 @@ def calculate_planar_angle(
     # Clamp to valid range for arccos to avoid numerical errors
     cos_angle = np.clip(cos_angle, -1.0, 1.0)
 
-    # Return angle in degrees
-    return math.degrees(math.acos(cos_angle))
+    # Return angle in radians
+    return math.acos(cos_angle)
 
 
 def calculate_torsion_angle(
@@ -82,7 +82,7 @@ def calculate_torsion_angle(
         p4: Fourth point as (x, y, z) tuple
 
     Returns:
-        Torsion angle in degrees (-180 to 180)
+        Torsion angle in radians (-π to π)
     """
     # Convert to numpy arrays
     p1, p2, p3, p4 = map(np.array, [p1, p2, p3, p4])
@@ -112,7 +112,7 @@ def calculate_torsion_angle(
     sin_angle = np.dot(np.cross(n1, n2), v2 / np.linalg.norm(v2))
 
     # Use atan2 to get the correct sign and full range
-    torsion_angle = math.degrees(math.atan2(sin_angle, cos_angle))
+    torsion_angle = math.atan2(sin_angle, cos_angle)
 
     return torsion_angle
 
