@@ -63,9 +63,9 @@ def calculate_planar_angle(
     # Clamp to valid range for arccos to avoid numerical errors
     cos_angle = np.clip(cos_angle, -1.0, 1.0)
 
-    # Calculate angle and sine
+    # Calculate angle and sine (using sqrt for better numerical stability)
     angle = math.acos(cos_angle)
-    sin_angle = math.sin(angle)
+    sin_angle = math.sqrt(1.0 - cos_angle * cos_angle)
 
     return angle, sin_angle, cos_angle
 
