@@ -36,9 +36,9 @@ def process_cif_files_for_c1_prime(directory: str) -> pd.DataFrame:
 
             # Filter for C1' atoms only
             c1_prime_atoms = atoms_df[atoms_df["auth_atom_id"] == "C1'"]
-            
+
             # Handle alternate conformations - keep only atoms with empty label_alt_id (first conformation)
-            # In mmCIF, empty alt_id is represented as "?" 
+            # In mmCIF, empty alt_id is represented as "?"
             c1_prime_atoms = c1_prime_atoms[c1_prime_atoms["label_alt_id"] == "?"]
 
             # Check if we have exactly 8 C1' atoms
