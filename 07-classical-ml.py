@@ -78,9 +78,9 @@ for name, classifier in classifiers.items():
     results[name] = accuracy
 
     print(f"Accuracy: {accuracy:.4f}")
-    print(f"\nClassification Report:")
+    print("\nClassification Report:")
     print(classification_report(y_test, y_pred))
-    print(f"\nConfusion Matrix:")
+    print("\nConfusion Matrix:")
     print(confusion_matrix(y_test, y_pred))
 
 # Summary of results
