@@ -30,10 +30,13 @@ print(f"Original dataset shape: {df.shape}")
 with open("clusters.json", "r") as f:
     clusters_data = json.load(f)
 
-# Extract representative filenames
+# Extract representative filenames and remove .cif extension
 representative_files = set()
 for cluster in clusters_data["clusters"]:
-    representative_files.add(cluster["representative"])
+    rep_file = cluster["representative"]
+    if rep_file.endswith(".cif"):
+        rep_file = rep_file[:-4]  # Remove .cif extension
+    representative_files.add(rep_file)
 
 print(f"Found {len(representative_files)} representative structures")
 
