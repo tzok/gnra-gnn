@@ -6,7 +6,14 @@ import json
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, precision_score, recall_score, f1_score
+from sklearn.metrics import (
+    accuracy_score,
+    classification_report,
+    confusion_matrix,
+    precision_score,
+    recall_score,
+    f1_score,
+)
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.preprocessing import StandardScaler
@@ -136,10 +143,10 @@ for name, classifier in classifiers.items():
     recall = recall_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred)
     results[name] = {
-        'accuracy': accuracy,
-        'precision': precision,
-        'recall': recall,
-        'f1': f1
+        "accuracy": accuracy,
+        "precision": precision,
+        "recall": recall,
+        "f1": f1,
     }
 
     print(f"Accuracy: {accuracy:.4f}")
@@ -197,10 +204,10 @@ nn_precision = precision_score(y_test, y_pred_nn)
 nn_recall = recall_score(y_test, y_pred_nn)
 nn_f1 = f1_score(y_test, y_pred_nn)
 results["Neural Network"] = {
-    'accuracy': nn_accuracy,
-    'precision': nn_precision,
-    'recall': nn_recall,
-    'f1': nn_f1
+    "accuracy": nn_accuracy,
+    "precision": nn_precision,
+    "recall": nn_recall,
+    "f1": nn_f1,
 }
 
 print(f"Accuracy: {nn_accuracy:.4f}")
@@ -229,7 +236,13 @@ else:
 print(f"\n{'=' * 50}")
 print("SUMMARY OF RESULTS")
 print(f"{'=' * 50}")
-print(f"{'Classifier':<20} {'Accuracy':<10} {'Precision':<10} {'Recall':<10} {'F1-Score':<10}")
+print(
+    f"{'Classifier':<20} {'Accuracy':<10} {'Precision':<10} {'Recall':<10} {'F1-Score':<10}"
+)
 print("-" * 70)
-for name, metrics in sorted(results.items(), key=lambda x: x[1]['accuracy'], reverse=True):
-    print(f"{name:<20} {metrics['accuracy']:<10.4f} {metrics['precision']:<10.4f} {metrics['recall']:<10.4f} {metrics['f1']:<10.4f}")
+for name, metrics in sorted(
+    results.items(), key=lambda x: x[1]["accuracy"], reverse=True
+):
+    print(
+        f"{name:<20} {metrics['accuracy']:<10.4f} {metrics['precision']:<10.4f} {metrics['recall']:<10.4f} {metrics['f1']:<10.4f}"
+    )
