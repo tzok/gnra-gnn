@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 from itertools import combinations
+import json
 
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
@@ -17,6 +18,38 @@ from tensorflow import keras
 df = pd.read_csv("geometric_features.csv")
 
 print(f"Original dataset shape: {df.shape}")
+
+# Load clusters.json to get representative structures
+with open("clusters.json", "r") as f:
+    clusters_data = json.load(f)
+
+# Extract representative filenames
+representative_files = set()
+for cluster in clusters_data["clusters"]:
+    representative_files.add(cluster["representative"])
+
+print(f"Found {len(representative_files)} representative structures")
+
+# Filter positive dataset to only contain representatives
+# Only filter positive samples (gnra == 1), keep all negative samples
+positive_mask = df["gnra"] == 1
+negative_mask = df["gnra"] == 0
+
+# For positive samples, keep only representatives
+positive_df = df[positive_mask]
+representative_mask = positive_df["source_file"].isin(representative_files)
+filtered_positive_df = positive_df[representative_mask]
+
+# Keep all negative samples
+negative_df = df[negative_mask]
+
+# Combine filtered positive and all negative samples
+df = pd.concat([filtered_positive_df, negative_df], ignore_index=True)
+
+print(f"After filtering to representatives:")
+print(f"  Positive samples: {len(filtered_positive_df)} (was {len(positive_df)})")
+print(f"  Negative samples: {len(negative_df)}")
+print(f"  Total samples: {len(df)}")
 
 # Generate column names to drop (raw angle values)
 columns_to_drop = []
