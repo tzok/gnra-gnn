@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from itertools import combinations
 import json
+import numpy as np
 
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
@@ -14,7 +15,7 @@ from sklearn.metrics import (
     recall_score,
     f1_score,
 )
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import StratifiedKFold
 from sklearn.naive_bayes import GaussianNB
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
@@ -88,18 +89,11 @@ y = df["gnra"]
 print(f"\nFeature matrix shape: {X.shape}")
 print(f"Target vector shape: {y.shape}")
 
-# Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42, stratify=y
-)
+# K-fold cross-validation setup
+n_splits = 5
+skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
 
-print(f"Training set: {X_train.shape[0]} samples")
-print(f"Test set: {X_test.shape[0]} samples")
-
-# Standardize features for neural network
-scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
+print(f"\nUsing {n_splits}-fold stratified cross-validation.")
 
 # Initialize classifiers
 classifiers = {
@@ -127,113 +121,56 @@ def create_neural_network(input_dim):
     return model
 
 
-# Train and evaluate each classifier
+# Train and evaluate each classifier using k-fold cross-validation
+cv_results = {}
+classifier_names = list(classifiers.keys()) + ["Neural Network"]
+for name in classifier_names:
+    cv_results[name] = {"accuracy": [], "precision": [], "recall": [], "f1": []}
+
+for fold, (train_index, test_index) in enumerate(skf.split(X, y)):
+    print(f"\n--- Fold {fold + 1}/{n_splits} ---")
+    X_train, X_test = X.iloc[train_index], X.iloc[test_index]
+    y_train, y_test = y.iloc[train_index], y.iloc[test_index]
+
+    # Standardize features for this fold
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
+
+    # Train and evaluate classical classifiers
+    for name, classifier in classifiers.items():
+        print(f"  Training and evaluating {name}...")
+        classifier.fit(X_train, y_train)
+        y_pred = classifier.predict(X_test)
+
+        cv_results[name]["accuracy"].append(accuracy_score(y_test, y_pred))
+        cv_results[name]["precision"].append(precision_score(y_test, y_pred))
+        cv_results[name]["recall"].append(recall_score(y_test, y_pred))
+        cv_results[name]["f1"].append(f1_score(y_test, y_pred))
+
+    # Train and evaluate neural network
+    print("  Training and evaluating Neural Network...")
+    nn_model = create_neural_network(X_train_scaled.shape[1])
+    nn_model.fit(X_train_scaled, y_train, epochs=50, batch_size=32, verbose=0)
+    y_pred_proba = nn_model.predict(X_test_scaled, verbose=0)
+    y_pred_nn = (y_pred_proba > 0.5).astype(int).flatten()
+
+    cv_results["Neural Network"]["accuracy"].append(accuracy_score(y_test, y_pred_nn))
+    cv_results["Neural Network"]["precision"].append(
+        precision_score(y_test, y_pred_nn)
+    )
+    cv_results["Neural Network"]["recall"].append(recall_score(y_test, y_pred_nn))
+    cv_results["Neural Network"]["f1"].append(f1_score(y_test, y_pred_nn))
+
+# Average results for final summary
 results = {}
-
-for name, classifier in classifiers.items():
-    print(f"\n{'=' * 50}")
-    print(f"Training {name}...")
-
-    # Train the classifier
-    classifier.fit(X_train, y_train)
-
-    # Make predictions
-    y_pred = classifier.predict(X_test)
-
-    # Calculate metrics
-    accuracy = accuracy_score(y_test, y_pred)
-    precision = precision_score(y_test, y_pred)
-    recall = recall_score(y_test, y_pred)
-    f1 = f1_score(y_test, y_pred)
+for name, metrics in cv_results.items():
     results[name] = {
-        "accuracy": accuracy,
-        "precision": precision,
-        "recall": recall,
-        "f1": f1,
+        "accuracy": np.mean(metrics["accuracy"]),
+        "precision": np.mean(metrics["precision"]),
+        "recall": np.mean(metrics["recall"]),
+        "f1": np.mean(metrics["f1"]),
     }
-
-    print(f"Accuracy: {accuracy:.4f}")
-    print("\nClassification Report:")
-    print(classification_report(y_test, y_pred))
-    print("\nConfusion Matrix:")
-    print(confusion_matrix(y_test, y_pred))
-
-    # Find misclassified instances
-    misclassified_mask = y_test != y_pred
-    misclassified_indices = y_test[misclassified_mask].index
-
-    if len(misclassified_indices) > 0:
-        print(f"\nMisclassified instances ({len(misclassified_indices)} total):")
-        for idx in misclassified_indices:
-            true_label = y_test.loc[idx]
-            pred_label = y_pred[y_test.index.get_loc(idx)]
-            source_file = df.loc[idx, "source_file"]
-            print(
-                f"  Index {idx}: {source_file} - Ground truth: {true_label}, Predicted: {pred_label}"
-            )
-    else:
-        print("\nNo misclassified instances!")
-
-# Train and evaluate neural network
-print(f"\n{'=' * 50}")
-print("Training Neural Network...")
-
-# Create and train the neural network
-nn_model = create_neural_network(X_train_scaled.shape[1])
-
-# Set up checkpoint callback
-checkpoint = keras.callbacks.ModelCheckpoint(
-    "best_model_gnra.keras", save_best_only=True, monitor="loss", mode="min", verbose=0
-)
-
-# Train the model
-history = nn_model.fit(
-    X_train_scaled,
-    y_train,
-    epochs=50,
-    batch_size=32,
-    validation_split=0.2,
-    callbacks=[checkpoint],
-    verbose=0,
-)
-
-# Make predictions
-y_pred_proba = nn_model.predict(X_test_scaled, verbose=0)
-y_pred_nn = (y_pred_proba > 0.5).astype(int).flatten()
-
-# Calculate metrics
-nn_accuracy = accuracy_score(y_test, y_pred_nn)
-nn_precision = precision_score(y_test, y_pred_nn)
-nn_recall = recall_score(y_test, y_pred_nn)
-nn_f1 = f1_score(y_test, y_pred_nn)
-results["Neural Network"] = {
-    "accuracy": nn_accuracy,
-    "precision": nn_precision,
-    "recall": nn_recall,
-    "f1": nn_f1,
-}
-
-print(f"Accuracy: {nn_accuracy:.4f}")
-print("\nClassification Report:")
-print(classification_report(y_test, y_pred_nn))
-print("\nConfusion Matrix:")
-print(confusion_matrix(y_test, y_pred_nn))
-
-# Find misclassified instances for neural network
-misclassified_mask_nn = y_test != y_pred_nn
-misclassified_indices_nn = y_test[misclassified_mask_nn].index
-
-if len(misclassified_indices_nn) > 0:
-    print(f"\nMisclassified instances ({len(misclassified_indices_nn)} total):")
-    for idx in misclassified_indices_nn:
-        true_label = y_test.loc[idx]
-        pred_label = y_pred_nn[y_test.index.get_loc(idx)]
-        source_file = df.loc[idx, "source_file"]
-        print(
-            f"  Index {idx}: {source_file} - Ground truth: {true_label}, Predicted: {pred_label}"
-        )
-else:
-    print("\nNo misclassified instances!")
 
 # Summary of results
 print(f"\n{'=' * 50}")
