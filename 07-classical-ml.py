@@ -156,9 +156,7 @@ for fold, (train_index, test_index) in enumerate(skf.split(X, y)):
     y_pred_nn = (y_pred_proba > 0.5).astype(int).flatten()
 
     cv_results["Neural Network"]["accuracy"].append(accuracy_score(y_test, y_pred_nn))
-    cv_results["Neural Network"]["precision"].append(
-        precision_score(y_test, y_pred_nn)
-    )
+    cv_results["Neural Network"]["precision"].append(precision_score(y_test, y_pred_nn))
     cv_results["Neural Network"]["recall"].append(recall_score(y_test, y_pred_nn))
     cv_results["Neural Network"]["f1"].append(f1_score(y_test, y_pred_nn))
 
