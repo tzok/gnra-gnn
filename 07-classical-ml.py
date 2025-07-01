@@ -140,8 +140,8 @@ for fold, (train_index, test_index) in enumerate(skf.split(X, y)):
     # Train and evaluate classical classifiers
     for name, classifier in classifiers.items():
         print(f"  Training and evaluating {name}...")
-        classifier.fit(X_train, y_train)
-        y_pred = classifier.predict(X_test)
+        classifier.fit(X_train_scaled, y_train)
+        y_pred = classifier.predict(X_test_scaled)
 
         cv_results[name]["accuracy"].append(accuracy_score(y_test, y_pred))
         cv_results[name]["precision"].append(precision_score(y_test, y_pred))
