@@ -835,8 +835,12 @@ print(f"Total graphs in post (fixed validation): {len(df_graph_post)}")
 
 # prepare post dataset once (shared across all folds)
 cols_post = df_graph_post.columns[:-1]
-test_dataset = df_graph_post.apply(lambda x: get_graph_hot_encoding_v3(x, cols_post), axis=1)
-test_loader = DataLoader(test_dataset, batch_size=32)
+#renamed to avoid mixup with the testing during the training process
+# test_dataset = df_graph_post.apply(lambda x: get_graph_hot_encoding_v3(x, cols_post), axis=1)
+# test_loader = DataLoader(test_dataset, batch_size=32)
+post_test_dataset = df_graph_post.apply(lambda x: get_graph_hot_encoding_v3(x, cols_post), axis=1)
+post_test_loader = DataLoader(post_test_dataset, batch_size=32)
+
 
 gnn_fold_results = []
 
@@ -950,10 +954,12 @@ for fold, (train_idx, val_idx) in enumerate(fold_splits):
     # Per-fold early stopping
     best_model_state = None
     best_model_state_by_acc = None
+    best_model_state_by_mcc = None
     best_acc = 0.0
     best_f1 = 0.0
+    best_mcc = 0.0
     no_improve_counter = 0
-    max_no_improve = 10
+    max_no_improve = 30 #10
     
     # Tracking metrics for plotting
     epoch_metrics = {
@@ -994,19 +1000,25 @@ for fold, (train_idx, val_idx) in enumerate(fold_splits):
         if test_f1 > best_f1:  # or test_mcc > best_mcc
             best_f1 = test_f1
             best_model_state = copy.deepcopy(model.state_dict())
-            no_improve_counter = 0
-        else:
-            no_improve_counter += 1
+        #     no_improve_counter = 0
+        # else:
+        #     no_improve_counter += 1
         if test_acc > best_acc:
             best_acc = test_acc
             best_model_state_by_acc = copy.deepcopy(model.state_dict())
         #     no_improve_counter = 0
         # else:
         #     no_improve_counter += 1
+        if test_mcc > best_mcc:  # or test_mcc > best_mcc
+            best_mcc = test_mcc
+            best_model_state_by_mcc = copy.deepcopy(model.state_dict())
+            no_improve_counter = 0
+        else:
+            no_improve_counter += 1
 
         print(f'Epoch: {epoch:03d}, Train Acc: {train_acc:.4f}, Test Acc: {test_acc:.4f}, Test F1: {test_f1:.4f}, Test MCC: {test_mcc:.4f}')
 
-        if no_improve_counter >= max_no_improve and epoch>190:
+        if no_improve_counter >= max_no_improve : # and epoch>190
             print("Early stopping due to no improvement")
             break
 
@@ -1019,15 +1031,35 @@ for fold, (train_idx, val_idx) in enumerate(fold_splits):
 
     # Evaluate restored model on test set to collect predictions and compute metrics
     model.eval()
-    y_true = []
-    y_pred = []
-    with torch.no_grad():
-        for data in test_loader:
-            edge_weight = data.edge_attr[:, 0]
-            out = model(data.x, data.edge_index, edge_weight, data.batch)
-            pred = out.argmax(dim=1)
-            y_true.extend(data.y.cpu().numpy().tolist())
-            y_pred.extend(pred.cpu().numpy().tolist())
+
+    # After the fold loop — evaluate best model on true holdout
+    print("\n--- Final evaluation on post (holdout) dataset ---")
+    print("\n -- model by f1 --")
+    model.load_state_dict(best_model_state)
+    final_acc, final_preds, final_labels = test(post_test_loader, return_predictions=True)
+    print(f"Post holdout Acc: {final_acc:.4f}")
+    print(f"Post holdout F1: {f1_score(final_labels, final_preds, zero_division=0):.4f}")
+    print(f"Post holdout MCC: {matthews_corrcoef(final_labels, final_preds):.4f}")
+    print("\n -- model by accuracy --")
+    model.load_state_dict(best_model_state_by_acc)
+    final_acc, final_preds, final_labels = test(post_test_loader, return_predictions=True)
+    print(f"Post holdout Acc: {final_acc:.4f}")
+    print(f"Post holdout F1: {f1_score(final_labels, final_preds, zero_division=0):.4f}")
+    print(f"Post holdout MCC: {matthews_corrcoef(final_labels, final_preds):.4f}")
+    print("\n -- model by mcc --")
+    model.load_state_dict(best_model_state_by_mcc)
+    final_acc, final_preds, final_labels = test(post_test_loader, return_predictions=True)
+    print(f"Post holdout Acc: {final_acc:.4f}")
+    print(f"Post holdout F1: {f1_score(final_labels, final_preds, zero_division=0):.4f}")
+    print(f"Post holdout MCC: {matthews_corrcoef(final_labels, final_preds):.4f}")
+y_true = []
+y_pred = []
+with torch.no_grad():
+    for data in test_loader:
+        out = model(data.x, data.edge_index, data.edge_attr, data.batch)  # full edge_attr
+        pred = out.argmax(dim=1)
+        y_true.extend(data.y.cpu().numpy().tolist())
+        y_pred.extend(pred.cpu().numpy().tolist())
 
     # Diagnostic outputs to detect collapsed predictions / class imbalance
     try:
@@ -1059,6 +1091,7 @@ for fold, (train_idx, val_idx) in enumerate(fold_splits):
     print(f"Fold {fold + 1} best Test Acc: {best_acc:.4f}")
     print(f"Fold {fold + 1} metrics: Acc={fold_acc:.4f}, F1={fold_f1:.4f}, MCC={fold_mcc:.4f}")
     gnn_fold_results.append({'accuracy': fold_acc, 'f1': fold_f1, 'mcc': fold_mcc})
+    
 # print("------------------------------------------------------")
 # display_graph_and_weights(train_dataset.iloc[0])  # Display the first graph's edge index and attributes for verification
 # print("------------------------------------------------------")
