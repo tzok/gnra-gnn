@@ -551,7 +551,26 @@ data_full['seq'] = seqs
 #CREATING THE DATAFRAME
 
 
+#dataframe for testing the complete model on an example mmcif
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<FINAL EVAL DATAFRAME>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+dftofinalevaltmp = pd.read_csv("filtered_geometric_features_to_test.csv", sep=',', index_col=0)
+seq_eval = "GGAUUUCGAUGUGCCUUGCGCCGGGAAACCACGCAAGGGAUGGUGUCAAAUUCGGCGAAACCUAAGCGCCCGCCCGGGCGUAUGGCAACGCCGAGCCAAGCUUCGGCGCCUGCGCCGAUGAAGGUGUAGAGACUAGACGGCACCCACCUAAGGCAAACGCUAUGGUGAAGGCAUAGUCCAGGGAGUGGCGAAAGUCACACAAACCGG"
+seqences_eval = []
+for i in range(0,dftofinalevaltmp.shape[0]):
+    #grab a sequence of 8 characters from seq_eval for each row in dftofinalevaltmp, starting from the first character and moving one character at a time until we have 8 characters, then add that sequence to seqences_eval list
+    seqences_eval.append(seq_eval[i:i+8])
+seqences_eval2 = []
+for i in range(1,dftofinalevaltmp.shape[0]):
+    #grab a sequence of 8 characters from seq_eval for each row in dftofinalevaltmp, starting from the first character and moving one character at a time until we have 8 characters, then add that sequence to seqences_eval list
+    seqences_eval2.append(seq_eval[i:i+6])
 
+dftofinalevaltmp['seq'] = seqences_eval
+
+dftofinaleval_X = dftofinalevaltmp.drop(columns=['is_positive'])
+dftofinaleval_Y = dftofinalevaltmp['is_positive']
+graph_dftofinaleval = dftofinalevaltmp.apply(lambda x: get_graph_hot_encoding_v3(x, dftofinalevaltmp.columns[:-1]), axis=1)
+final_eval_loader = DataLoader(graph_dftofinaleval, batch_size=32)
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<FINAL EVAL DATAFRAME>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 dftofilter = pd.read_csv("filtered_geometric_features.csv", sep=',', index_col=0)
 
@@ -1052,6 +1071,15 @@ for fold, (train_idx, val_idx) in enumerate(fold_splits):
     print(f"Post holdout Acc: {final_acc:.4f}")
     print(f"Post holdout F1: {f1_score(final_labels, final_preds, zero_division=0):.4f}")
     print(f"Post holdout MCC: {matthews_corrcoef(final_labels, final_preds):.4f}")
+
+    
+    final_acc2, final_preds2, final_labels2 = test(final_eval_loader, return_predictions=True)
+    print(f"mmcif Acc: {final_acc2:.4f}")
+    print(f"mmcif F1: {f1_score(final_labels2, final_preds2, zero_division=0):.4f}")
+    print(f"mmcif MCC: {matthews_corrcoef(final_labels2, final_preds2):.4f}")
+    print(f"real labels: {dftofinaleval_Y.values}")
+    print(f"GNN labels: {final_labels2}")
+    print(f"GNN predictions: {final_preds2}")
 y_true = []
 y_pred = []
 with torch.no_grad():

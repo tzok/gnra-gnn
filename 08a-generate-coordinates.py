@@ -380,30 +380,33 @@ def filterIncorrectFromDataset(df):
     return filtered_df
 
 if __name__ == "__main__":
-    processForSeqAndNtCords()
-
-    #read geometric_features.csv file as dataframe
+    
+    #processForSeqAndNtCords()
+    
+    # #read geometric_features.csv file as dataframe
     # geometric_features_file = "geometric_features.csv"
     
     # if not os.path.exists(geometric_features_file):
     #     print(f"File {geometric_features_file} does not exist. Please run the previous script to generate it.")
     #     exit(1)
-    #open geometric_features.csv as dataframe
+    # #open geometric_features.csv as dataframe
 
-    #remove the rows with incorrect names from the geometric_features.csv
+    # #remove the rows with incorrect names from the geometric_features.csv
     # gf = pd.read_csv(geometric_features_file)
     # gf2 =  filterIncorrectFromDataset(gf)
     # gf2.to_csv('geometric_features_filtered.csv', index=False)
 
+
+    #THIS PART IS IMPORTANT FOR GENERATING DATA FOR THE COMPLETE MODEL TO EVALUATE 
     #remove unnecesary columns from the geometric_features.csv
-    # geometric_features_file = "geometric_features_filtered.csv"
-    
-    # if not os.path.exists(geometric_features_file):
-    #     print(f"File {geometric_features_file} does not exist. Please run the previous script to generate it.")
-    #     exit(1)
-    # gf = pd.read_csv(geometric_features_file)
-    # df= filterOutIndexes(gf)
-    # df.to_csv('filtered_geometric_features.csv', index=False)
+    geometric_features_file = "geometric_features_to_test.csv"
+    filename_to_save = "filtered_geometric_features_to_test.csv"
+    if not os.path.exists(geometric_features_file):
+        print(f"File {geometric_features_file} does not exist. Please run the previous script to generate it.")
+        exit(1)
+    gf = pd.read_csv(geometric_features_file)
+    df= filterOutIndexes(gf)
+    df.to_csv(filename_to_save, index=False)
     
 
 # C:\Users\jmp\Downloads\rnative-competition-tests\gnra-gnn\08-data-extraction-GNN.py
