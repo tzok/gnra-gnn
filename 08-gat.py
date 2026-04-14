@@ -318,7 +318,8 @@ def get_graph_hot_encoding_v3(row, cols):
     num_classes = len(d)
 
     seq = row['seq'][:NUM_NODES]  # slice to first 6 nucleotides, ignore the rest
-
+    #TODONE remove after testing, replace seq with 6 G's
+    #seq = 'GGGGGG'
     # one-hot base node features: shape [6, 4]
     node_features = torch.nn.functional.one_hot(
         torch.tensor([d[n] for n in seq], dtype=torch.long),
@@ -329,7 +330,7 @@ def get_graph_hot_encoding_v3(row, cols):
     node_angle   = {i: [] for i in range(NUM_NODES)}
     node_torsion = {i: [] for i in range(NUM_NODES)}
 
-    feature_cols = [c for c in cols if c not in ('seq', 'is_positive')]
+    feature_cols = [c for c in cols if c not in ('seq', 'is_positive', 'source_file')]
 
     for col in feature_cols:
         idxs = get_all_indexes_from_string(col)
@@ -436,6 +437,18 @@ def test(loader, return_predictions=False):
     if return_predictions:
         return accuracy, np.array(all_preds), np.array(all_labels)
     return accuracy
+
+def test_proba(loader):
+    """Returns softmax probabilities instead of hard predictions."""
+    model.eval()
+    all_probs, all_labels = [], []
+    with torch.no_grad():
+        for data in loader:
+            out = model(data.x, data.edge_index, data.edge_attr, data.batch)
+            probs = torch.softmax(out, dim=1)          # shape [N, 2]
+            all_probs.extend(probs[:, 1].cpu().numpy().tolist())  # prob of class 1
+            all_labels.extend(data.y.cpu().numpy().tolist())
+    return np.array(all_probs), np.array(all_labels)
 
 def plot_model_metrics_during_training(epoch_data, model_name, fold_number=None, save_path=None):
     """
@@ -553,8 +566,9 @@ data_full['seq'] = seqs
 
 #dataframe for testing the complete model on an example mmcif
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<FINAL EVAL DATAFRAME>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-dftofinalevaltmp = pd.read_csv("filtered_geometric_features_to_test.csv", sep=',', index_col=0)
-seq_eval = "GGAUUUCGAUGUGCCUUGCGCCGGGAAACCACGCAAGGGAUGGUGUCAAAUUCGGCGAAACCUAAGCGCCCGCCCGGGCGUAUGGCAACGCCGAGCCAAGCUUCGGCGCCUGCGCCGAUGAAGGUGUAGAGACUAGACGGCACCCACCUAAGGCAAACGCUAUGGUGAAGGCAUAGUCCAGGGAGUGGCGAAAGUCACACAAACCGG"
+dftofinalevaltmp = pd.read_csv("filtered_geometric_features_to_test4.csv", sep=',', index_col=0)
+#seq_eval = "AAGGCGGCCGAAAGGCUAGACGGUGGGAGAGGGUGGUGGAAACGCCGAUGGCGAAGGCAGCCACCUGGUCCACCCGUGACGCUUUAAGGCGGCCGAAAGGCUAGACGGUGGGAGAGGGUGGUGGAAACGCCGAUGGCGAAGGCAGCCACCUGGUCCACCCGUGACGCUUU" #GGAUUUCGAUGUGCCUUGCGCCGGGAAACCACGCAAGGGAUGGUGUCAAAUUCGGCGAAACCUAAGCGCCCGCCCGGGCGUAUGGCAACGCCGAGCCAAGCUUCGGCGCCUGCGCCGAUGAAGGUGUAGAGACUAGACGGCACCCACCUAAGGCAAACGCUAUGGUGAAGGCAUAGUCCAGGGAGUGGCGAAAGUCACACAAACCGG"
+seq_eval = "GGUGACCUCCCGGGAGCGGGGGACCACUA"
 seqences_eval = []
 for i in range(0,dftofinalevaltmp.shape[0]):
     #grab a sequence of 8 characters from seq_eval for each row in dftofinalevaltmp, starting from the first character and moving one character at a time until we have 8 characters, then add that sequence to seqences_eval list
@@ -572,7 +586,7 @@ graph_dftofinaleval = dftofinalevaltmp.apply(lambda x: get_graph_hot_encoding_v3
 final_eval_loader = DataLoader(graph_dftofinaleval, batch_size=32)
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<FINAL EVAL DATAFRAME>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-dftofilter = pd.read_csv("filtered_geometric_features.csv", sep=',', index_col=0)
+dftofilter = pd.read_csv("filtered_geometric_features_bez1JID.csv", sep=',', index_col=0)
 
 num_gnra_pre_filter = dftofilter["gnra"].value_counts()
 #filter the dataframe to remove the clusters of data. 
@@ -933,6 +947,7 @@ if USE_FULL_DATASET:
 else:
     fold_splits = list(skf.split(df_graph_pre.drop(columns=['is_positive']), df_graph_pre['is_positive']))
 
+fold_index =0
 for fold, (train_idx, val_idx) in enumerate(fold_splits):
     print(f"\n--- GNN Fold {fold + 1}/{n_splits} ---")
 
@@ -1074,12 +1089,16 @@ for fold, (train_idx, val_idx) in enumerate(fold_splits):
 
     
     final_acc2, final_preds2, final_labels2 = test(final_eval_loader, return_predictions=True)
+    final_probs, final_labels_probs = test_proba(final_eval_loader)
     print(f"mmcif Acc: {final_acc2:.4f}")
     print(f"mmcif F1: {f1_score(final_labels2, final_preds2, zero_division=0):.4f}")
     print(f"mmcif MCC: {matthews_corrcoef(final_labels2, final_preds2):.4f}")
     print(f"real labels: {dftofinaleval_Y.values}")
     print(f"GNN labels: {final_labels2}")
     print(f"GNN predictions: {final_preds2}")
+    print(f"Post holdout probabilities (class 1): {np.round(final_probs, 3)}")
+    torch.save(best_model_state_by_mcc, f'model_best_mcc{fold_index}.pth')
+    fold_index += 1
 y_true = []
 y_pred = []
 with torch.no_grad():
@@ -1140,5 +1159,5 @@ print(f"  Mean MCC: {np.mean(mccs):.4f} (std: {np.std(mccs):.4f})")
 # print(cv_results["GaussianNB"]["recall"])
 # print(cv_results["GaussianNB"]["precision"])
 # print(cv_results["GaussianNB"]["f1"])
-#TODO remove redundancy 
+#TODONE remove redundancy 
 

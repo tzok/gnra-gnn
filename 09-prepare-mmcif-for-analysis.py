@@ -89,7 +89,7 @@ def process_cif_files_for_c1_prime(directory: str,filepath: str = None) -> List[
 if __name__ == "__main__":
     # Process positive examples (GNRA motifs)
     print("Processing positive examples from motif_cif_files...")
-    dfs = process_cif_files_for_c1_prime("test_cif_files")
+    dfs = process_cif_files_for_c1_prime("test_1JID")
 
     features = []
     for df in dfs:
@@ -103,7 +103,7 @@ if __name__ == "__main__":
         final_df = pd.concat(features, ignore_index=True)
 
         # Save to CSV
-        output_file = "geometric_features_to_test.csv"
+        output_file = "geometric_features_to_test4.csv"
         final_df.to_csv(output_file, index=False)
 
         print(f"\nSaved {len(final_df)} samples to {output_file}")
