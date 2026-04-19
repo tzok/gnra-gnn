@@ -3,7 +3,7 @@ import numpy as np
 import re
 import ast
 import os
-
+cma = __import__('custom-model-assessment')
 from sklearn.metrics import f1_score, matthews_corrcoef, accuracy_score
 
 from torch_geometric.data import Data
@@ -172,7 +172,8 @@ final_eval_loader = DataLoader(graph_dftofinaleval, batch_size=32)
 # Load every .pth model from "models_that_worked" and evaluate
 # ──────────────────────────────────────────────────────────────────────────────
 
-models_dir = "models_that_worked"
+models_dir = "test_models_annealing"
+#models_dir = "models_that_worked"
 
 if not os.path.isdir(models_dir):
     raise FileNotFoundError(f"Directory '{models_dir}' not found. "
@@ -206,7 +207,7 @@ for model_filename in model_files:
 
     # Soft probabilities (class 1)
     probs, _ = test_proba(model, final_eval_loader)
-
+    cmascore =cma.customAssesment1(labels, preds)
     print(f"  Accuracy : {acc:.4f}")
     print(f"  F1 Score : {f1:.4f}")
     print(f"  MCC      : {mcc:.4f}")
@@ -214,6 +215,7 @@ for model_filename in model_files:
     print(f"  Model labels     : {labels}")
     print(f"  Model predictions: {preds}")
     print(f"  Probabilities (class 1): {np.round(probs, 3)}")
+    print(f'  Custom Assessment Score: {cmascore}')
     print()
 
     all_results.append({
@@ -221,6 +223,7 @@ for model_filename in model_files:
         'accuracy': acc,
         'f1': f1,
         'mcc': mcc,
+        'cmascore': cmascore
     })
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -230,8 +233,8 @@ for model_filename in model_files:
 print(f"\n{'='*60}")
 print("SUMMARY")
 print(f"{'='*60}")
-print(f"{'Model':<40} {'Acc':>8} {'F1':>8} {'MCC':>8}")
+print(f"{'Model':<40} {'Acc':>8} {'F1':>8} {'MCC':>8} {'CMA':>8}")
 print("-" * 60)
 for r in all_results:
-    print(f"{r['model']:<40} {r['accuracy']:>8.4f} {r['f1']:>8.4f} {r['mcc']:>8.4f}")
+    print(f"{r['model']:<40} {r['accuracy']:>8.4f} {r['f1']:>8.4f} {r['mcc']:>8.4f} {r['cmascore']:>8}")
 print(f"{'='*60}")
