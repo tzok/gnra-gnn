@@ -566,19 +566,19 @@ data_full['seq'] = seqs
 
 #dataframe for testing the complete model on an example mmcif
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<FINAL EVAL DATAFRAME>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-dftofinalevaltmp = pd.read_csv("filtered_geometric_features_to_test4.csv", sep=',', index_col=0)
+dftofinalevaltmp = pd.read_csv("filtered_geometric_features_to_test8.csv", sep=',', index_col=0)
 #seq_eval = "AAGGCGGCCGAAAGGCUAGACGGUGGGAGAGGGUGGUGGAAACGCCGAUGGCGAAGGCAGCCACCUGGUCCACCCGUGACGCUUUAAGGCGGCCGAAAGGCUAGACGGUGGGAGAGGGUGGUGGAAACGCCGAUGGCGAAGGCAGCCACCUGGUCCACCCGUGACGCUUU" #GGAUUUCGAUGUGCCUUGCGCCGGGAAACCACGCAAGGGAUGGUGUCAAAUUCGGCGAAACCUAAGCGCCCGCCCGGGCGUAUGGCAACGCCGAGCCAAGCUUCGGCGCCUGCGCCGAUGAAGGUGUAGAGACUAGACGGCACCCACCUAAGGCAAACGCUAUGGUGAAGGCAUAGUCCAGGGAGUGGCGAAAGUCACACAAACCGG"
-seq_eval = "GGUGACCUCCCGGGAGCGGGGGACCACUA"
-seqences_eval = []
-for i in range(0,dftofinalevaltmp.shape[0]):
-    #grab a sequence of 8 characters from seq_eval for each row in dftofinalevaltmp, starting from the first character and moving one character at a time until we have 8 characters, then add that sequence to seqences_eval list
-    seqences_eval.append(seq_eval[i:i+8])
-seqences_eval2 = []
-for i in range(1,dftofinalevaltmp.shape[0]):
-    #grab a sequence of 8 characters from seq_eval for each row in dftofinalevaltmp, starting from the first character and moving one character at a time until we have 8 characters, then add that sequence to seqences_eval list
-    seqences_eval2.append(seq_eval[i:i+6])
+# seq_eval = "GGUGACCUCCCGGGAGCGGGGGACCACUA"
+# seqences_eval = []
+# for i in range(0,dftofinalevaltmp.shape[0]):
+#     #grab a sequence of 8 characters from seq_eval for each row in dftofinalevaltmp, starting from the first character and moving one character at a time until we have 8 characters, then add that sequence to seqences_eval list
+#     seqences_eval.append(seq_eval[i:i+8])
+# seqences_eval2 = []
+# for i in range(1,dftofinalevaltmp.shape[0]):
+#     #grab a sequence of 8 characters from seq_eval for each row in dftofinalevaltmp, starting from the first character and moving one character at a time until we have 8 characters, then add that sequence to seqences_eval list
+#     seqences_eval2.append(seq_eval[i:i+6])
 
-dftofinalevaltmp['seq'] = seqences_eval
+# dftofinalevaltmp['seq'] = seqences_eval
 
 dftofinaleval_X = dftofinalevaltmp.drop(columns=['is_positive'])
 dftofinaleval_Y = dftofinalevaltmp['is_positive']
