@@ -1109,7 +1109,7 @@ for fold, (train_idx, val_idx) in enumerate(fold_splits):
     
     final_acc2, final_preds2, final_labels2 = test(final_eval_loader, return_predictions=True)
     final_probs, final_labels_probs = test_proba(final_eval_loader)
-    cmascore = cma.customAssesment1(final_labels2, final_preds2)
+    cmascore = cma.customAssesment2(final_labels2, final_preds2)
     print(f"mmcif Acc: {final_acc2:.4f}")
     print(f"mmcif F1: {f1_score(final_labels2, final_preds2, zero_division=0):.4f}")
     print(f"mmcif MCC: {matthews_corrcoef(final_labels2, final_preds2):.4f}")

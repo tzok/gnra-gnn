@@ -158,7 +158,7 @@ def test_proba(model, loader):
 # Build the final-eval loader (copied from original)
 # ──────────────────────────────────────────────────────────────────────────────
 
-dftofinalevaltmp = pd.read_csv("filtered_geometric_features_to_test8.csv", sep=',', index_col=0)
+dftofinalevaltmp = pd.read_csv("filtered_geometric_features_to_test8a.csv", sep=',', index_col=0)
 dftofinaleval_X  = dftofinalevaltmp.drop(columns=['is_positive'])
 dftofinaleval_Y  = dftofinalevaltmp['is_positive']
 
@@ -207,7 +207,7 @@ for model_filename in model_files:
 
     # Soft probabilities (class 1)
     probs, _ = test_proba(model, final_eval_loader)
-    cmascore =cma.customAssesment1(labels, preds)
+    cmascore =cma.customAssesment2(labels, preds)
     print(f"  Accuracy : {acc:.4f}")
     print(f"  F1 Score : {f1:.4f}")
     print(f"  MCC      : {mcc:.4f}")

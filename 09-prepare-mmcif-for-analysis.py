@@ -65,7 +65,19 @@ def process_cif_files_for_c1_prime(directory: str, ids: List[List[int]] = None, 
 
             # Filter for C1' atoms only
             c1_prime_atoms = atoms_df[atoms_df["auth_atom_id"] == "C1'"]
-
+            # ── NEW: keep only standard RNA residues ──────────────────────────────────────
+            RNA_RESIDUES = {
+                # Standard
+                "A", "U", "G", "C",
+                # Legacy 3-letter codes
+                "ADE", "URA", "URI", "GUA", "CYT",
+                # Common modified RNA bases (extend as needed)
+                "PSU", "5MC", "5MU", "H2U", "M2G",
+            }
+            c1_prime_atoms = c1_prime_atoms[
+                c1_prime_atoms["label_comp_id"].isin(RNA_RESIDUES)
+            ]
+            # ─────────────────────────────────────────────────────────────────────────────
             # Remove duplicate C1' atoms within the same residue - keep only the first occurrence
             # Group by residue identifiers and take the first occurrence of each group
             c1_prime_atoms = c1_prime_atoms.drop_duplicates(
@@ -89,10 +101,33 @@ def process_cif_files_for_c1_prime(directory: str, ids: List[List[int]] = None, 
                 residue_names = group_of_8["label_comp_id"].tolist()
                 # Map 3-letter codes to 1-letter codes (RNA nucleotides)
                 three_to_one = {
-                    'A': 'A', 'U': 'U', 'G': 'G', 'C': 'C', 'T': 'T',
-                    'ADE': 'A', 'URA': 'U', 'GUA': 'G', 'CYT': 'C', 'THY': 'T',
+                    # Standard single-letter
+                    'A': 'A', 'U': 'U', 'G': 'G', 'C': 'C',
+                    # Alternate 3-letter names for standard bases
+                    'ADE': 'A', 'URA': 'U', 'URI': 'U', 'GUA': 'G', 'CYT': 'C',
+                    # Modified bases → closest standard base
+                    'PSU': 'U',  # pseudouridine
+                    '5MC': 'C',  # 5-methylcytosine
+                    '5MU': 'U',  # 5-methyluridine (ribothymidine)
+                    'H2U': 'U',  # dihydrouridine
+                    'M2G': 'G',  # N2-methylguanosine
+                    '2MG': 'G',  # 2-methylguanosine
+                    '7MG': 'G',  # 7-methylguanosine
+                    '1MA': 'A',  # 1-methyladenosine
+                    '6MA': 'A',  # N6-methyladenosine
+                    'OMG': 'G',  # 2'-O-methylguanosine
+                    'OMC': 'C',  # 2'-O-methylcytosine
+                    'OMA': 'A',  # 2'-O-methyladenosine
+                    'OMU': 'U',  # 2'-O-methyluridine
                 }
-                seq = ''.join([three_to_one.get(str(rn), rn) for rn in residue_names])
+                # Then when building seq, skip the whole window if any residue is unmapped:
+                mapped = [three_to_one.get(str(rn)) for rn in residue_names]
+                if any(m is None for m in mapped):
+                    print(f" {filename}: Skipping {i}-{i+7}, unknown residue code(s): "
+                        f"{[rn for rn in residue_names if str(rn) not in three_to_one]}")
+                    continue
+                seq = ''.join(mapped)
+                #seq = ''.join([three_to_one.get(str(rn), rn) for rn in residue_names])
                 group_of_8["seq"] = seq
 
                 all_dataframes.append(group_of_8)
@@ -332,7 +367,17 @@ def parse_and_process_mmcif_file(folder: str, pdb_id: str, motifs: List[Dict[str
             atoms_df = parse_cif_atoms(f)
         structure = Structure(atoms_df)
 
-        residues = [residue for residue in structure.residues if residue.is_nucleotide]
+        #residues = [residue for residue in structure.residues if residue.is_nucleotide]
+        
+        residues = [
+            residue for residue in structure.residues
+            if residue.is_nucleotide
+            and residue.residue_name in {
+                "A", "U", "G", "C",
+                "ADE", "URA", "URI", "GUA", "CYT",
+                "PSU", "5MC", "5MU", "H2U", "M2G",
+            }
+        ]
         # FIX: pass pdb_id so we can filter by PDB in the alignment dict
         motif_data = find_motif_residue_indices(residues, motifs, pdb_id=pdb_id)
 
