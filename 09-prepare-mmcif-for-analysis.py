@@ -439,6 +439,8 @@ def parse_and_process_mmcif_file(folder: str, pdb_id: str, motifs: List[Dict[str
 #         print(f"  Error parsing {pdb_id}: {e}")
 #         return False
 
+
+
 def parse_and_process_mmcif_files(directory: str,motifs,filepath: str = None,):
     """
     Process all *.cif files in a directory, and find motifs in them.
@@ -467,6 +469,12 @@ def parse_and_process_mmcif_files(directory: str,motifs,filepath: str = None,):
         found_motifs.append(found)
     print(f"Found motifs: {found_motifs}")
     return found_motifs
+
+
+
+#this script will take a mmcif file and parse it into a dataset containing 8 C1' atoms per row
+#to make it compatible with the gnn, 08a-generate-coordinates.py should be called on the result 
+
 
 if __name__ == "__main__":
     # Process positive examples (GNRA motifs)
@@ -499,6 +507,7 @@ if __name__ == "__main__":
         cols = [c for c in final_df.columns if c not in ('seq', 'gnra')]
         cols.extend(['seq', 'gnra'])
         final_df = final_df[cols]
+        final_df = final_df.rename(columns={"gnra": "is_positive"})
 
         # Save to CSV
         output_file = "geometric_features_to_test8.csv"
@@ -508,6 +517,3 @@ if __name__ == "__main__":
         print(f"Total features per sample: {len(final_df.columns)}")
     else:
         print("\nNo valid samples found to process")
-#Biorę mmcifa, biorę ten skrypt od Tomka, za pomocą RNApolis, 
-# generuję z niego lista Residue. Biorę hl_3.97.json i go też 
-# wrzucam do tej funkcji i dostaję listę id. (Przerobić funkcję żeby działała tak jak tu opisane)
