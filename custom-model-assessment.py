@@ -42,6 +42,7 @@ def customAssesment2(labels,preds):
     score = 0
     allToHit = 0
     allPos = 0
+    hit = 0
     for i in range(len(labels)):
         points = 0
         if preds[i] == 1:
@@ -49,10 +50,11 @@ def customAssesment2(labels,preds):
         if labels[i] == 1 and preds[i] == 1:
             points += 1
             allToHit += 1
+            hit +=1
         if labels[i] == 1 and preds[i] == 0:
             allToHit += 1
         score += points
-    print(f"custom assesment 2: {allToHit} to hit, {allPos} predicted positive")
+    print(f"custom assesment 2: \n...{allToHit} to hit, \n...{allPos} predicted positive, \n...{hit} of them correctly")
     return score
 
 def customAssesment3(labels,preds):
