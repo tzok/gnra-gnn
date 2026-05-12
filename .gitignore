@@ -1,9 +1,12 @@
-.aider*
+*.keras
+*.pkl
+.ipynb_checkpoints
 .venv
 json_files
 mmcif_files
 motif_cif_files
 negative_cif_files
+nrmsd_cache.json
 
 # Devenv
 .devenv*
@@ -16,6 +19,3 @@ devenv.local.yaml
 # pre-commit
 .pre-commit-config.yaml
 
-*.pkl
-*.keras
-nrmsd_cache.json
