@@ -1,0 +1,14 @@
+[project]
+name = "gnra-gnn"
+version = "0.1.0"
+description = "GNRA motif classification"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ipykernel",
+    "jupyter",
+    "matplotlib",
+    "pandas",
+    "rnapolis",
+    "scikit-learn",
+]
