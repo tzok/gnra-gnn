@@ -23,6 +23,11 @@ from torch_geometric.loader import DataLoader
 from torch_geometric.nn import GATv2Conv, global_mean_pool
 _GAT_AVAILABLE = True
 
+# Default number of nucleotides per window/graph. Overridable on the command
+# line with --nt-number; must match the window_size the loaded model bundle
+# was trained with (checked in load_model_bundle).
+DEFAULT_NT_NUMBER = 8
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # GAT model + inference wrapper
@@ -138,7 +143,9 @@ class GATPredictor:
         self._hp             = bundle["hp"]
         self._node_dim       = bundle["node_dim"]
         self._edge_dim       = bundle["edge_dim"]
-        self._num_nodes      = bundle.get("num_nodes", bundle.get("window_size", 8))
+        self._num_nodes      = bundle.get(
+            "num_nodes", bundle.get("window_size", DEFAULT_NT_NUMBER)
+        )
         self.feature_columns = bundle["feature_columns"]
         self.n_features_in_  = len(self.feature_columns)
         # Match the two possible positive_label types used across bundles
@@ -183,7 +190,7 @@ class GATPredictor:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Run a bundled classical or GAT model on all 8-nt windows from a structure"
+            "Run a bundled classical or GAT model on all N-nt windows from a structure"
         )
     )
     parser.add_argument("structure", type=Path, help="Path to an input .cif or .pdb")
@@ -192,6 +199,15 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         required=True,
         help="Path to a bundled pickle from classical.ipynb or gnn_rna_motif_v2.ipynb",
+    )
+    parser.add_argument(
+        "--nt-number",
+        type=int,
+        default=DEFAULT_NT_NUMBER,
+        help=(
+            "Number of nucleotides per window/graph (default: %(default)s). "
+            "Must match the window_size the loaded model bundle was trained with."
+        ),
     )
     parser.add_argument(
         "--output-csv",
@@ -234,7 +250,7 @@ def _is_gat_bundle(payload: dict) -> bool:
     return "model_state_dict" in payload and "classifier" not in payload
 
 
-def load_model_bundle(model_path: Path) -> dict[str, Any]:
+def load_model_bundle(model_path: Path, nt_number: int = DEFAULT_NT_NUMBER) -> dict[str, Any]:
     with open(model_path, "rb") as handle:
         payload = pickle.load(handle)
 
@@ -254,9 +270,11 @@ def load_model_bundle(model_path: Path) -> dict[str, Any]:
             raise ValueError(
                 f"{model_path} is missing required GAT bundle keys: {', '.join(missing)}"
             )
-        if payload["window_size"] != 8:
+        if payload["window_size"] != nt_number:
             raise ValueError(
-                f"This script only supports 8-nt windows, got window_size={payload['window_size']}"
+                f"--nt-number={nt_number} does not match this model's window_size="
+                f"{payload['window_size']}. Pass --nt-number {payload['window_size']} "
+                f"to match the bundle this model was trained with."
             )
         # Wrap in a sklearn-compatible predictor and inject as "classifier"
         payload["classifier"]     = GATPredictor(payload)
@@ -273,9 +291,11 @@ def load_model_bundle(model_path: Path) -> dict[str, Any]:
             raise ValueError(
                 f"{model_path} is missing required bundle keys: {', '.join(missing_keys)}"
             )
-        if payload["window_size"] != 8:
+        if payload["window_size"] != nt_number:
             raise ValueError(
-                f"This script only supports 8-nt windows, got window_size={payload['window_size']}"
+                f"--nt-number={nt_number} does not match this model's window_size="
+                f"{payload['window_size']}. Pass --nt-number {payload['window_size']} "
+                f"to match the bundle this model was trained with."
             )
 
     feature_columns = payload["feature_columns"]
@@ -452,23 +472,24 @@ def first_c1_prime_coordinates(
 
 def calculate_window_features(
     coords: list[tuple[float, float, float]],
+    nt_number: int = DEFAULT_NT_NUMBER,
 ) -> dict[str, float]:
-    if len(coords) != 8:
-        raise ValueError(f"Expected exactly 8 coordinates, got {len(coords)}")
+    if len(coords) != nt_number:
+        raise ValueError(f"Expected exactly {nt_number} coordinates, got {len(coords)}")
 
     result: dict[str, float] = {}
 
-    for i, j in combinations(range(8), 2):
+    for i, j in combinations(range(nt_number), 2):
         result[f"d{i}{j}"] = calculate_distance(coords[i], coords[j])
 
-    for i, j, k in combinations(range(8), 3):
+    for i, j, k in combinations(range(nt_number), 3):
         _, sin_angle, cos_angle = calculate_planar_angle(
             coords[i], coords[j], coords[k]
         )
         result[f"as{i}{j}{k}"] = sin_angle
         result[f"aa{i}{j}{k}"] = cos_angle
 
-    for i, j, k, l in combinations(range(8), 4):
+    for i, j, k, l in combinations(range(nt_number), 4):
         _, sin_torsion, cos_torsion = calculate_torsion_angle(
             coords[i], coords[j], coords[k], coords[l]
         )
@@ -526,7 +547,7 @@ def build_window_rows(
                         ),
                     }
                 )
-                feature_rows.append(calculate_window_features(coords))
+                feature_rows.append(calculate_window_features(coords, window_size))
                 global_window_index += 1
 
     return rows, pd.DataFrame(feature_rows), skipped_windows
@@ -576,7 +597,7 @@ def save_probability_plot(results_df: pd.DataFrame, output_plot: Path) -> None:
 def main() -> None:
     args = parse_args()
 
-    model_bundle = load_model_bundle(args.model)
+    model_bundle = load_model_bundle(args.model, args.nt_number)
     window_size = model_bundle["window_size"]
     feature_columns = model_bundle["feature_columns"]
     classifier = model_bundle["classifier"]

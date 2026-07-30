@@ -360,6 +360,7 @@ def positive_class_probabilities(
     return probabilities[:, positive_index]
 
 
+
 def save_probability_plot(results_df: pd.DataFrame, output_plot: Path) -> None:
     import matplotlib
 
