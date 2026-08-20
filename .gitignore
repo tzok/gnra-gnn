@@ -8,6 +8,20 @@ motif_cif_files
 negative_cif_files
 nrmsd_cache.json
 
+# Tetrad pipeline
+tetrad/motif_cif_files
+tetrad/negative_cif_files
+tetrad/json_files
+tetrad/nrmsd_cache.json
+tetrad/*.png
+
+# Double-tetrad pipeline
+double_tetrad/motif_cif_files
+double_tetrad/negative_cif_files
+double_tetrad/json_files
+double_tetrad/nrmsd_cache.json
+double_tetrad/*.png
+
 # Devenv
 .devenv*
 devenv.local.nix
@@ -19,3 +33,4 @@ devenv.local.yaml
 # pre-commit
 .pre-commit-config.yaml
 
+__pycache__/

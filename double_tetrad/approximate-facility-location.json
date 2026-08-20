@@ -1,0 +1,2338 @@
+{
+  "clustering": {
+    "clusters": [
+      {
+        "representative": "motif_cif_files/DT_7xhd-assembly1_003.cif",
+        "members": [
+          "motif_cif_files/DT_1eeg-assembly1_001.cif",
+          "motif_cif_files/DT_1kf1-assembly1_000.cif",
+          "motif_cif_files/DT_1s45-assembly2_001.cif",
+          "motif_cif_files/DT_2mb4-assembly1_002.cif",
+          "motif_cif_files/DT_3qxr-assembly2_000.cif",
+          "motif_cif_files/DT_3r6r-assembly1_000.cif",
+          "motif_cif_files/DT_4r44-assembly2_004.cif",
+          "motif_cif_files/DT_4wo2-assembly1_000.cif",
+          "motif_cif_files/DT_5cdb-assembly1_000.cif",
+          "motif_cif_files/DT_5dww-assembly2_000.cif",
+          "motif_cif_files/DT_5i2v-assembly1_001.cif",
+          "motif_cif_files/DT_5ua3-assembly1_000.cif",
+          "motif_cif_files/DT_6a85-assembly1_001.cif",
+          "motif_cif_files/DT_6ip7-assembly1_000.cif",
+          "motif_cif_files/DT_6ldm-assembly1_000.cif",
+          "motif_cif_files/DT_6neb-assembly1_001.cif",
+          "motif_cif_files/DT_6p45-assembly1_000.cif",
+          "motif_cif_files/DT_6s15-assembly1_000.cif",
+          "motif_cif_files/DT_6w9p-assembly1_001.cif",
+          "motif_cif_files/DT_7ecf-assembly1_004.cif",
+          "motif_cif_files/DT_7ecf-assembly2_001.cif",
+          "motif_cif_files/DT_7ech-assembly2_001.cif",
+          "motif_cif_files/DT_7klp-assembly1_000.cif",
+          "motif_cif_files/DT_7x7g-assembly1_000.cif",
+          "motif_cif_files/DT_7xdh-assembly1_004.cif",
+          "motif_cif_files/DT_7xdh-assembly2_004.cif",
+          "motif_cif_files/DT_7xh9-assembly1_003.cif",
+          "motif_cif_files/DT_7xh9-assembly1_004.cif",
+          "motif_cif_files/DT_7xhd-assembly1_004.cif",
+          "motif_cif_files/DT_7xie-assembly1_004.cif",
+          "motif_cif_files/DT_8ipp-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_3cdm-assembly2_001.cif",
+        "members": [
+          "motif_cif_files/DT_1k8p-assembly1_001.cif",
+          "motif_cif_files/DT_1s45-assembly1_002.cif",
+          "motif_cif_files/DT_1s47-assembly1_000.cif",
+          "motif_cif_files/DT_1s47-assembly2_002.cif",
+          "motif_cif_files/DT_244d-assembly1_002.cif",
+          "motif_cif_files/DT_244d-assembly4_002.cif",
+          "motif_cif_files/DT_2gw0-assembly1_002.cif",
+          "motif_cif_files/DT_2o4f-assembly1_001.cif",
+          "motif_cif_files/DT_352d-assembly1_002.cif",
+          "motif_cif_files/DT_3tvb-assembly1_005.cif",
+          "motif_cif_files/DT_4h29-assembly1_005.cif",
+          "motif_cif_files/DT_4p1d-assembly1_001.cif",
+          "motif_cif_files/DT_4r44-assembly1_000.cif",
+          "motif_cif_files/DT_4r44-assembly1_005.cif",
+          "motif_cif_files/DT_5cdb-assembly1_001.cif",
+          "motif_cif_files/DT_6au4-assembly1_001.cif",
+          "motif_cif_files/DT_6xcl-assembly1_003.cif",
+          "motif_cif_files/DT_6xt7-assembly1_002.cif",
+          "motif_cif_files/DT_6xt7-assembly1_003.cif",
+          "motif_cif_files/DT_6xt7-assembly1_006.cif",
+          "motif_cif_files/DT_7ecg-assembly2_000.cif",
+          "motif_cif_files/DT_7nwd-assembly1_000.cif",
+          "motif_cif_files/DT_8d79-assembly1_002.cif",
+          "motif_cif_files/DT_9cb5-assembly2_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8u5k-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_6v9d-assembly1_001.cif",
+          "motif_cif_files/DT_8u5k-assembly2_001.cif",
+          "motif_cif_files/DT_8u5k-assembly3_001.cif",
+          "motif_cif_files/DT_8u5p-assembly1_001.cif",
+          "motif_cif_files/DT_8u5p-assembly3_001.cif",
+          "motif_cif_files/DT_8u5r-assembly1_001.cif",
+          "motif_cif_files/DT_8u5r-assembly2_001.cif",
+          "motif_cif_files/DT_8u5r-assembly3_001.cif",
+          "motif_cif_files/DT_8u5t-assembly1_001.cif",
+          "motif_cif_files/DT_8u5t-assembly3_001.cif",
+          "motif_cif_files/DT_8u5z-assembly1_001.cif",
+          "motif_cif_files/DT_8u5z-assembly3_001.cif",
+          "motif_cif_files/DT_8u60-assembly1_001.cif",
+          "motif_cif_files/DT_8u60-assembly2_001.cif",
+          "motif_cif_files/DT_8u60-assembly3_001.cif",
+          "motif_cif_files/DT_8vxx-assembly1_000.cif",
+          "motif_cif_files/DT_8vxx-assembly1_005.cif",
+          "motif_cif_files/DT_8vxz-assembly1_000.cif",
+          "motif_cif_files/DT_8vxz-assembly1_003.cif",
+          "motif_cif_files/DT_8vxz-assembly2_000.cif",
+          "motif_cif_files/DT_8vy0-assembly1_000.cif",
+          "motif_cif_files/DT_8vy1-assembly1_000.cif",
+          "motif_cif_files/DT_8vy1-assembly1_002.cif",
+          "motif_cif_files/DT_8vy1-assembly1_005.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7pnl-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_1jjp-assembly1_000.cif",
+          "motif_cif_files/DT_1rau-assembly1_001.cif",
+          "motif_cif_files/DT_1y8d-assembly1_001.cif",
+          "motif_cif_files/DT_2a5p-assembly1_000.cif",
+          "motif_cif_files/DT_2n3m-assembly1_002.cif",
+          "motif_cif_files/DT_4daq-assembly1_000.cif",
+          "motif_cif_files/DT_4rj1-assembly1_004.cif",
+          "motif_cif_files/DT_4rkv-assembly1_004.cif",
+          "motif_cif_files/DT_4ts0-assembly1_000.cif",
+          "motif_cif_files/DT_4xk0-assembly1_001.cif",
+          "motif_cif_files/DT_6h5r-assembly1_001.cif",
+          "motif_cif_files/DT_6jjf-assembly1_002.cif",
+          "motif_cif_files/DT_6jjg-assembly1_002.cif",
+          "motif_cif_files/DT_6o2l-assembly1_000.cif",
+          "motif_cif_files/DT_6qjo-assembly2_000.cif",
+          "motif_cif_files/DT_6qjo-assembly3_000.cif",
+          "motif_cif_files/DT_6xrq-assembly1_000.cif",
+          "motif_cif_files/DT_7qvq-assembly1_000.cif",
+          "motif_cif_files/DT_7sxp-assembly1_000.cif",
+          "motif_cif_files/DT_8d78-assembly1_000.cif",
+          "motif_cif_files/DT_8utg-assembly1_000.cif",
+          "motif_cif_files/DT_9mmf-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8t8t-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_1aff-assembly1_000.cif",
+          "motif_cif_files/DT_1hao-assembly1_000.cif",
+          "motif_cif_files/DT_1hap-assembly1_000.cif",
+          "motif_cif_files/DT_201d-assembly1_002.cif",
+          "motif_cif_files/DT_2mb3-assembly1_000.cif",
+          "motif_cif_files/DT_4dih-assembly1_000.cif",
+          "motif_cif_files/DT_4lz4-assembly1_000.cif",
+          "motif_cif_files/DT_4lz4-assembly2_000.cif",
+          "motif_cif_files/DT_4ni9-assembly1_001.cif",
+          "motif_cif_files/DT_6eo7-assembly1_000.cif",
+          "motif_cif_files/DT_6jje-assembly1_000.cif",
+          "motif_cif_files/DT_6tzq-assembly1_000.cif",
+          "motif_cif_files/DT_6z8w-assembly1_000.cif",
+          "motif_cif_files/DT_7d32-assembly2_000.cif",
+          "motif_cif_files/DT_7d32-assembly2_001.cif",
+          "motif_cif_files/DT_7d33-assembly3_000.cif",
+          "motif_cif_files/DT_7d33-assembly3_001.cif",
+          "motif_cif_files/DT_7otb-assembly1_000.cif",
+          "motif_cif_files/DT_8g2n-assembly1_000.cif",
+          "motif_cif_files/DT_9gxh-assembly1_000.cif",
+          "motif_cif_files/DT_9uk8-assembly1_002.cif",
+          "motif_cif_files/DT_9uk8-assembly3_002.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_3uyh-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_1y8d-assembly1_003.cif",
+          "motif_cif_files/DT_2hri-assembly1_001.cif",
+          "motif_cif_files/DT_2le6-assembly1_001.cif",
+          "motif_cif_files/DT_2mb4-assembly1_000.cif",
+          "motif_cif_files/DT_5ua3-assembly1_002.cif",
+          "motif_cif_files/DT_6e8t-assembly3_000.cif",
+          "motif_cif_files/DT_6e8u-assembly1_000.cif",
+          "motif_cif_files/DT_6n65-assembly1_001.cif",
+          "motif_cif_files/DT_6n65-assembly1_002.cif",
+          "motif_cif_files/DT_6t51-assembly1_000.cif",
+          "motif_cif_files/DT_6wck-assembly1_001.cif",
+          "motif_cif_files/DT_6wck-assembly1_002.cif",
+          "motif_cif_files/DT_7cls-assembly1_000.cif",
+          "motif_cif_files/DT_7e5p-assembly1_001.cif",
+          "motif_cif_files/DT_7ecf-assembly1_002.cif",
+          "motif_cif_files/DT_7ecf-assembly3_003.cif",
+          "motif_cif_files/DT_7n7e-assembly1_000.cif",
+          "motif_cif_files/DT_8eyu-assembly1_000.cif",
+          "motif_cif_files/DT_8eyv-assembly1_000.cif",
+          "motif_cif_files/DT_9e2x-assembly1_000.cif",
+          "motif_cif_files/DT_9i22-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_5ls8-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1a8w-assembly1_000.cif",
+          "motif_cif_files/DT_1lvs-assembly1_001.cif",
+          "motif_cif_files/DT_2kaz-assembly1_001.cif",
+          "motif_cif_files/DT_2kzd-assembly1_000.cif",
+          "motif_cif_files/DT_2n2d-assembly1_000.cif",
+          "motif_cif_files/DT_3eui-assembly1_002.cif",
+          "motif_cif_files/DT_3nyp-assembly1_002.cif",
+          "motif_cif_files/DT_5hix-assembly1_000.cif",
+          "motif_cif_files/DT_5mjx-assembly1_000.cif",
+          "motif_cif_files/DT_5oph-assembly1_000.cif",
+          "motif_cif_files/DT_5yey-assembly1_000.cif",
+          "motif_cif_files/DT_6ccw-assembly1_000.cif",
+          "motif_cif_files/DT_6erl-assembly1_000.cif",
+          "motif_cif_files/DT_6jwd-assembly1_000.cif",
+          "motif_cif_files/DT_7atz-assembly1_000.cif",
+          "motif_cif_files/DT_7w0x-assembly1_000.cif",
+          "motif_cif_files/DT_8kf9-assembly1_000.cif",
+          "motif_cif_files/DT_8p6b-assembly1_000.cif",
+          "motif_cif_files/DT_8qkx-assembly1_000.cif",
+          "motif_cif_files/DT_8r6g-assembly1_000.cif",
+          "motif_cif_files/DT_9k70-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7d33-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1c34-assembly1_000.cif",
+          "motif_cif_files/DT_1c38-assembly1_000.cif",
+          "motif_cif_files/DT_3qlp-assembly1_000.cif",
+          "motif_cif_files/DT_5cmx-assembly1_000.cif",
+          "motif_cif_files/DT_5ew1-assembly1_001.cif",
+          "motif_cif_files/DT_6eo6-assembly1_000.cif",
+          "motif_cif_files/DT_6evv-assembly1_000.cif",
+          "motif_cif_files/DT_6f4z-assembly1_000.cif",
+          "motif_cif_files/DT_6ftu-assembly5_000.cif",
+          "motif_cif_files/DT_6ftu-assembly7_002.cif",
+          "motif_cif_files/DT_6k84-assembly1_001.cif",
+          "motif_cif_files/DT_6z8v-assembly1_000.cif",
+          "motif_cif_files/DT_6z8x-assembly1_000.cif",
+          "motif_cif_files/DT_7d33-assembly1_000.cif",
+          "motif_cif_files/DT_7d33-assembly2_001.cif",
+          "motif_cif_files/DT_7ntu-assembly2_000.cif",
+          "motif_cif_files/DT_7zkn-assembly2_000.cif",
+          "motif_cif_files/DT_8t8t-assembly1_002.cif",
+          "motif_cif_files/DT_8t8t-assembly2_000.cif",
+          "motif_cif_files/DT_9gxh-assembly2_000.cif",
+          "motif_cif_files/DT_9pa0-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7ech-assembly1_005.cif",
+        "members": [
+          "motif_cif_files/DT_1s45-assembly1_001.cif",
+          "motif_cif_files/DT_1s47-assembly2_001.cif",
+          "motif_cif_files/DT_244d-assembly4_001.cif",
+          "motif_cif_files/DT_2gw0-assembly1_001.cif",
+          "motif_cif_files/DT_3t5e-assembly1_001.cif",
+          "motif_cif_files/DT_4g0f-assembly1_001.cif",
+          "motif_cif_files/DT_5ccw-assembly1_001.cif",
+          "motif_cif_files/DT_6ip7-assembly1_001.cif",
+          "motif_cif_files/DT_6n65-assembly1_003.cif",
+          "motif_cif_files/DT_6wck-assembly1_003.cif",
+          "motif_cif_files/DT_7ecf-assembly1_000.cif",
+          "motif_cif_files/DT_7ecf-assembly1_001.cif",
+          "motif_cif_files/DT_7ecf-assembly2_004.cif",
+          "motif_cif_files/DT_7ecf-assembly2_005.cif",
+          "motif_cif_files/DT_7ecf-assembly3_005.cif",
+          "motif_cif_files/DT_7ecg-assembly1_000.cif",
+          "motif_cif_files/DT_7ecg-assembly2_005.cif",
+          "motif_cif_files/DT_7ll0-assembly1_002.cif",
+          "motif_cif_files/DT_7n7e-assembly1_001.cif",
+          "motif_cif_files/DT_7wgw-assembly1_000.cif",
+          "motif_cif_files/DT_9va0-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7zur-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_1rau-assembly1_000.cif",
+          "motif_cif_files/DT_2led-assembly1_001.cif",
+          "motif_cif_files/DT_2m90-assembly1_001.cif",
+          "motif_cif_files/DT_2mb4-assembly1_001.cif",
+          "motif_cif_files/DT_3cdm-assembly1_000.cif",
+          "motif_cif_files/DT_3ugo-assembly2_001.cif",
+          "motif_cif_files/DT_3ugp-assembly2_001.cif",
+          "motif_cif_files/DT_4r44-assembly2_003.cif",
+          "motif_cif_files/DT_4wo2-assembly1_003.cif",
+          "motif_cif_files/DT_4wo3-assembly2_000.cif",
+          "motif_cif_files/DT_5dwx-assembly1_000.cif",
+          "motif_cif_files/DT_6jj0-assembly1_000.cif",
+          "motif_cif_files/DT_6k3y-assembly1_000.cif",
+          "motif_cif_files/DT_6rnl-assembly1_001.cif",
+          "motif_cif_files/DT_6xt7-assembly1_007.cif",
+          "motif_cif_files/DT_7ech-assembly2_004.cif",
+          "motif_cif_files/DT_8d78-assembly1_002.cif",
+          "motif_cif_files/DT_8edp-assembly1_000.cif",
+          "motif_cif_files/DT_8qn2-assembly1_000.cif",
+          "motif_cif_files/DT_8twh-assembly4_000.cif",
+          "motif_cif_files/DT_9hrf-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8u5k-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_6h1k-assembly1_001.cif",
+          "motif_cif_files/DT_6jce-assembly1_000.cif",
+          "motif_cif_files/DT_8u5k-assembly3_000.cif",
+          "motif_cif_files/DT_8u5p-assembly1_000.cif",
+          "motif_cif_files/DT_8u5p-assembly3_000.cif",
+          "motif_cif_files/DT_8u5r-assembly1_000.cif",
+          "motif_cif_files/DT_8u5r-assembly3_000.cif",
+          "motif_cif_files/DT_8u5t-assembly1_000.cif",
+          "motif_cif_files/DT_8u5t-assembly3_000.cif",
+          "motif_cif_files/DT_8u5z-assembly1_000.cif",
+          "motif_cif_files/DT_8u5z-assembly3_000.cif",
+          "motif_cif_files/DT_8u60-assembly1_000.cif",
+          "motif_cif_files/DT_8u60-assembly3_000.cif",
+          "motif_cif_files/DT_8vxx-assembly1_001.cif",
+          "motif_cif_files/DT_8vxx-assembly1_004.cif",
+          "motif_cif_files/DT_8vxz-assembly1_001.cif",
+          "motif_cif_files/DT_8vxz-assembly2_002.cif",
+          "motif_cif_files/DT_8vy0-assembly1_001.cif",
+          "motif_cif_files/DT_8vy0-assembly1_004.cif",
+          "motif_cif_files/DT_8vy1-assembly1_001.cif",
+          "motif_cif_files/DT_8vy1-assembly1_004.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_9uk8-assembly2_000.cif",
+        "members": [
+          "motif_cif_files/DT_1jpq-assembly1_000.cif",
+          "motif_cif_files/DT_1rde-assembly1_000.cif",
+          "motif_cif_files/DT_2avh-assembly1_000.cif",
+          "motif_cif_files/DT_2avj-assembly1_002.cif",
+          "motif_cif_files/DT_2avj-assembly3_002.cif",
+          "motif_cif_files/DT_3eqw-assembly1_000.cif",
+          "motif_cif_files/DT_3eum-assembly1_002.cif",
+          "motif_cif_files/DT_3tvb-assembly1_000.cif",
+          "motif_cif_files/DT_6ftu-assembly1_002.cif",
+          "motif_cif_files/DT_6ftu-assembly2_000.cif",
+          "motif_cif_files/DT_6ftu-assembly3_002.cif",
+          "motif_cif_files/DT_6ftu-assembly6_002.cif",
+          "motif_cif_files/DT_6ftu-assembly7_000.cif",
+          "motif_cif_files/DT_6jjg-assembly1_000.cif",
+          "motif_cif_files/DT_6yep-assembly1_000.cif",
+          "motif_cif_files/DT_6zx7-assembly1_001.cif",
+          "motif_cif_files/DT_7zkm-assembly1_001.cif",
+          "motif_cif_files/DT_8abn-assembly1_000.cif",
+          "motif_cif_files/DT_9uk8-assembly2_002.cif",
+          "motif_cif_files/DT_9uk8-assembly3_000.cif",
+          "motif_cif_files/DT_9uk8-assembly4_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_352d-assembly2_002.cif",
+        "members": [
+          "motif_cif_files/DT_139d-assembly1_000.cif",
+          "motif_cif_files/DT_1emq-assembly1_001.cif",
+          "motif_cif_files/DT_1o0k-assembly1_005.cif",
+          "motif_cif_files/DT_244d-assembly1_001.cif",
+          "motif_cif_files/DT_352d-assembly1_001.cif",
+          "motif_cif_files/DT_352d-assembly2_001.cif",
+          "motif_cif_files/DT_352d-assembly4_001.cif",
+          "motif_cif_files/DT_352d-assembly4_002.cif",
+          "motif_cif_files/DT_3qxr-assembly1_001.cif",
+          "motif_cif_files/DT_4r44-assembly1_002.cif",
+          "motif_cif_files/DT_4r44-assembly2_002.cif",
+          "motif_cif_files/DT_5dww-assembly4_001.cif",
+          "motif_cif_files/DT_6p45-assembly2_001.cif",
+          "motif_cif_files/DT_6xt7-assembly1_009.cif",
+          "motif_cif_files/DT_7ecg-assembly2_004.cif",
+          "motif_cif_files/DT_7jku-assembly1_002.cif",
+          "motif_cif_files/DT_7x7g-assembly1_004.cif",
+          "motif_cif_files/DT_7x8n-assembly1_001.cif",
+          "motif_cif_files/DT_8ebo-assembly1_001.cif",
+          "motif_cif_files/DT_8edp-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_3et8-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_156d-assembly1_002.cif",
+          "motif_cif_files/DT_1l1h-assembly1_002.cif",
+          "motif_cif_files/DT_2avj-assembly1_000.cif",
+          "motif_cif_files/DT_2avj-assembly2_000.cif",
+          "motif_cif_files/DT_2gwe-assembly2_002.cif",
+          "motif_cif_files/DT_2gwe-assembly6_000.cif",
+          "motif_cif_files/DT_2n9q-assembly1_001.cif",
+          "motif_cif_files/DT_3em2-assembly1_002.cif",
+          "motif_cif_files/DT_3eru-assembly1_000.cif",
+          "motif_cif_files/DT_3es0-assembly1_002.cif",
+          "motif_cif_files/DT_3eui-assembly1_000.cif",
+          "motif_cif_files/DT_3nz7-assembly1_002.cif",
+          "motif_cif_files/DT_4r47-assembly1_000.cif",
+          "motif_cif_files/DT_5hix-assembly1_002.cif",
+          "motif_cif_files/DT_6kfl-assembly1_000.cif",
+          "motif_cif_files/DT_8psc-assembly1_001.cif",
+          "motif_cif_files/DT_9fta-assembly1_000.cif",
+          "motif_cif_files/DT_9fta-assembly1_003.cif",
+          "motif_cif_files/DT_9uk8-assembly1_000.cif",
+          "motif_cif_files/DT_9uk8-assembly4_002.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7ech-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_1k8p-assembly1_000.cif",
+          "motif_cif_files/DT_2l7v-assembly1_000.cif",
+          "motif_cif_files/DT_2m92-assembly1_000.cif",
+          "motif_cif_files/DT_2n21-assembly1_001.cif",
+          "motif_cif_files/DT_352d-assembly2_000.cif",
+          "motif_cif_files/DT_3tvb-assembly1_004.cif",
+          "motif_cif_files/DT_4h29-assembly1_002.cif",
+          "motif_cif_files/DT_4wo3-assembly1_001.cif",
+          "motif_cif_files/DT_5yey-assembly1_001.cif",
+          "motif_cif_files/DT_6jjh-assembly1_002.cif",
+          "motif_cif_files/DT_6k3x-assembly1_001.cif",
+          "motif_cif_files/DT_6xrq-assembly1_002.cif",
+          "motif_cif_files/DT_6xt7-assembly1_001.cif",
+          "motif_cif_files/DT_6yy4-assembly1_000.cif",
+          "motif_cif_files/DT_7ecg-assembly1_003.cif",
+          "motif_cif_files/DT_7ech-assembly1_003.cif",
+          "motif_cif_files/DT_7q6l-assembly1_001.cif",
+          "motif_cif_files/DT_9e8e-assembly1_000.cif",
+          "motif_cif_files/DT_9i1p-assembly1_000.cif",
+          "motif_cif_files/DT_9i1p-assembly1_003.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_3qxr-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_1np9-assembly1_001.cif",
+          "motif_cif_files/DT_1o0k-assembly1_004.cif",
+          "motif_cif_files/DT_2ld8-assembly1_001.cif",
+          "motif_cif_files/DT_2o4f-assembly2_001.cif",
+          "motif_cif_files/DT_3t5e-assembly1_000.cif",
+          "motif_cif_files/DT_4h29-assembly1_004.cif",
+          "motif_cif_files/DT_4wo3-assembly1_000.cif",
+          "motif_cif_files/DT_4wo3-assembly2_001.cif",
+          "motif_cif_files/DT_5ua3-assembly1_003.cif",
+          "motif_cif_files/DT_6p45-assembly2_000.cif",
+          "motif_cif_files/DT_6wck-assembly1_000.cif",
+          "motif_cif_files/DT_7xdh-assembly1_000.cif",
+          "motif_cif_files/DT_7xdh-assembly2_000.cif",
+          "motif_cif_files/DT_7xh9-assembly1_000.cif",
+          "motif_cif_files/DT_7xie-assembly1_000.cif",
+          "motif_cif_files/DT_9hrd-assembly1_000.cif",
+          "motif_cif_files/DT_9hrd-assembly2_001.cif",
+          "motif_cif_files/DT_9hrg-assembly1_000.cif",
+          "motif_cif_files/DT_9hrg-assembly2_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6q6r-assembly1_006.cif",
+        "members": [
+          "motif_cif_files/DT_1o0k-assembly1_000.cif",
+          "motif_cif_files/DT_2kpr-assembly1_001.cif",
+          "motif_cif_files/DT_2kyo-assembly1_002.cif",
+          "motif_cif_files/DT_2le6-assembly1_002.cif",
+          "motif_cif_files/DT_2wcn-assembly1_002.cif",
+          "motif_cif_files/DT_3cco-assembly1_000.cif",
+          "motif_cif_files/DT_3qsf-assembly1_000.cif",
+          "motif_cif_files/DT_6au4-assembly1_003.cif",
+          "motif_cif_files/DT_6q6r-assembly1_001.cif",
+          "motif_cif_files/DT_7ecf-assembly1_003.cif",
+          "motif_cif_files/DT_7ecf-assembly3_002.cif",
+          "motif_cif_files/DT_7ecg-assembly1_002.cif",
+          "motif_cif_files/DT_7ech-assembly2_002.cif",
+          "motif_cif_files/DT_7euc-assembly1_001.cif",
+          "motif_cif_files/DT_7x7g-assembly1_001.cif",
+          "motif_cif_files/DT_8twh-assembly1_000.cif",
+          "motif_cif_files/DT_8x0s-assembly1_000.cif",
+          "motif_cif_files/DT_9mmf-assembly1_005.cif",
+          "motif_cif_files/DT_9uk6-assembly1_003.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7ecf-assembly2_000.cif",
+        "members": [
+          "motif_cif_files/DT_1kf1-assembly1_001.cif",
+          "motif_cif_files/DT_1o0k-assembly1_002.cif",
+          "motif_cif_files/DT_1s45-assembly2_000.cif",
+          "motif_cif_files/DT_1s47-assembly3_000.cif",
+          "motif_cif_files/DT_2e4i-assembly1_001.cif",
+          "motif_cif_files/DT_2gw0-assembly2_001.cif",
+          "motif_cif_files/DT_2o4f-assembly2_002.cif",
+          "motif_cif_files/DT_3qcr-assembly1_001.cif",
+          "motif_cif_files/DT_4fxm-assembly1_001.cif",
+          "motif_cif_files/DT_6ip3-assembly1_000.cif",
+          "motif_cif_files/DT_6ip3-assembly1_001.cif",
+          "motif_cif_files/DT_6p45-assembly1_001.cif",
+          "motif_cif_files/DT_6w9p-assembly1_002.cif",
+          "motif_cif_files/DT_7ecf-assembly1_005.cif",
+          "motif_cif_files/DT_7ecf-assembly3_000.cif",
+          "motif_cif_files/DT_7ech-assembly2_000.cif",
+          "motif_cif_files/DT_7klp-assembly1_001.cif",
+          "motif_cif_files/DT_7nwd-assembly1_001.cif",
+          "motif_cif_files/DT_9cb5-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8eyv-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_1evo-assembly1_000.cif",
+          "motif_cif_files/DT_2a5r-assembly1_000.cif",
+          "motif_cif_files/DT_2kbp-assembly1_000.cif",
+          "motif_cif_files/DT_2kyo-assembly1_000.cif",
+          "motif_cif_files/DT_2lxv-assembly1_002.cif",
+          "motif_cif_files/DT_4u92-assembly1_001.cif",
+          "motif_cif_files/DT_4u92-assembly1_004.cif",
+          "motif_cif_files/DT_5dww-assembly3_000.cif",
+          "motif_cif_files/DT_5dww-assembly5_000.cif",
+          "motif_cif_files/DT_5ov2-assembly1_001.cif",
+          "motif_cif_files/DT_6e81-assembly1_001.cif",
+          "motif_cif_files/DT_6r9l-assembly1_000.cif",
+          "motif_cif_files/DT_6v9b-assembly1_002.cif",
+          "motif_cif_files/DT_7qa2-assembly1_001.cif",
+          "motif_cif_files/DT_8eyw-assembly1_001.cif",
+          "motif_cif_files/DT_8jfq-assembly1_000.cif",
+          "motif_cif_files/DT_8vx1-assembly1_002.cif",
+          "motif_cif_files/DT_9mmf-assembly1_002.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7ecg-assembly1_005.cif",
+        "members": [
+          "motif_cif_files/DT_244d-assembly2_002.cif",
+          "motif_cif_files/DT_244d-assembly3_002.cif",
+          "motif_cif_files/DT_2kze-assembly1_000.cif",
+          "motif_cif_files/DT_2n4y-assembly1_001.cif",
+          "motif_cif_files/DT_4r44-assembly1_003.cif",
+          "motif_cif_files/DT_5dwx-assembly1_001.cif",
+          "motif_cif_files/DT_6au4-assembly1_002.cif",
+          "motif_cif_files/DT_6f4z-assembly1_001.cif",
+          "motif_cif_files/DT_6jkn-assembly1_001.cif",
+          "motif_cif_files/DT_6n65-assembly1_000.cif",
+          "motif_cif_files/DT_6xcl-assembly1_001.cif",
+          "motif_cif_files/DT_7ech-assembly1_000.cif",
+          "motif_cif_files/DT_7ech-assembly2_005.cif",
+          "motif_cif_files/DT_8r6d-assembly1_001.cif",
+          "motif_cif_files/DT_9c73-assembly1_001.cif",
+          "motif_cif_files/DT_9jo0-assembly1_001.cif",
+          "motif_cif_files/DT_9va3-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8u5t-assembly2_001.cif",
+        "members": [
+          "motif_cif_files/DT_2mco-assembly1_000.cif",
+          "motif_cif_files/DT_5j05-assembly1_001.cif",
+          "motif_cif_files/DT_6c63-assembly1_001.cif",
+          "motif_cif_files/DT_6c63-assembly2_001.cif",
+          "motif_cif_files/DT_6c63-assembly3_001.cif",
+          "motif_cif_files/DT_6c64-assembly1_001.cif",
+          "motif_cif_files/DT_6c64-assembly2_001.cif",
+          "motif_cif_files/DT_6c64-assembly3_001.cif",
+          "motif_cif_files/DT_6c65-assembly1_001.cif",
+          "motif_cif_files/DT_6c65-assembly2_001.cif",
+          "motif_cif_files/DT_6c65-assembly3_001.cif",
+          "motif_cif_files/DT_8u5p-assembly2_001.cif",
+          "motif_cif_files/DT_8u5z-assembly2_001.cif",
+          "motif_cif_files/DT_8vxx-assembly1_002.cif",
+          "motif_cif_files/DT_8vxz-assembly2_003.cif",
+          "motif_cif_files/DT_8vy0-assembly1_002.cif",
+          "motif_cif_files/DT_8vy0-assembly1_005.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1j8g-assembly4_000.cif",
+        "members": [
+          "motif_cif_files/DT_1xce-assembly1_000.cif",
+          "motif_cif_files/DT_2led-assembly1_003.cif",
+          "motif_cif_files/DT_3ibk-assembly1_001.cif",
+          "motif_cif_files/DT_4rj1-assembly1_000.cif",
+          "motif_cif_files/DT_4rj1-assembly1_003.cif",
+          "motif_cif_files/DT_4rkv-assembly1_003.cif",
+          "motif_cif_files/DT_4rne-assembly1_003.cif",
+          "motif_cif_files/DT_4rne-assembly1_005.cif",
+          "motif_cif_files/DT_4rne-assembly2_003.cif",
+          "motif_cif_files/DT_4rne-assembly2_005.cif",
+          "motif_cif_files/DT_4xk0-assembly1_000.cif",
+          "motif_cif_files/DT_5dww-assembly3_001.cif",
+          "motif_cif_files/DT_5dww-assembly5_001.cif",
+          "motif_cif_files/DT_5ov2-assembly1_000.cif",
+          "motif_cif_files/DT_6up0-assembly1_000.cif",
+          "motif_cif_files/DT_8vx1-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1n7b-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1j6s-assembly3_000.cif",
+          "motif_cif_files/DT_1n7a-assembly1_000.cif",
+          "motif_cif_files/DT_2grb-assembly2_002.cif",
+          "motif_cif_files/DT_2kvy-assembly1_002.cif",
+          "motif_cif_files/DT_4xk0-assembly1_005.cif",
+          "motif_cif_files/DT_5de8-assembly2_000.cif",
+          "motif_cif_files/DT_6ffr-assembly1_000.cif",
+          "motif_cif_files/DT_6ge1-assembly1_001.cif",
+          "motif_cif_files/DT_6v0l-assembly1_000.cif",
+          "motif_cif_files/DT_6yep-assembly1_001.cif",
+          "motif_cif_files/DT_8twh-assembly3_001.cif",
+          "motif_cif_files/DT_8twh-assembly6_001.cif",
+          "motif_cif_files/DT_8twh-assembly9_001.cif",
+          "motif_cif_files/DT_8vv2-assembly1_001.cif",
+          "motif_cif_files/DT_8vvd-assembly1_001.cif",
+          "motif_cif_files/DT_8x0s-assembly1_004.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_3qsc-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1j8g-assembly1_000.cif",
+          "motif_cif_files/DT_1j8g-assembly1_002.cif",
+          "motif_cif_files/DT_1j8g-assembly2_000.cif",
+          "motif_cif_files/DT_1j8g-assembly3_002.cif",
+          "motif_cif_files/DT_1mdg-assembly1_000.cif",
+          "motif_cif_files/DT_1n7a-assembly1_001.cif",
+          "motif_cif_files/DT_1n7b-assembly1_000.cif",
+          "motif_cif_files/DT_1xav-assembly1_001.cif",
+          "motif_cif_files/DT_2m18-assembly1_002.cif",
+          "motif_cif_files/DT_2m53-assembly1_000.cif",
+          "motif_cif_files/DT_3qsf-assembly1_001.cif",
+          "motif_cif_files/DT_8fyh-assembly1_000.cif",
+          "motif_cif_files/DT_8qkx-assembly1_001.cif",
+          "motif_cif_files/DT_8twh-assembly1_001.cif",
+          "motif_cif_files/DT_8twh-assembly8_001.cif",
+          "motif_cif_files/DT_9u89-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6qjo-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_2led-assembly1_002.cif",
+          "motif_cif_files/DT_2mb4-assembly1_003.cif",
+          "motif_cif_files/DT_4rne-assembly1_001.cif",
+          "motif_cif_files/DT_4rne-assembly2_001.cif",
+          "motif_cif_files/DT_6ge1-assembly1_000.cif",
+          "motif_cif_files/DT_6kfl-assembly1_002.cif",
+          "motif_cif_files/DT_7cls-assembly1_001.cif",
+          "motif_cif_files/DT_8twh-assembly10_000.cif",
+          "motif_cif_files/DT_8twh-assembly2_000.cif",
+          "motif_cif_files/DT_8twh-assembly3_000.cif",
+          "motif_cif_files/DT_8twh-assembly5_000.cif",
+          "motif_cif_files/DT_8vv2-assembly1_000.cif",
+          "motif_cif_files/DT_8vvd-assembly1_000.cif",
+          "motif_cif_files/DT_9c46-assembly1_002.cif",
+          "motif_cif_files/DT_9ciy-assembly1_002.cif",
+          "motif_cif_files/DT_9i23-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1j6s-assembly2_000.cif",
+        "members": [
+          "motif_cif_files/DT_1j6s-assembly4_000.cif",
+          "motif_cif_files/DT_1j8g-assembly4_002.cif",
+          "motif_cif_files/DT_1s45-assembly2_002.cif",
+          "motif_cif_files/DT_1s47-assembly1_002.cif",
+          "motif_cif_files/DT_4daq-assembly1_001.cif",
+          "motif_cif_files/DT_4rkv-assembly1_005.cif",
+          "motif_cif_files/DT_6h5r-assembly1_003.cif",
+          "motif_cif_files/DT_6kn4-assembly1_001.cif",
+          "motif_cif_files/DT_7pnl-assembly1_001.cif",
+          "motif_cif_files/DT_7qvq-assembly1_001.cif",
+          "motif_cif_files/DT_7sxp-assembly1_001.cif",
+          "motif_cif_files/DT_8qn2-assembly1_001.cif",
+          "motif_cif_files/DT_9e8e-assembly1_001.cif",
+          "motif_cif_files/DT_9jo0-assembly1_000.cif",
+          "motif_cif_files/DT_9mmf-assembly1_003.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8twh-assembly8_000.cif",
+        "members": [
+          "motif_cif_files/DT_139d-assembly1_001.cif",
+          "motif_cif_files/DT_1j8g-assembly1_001.cif",
+          "motif_cif_files/DT_1j8g-assembly2_001.cif",
+          "motif_cif_files/DT_1j8g-assembly3_001.cif",
+          "motif_cif_files/DT_1jjp-assembly1_002.cif",
+          "motif_cif_files/DT_2mb2-assembly1_001.cif",
+          "motif_cif_files/DT_2n6c-assembly1_001.cif",
+          "motif_cif_files/DT_3ibk-assembly1_000.cif",
+          "motif_cif_files/DT_4rkv-assembly1_001.cif",
+          "motif_cif_files/DT_6jje-assembly1_002.cif",
+          "motif_cif_files/DT_7jku-assembly1_000.cif",
+          "motif_cif_files/DT_7ll0-assembly1_000.cif",
+          "motif_cif_files/DT_8kfl-assembly1_001.cif",
+          "motif_cif_files/DT_8twh-assembly7_000.cif",
+          "motif_cif_files/DT_8twh-assembly9_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_9i1p-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_2jt7-assembly1_001.cif",
+          "motif_cif_files/DT_2jt7-assembly1_002.cif",
+          "motif_cif_files/DT_3ce5-assembly1_003.cif",
+          "motif_cif_files/DT_3ce5-assembly2_000.cif",
+          "motif_cif_files/DT_5vhe-assembly1_000.cif",
+          "motif_cif_files/DT_5w77-assembly1_000.cif",
+          "motif_cif_files/DT_6tc8-assembly1_001.cif",
+          "motif_cif_files/DT_7oar-assembly1_000.cif",
+          "motif_cif_files/DT_7x8m-assembly1_001.cif",
+          "motif_cif_files/DT_7x8o-assembly1_000.cif",
+          "motif_cif_files/DT_7x8o-assembly1_001.cif",
+          "motif_cif_files/DT_8c7a-assembly1_002.cif",
+          "motif_cif_files/DT_8dut-assembly1_001.cif",
+          "motif_cif_files/DT_9imy-assembly1_001.cif",
+          "motif_cif_files/DT_9kg8-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_9mmf-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_186d-assembly1_000.cif",
+          "motif_cif_files/DT_1f3s-assembly1_000.cif",
+          "motif_cif_files/DT_2idn-assembly1_000.cif",
+          "motif_cif_files/DT_2jsl-assembly1_000.cif",
+          "motif_cif_files/DT_2kpr-assembly1_000.cif",
+          "motif_cif_files/DT_2l88-assembly1_000.cif",
+          "motif_cif_files/DT_2n9q-assembly1_000.cif",
+          "motif_cif_files/DT_6tc8-assembly1_000.cif",
+          "motif_cif_files/DT_6xt7-assembly1_000.cif",
+          "motif_cif_files/DT_7w9n-assembly1_000.cif",
+          "motif_cif_files/DT_7ys5-assembly1_000.cif",
+          "motif_cif_files/DT_7zkm-assembly1_000.cif",
+          "motif_cif_files/DT_8gp7-assembly1_000.cif",
+          "motif_cif_files/DT_9fta-assembly1_002.cif",
+          "motif_cif_files/DT_9gvv-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_2gwq-assembly3_001.cif",
+        "members": [
+          "motif_cif_files/DT_1jpq-assembly1_001.cif",
+          "motif_cif_files/DT_1jrn-assembly1_001.cif",
+          "motif_cif_files/DT_230d-assembly1_001.cif",
+          "motif_cif_files/DT_2avh-assembly1_001.cif",
+          "motif_cif_files/DT_2gwe-assembly1_001.cif",
+          "motif_cif_files/DT_2gwq-assembly2_001.cif",
+          "motif_cif_files/DT_2hbn-assembly1_001.cif",
+          "motif_cif_files/DT_3eru-assembly1_001.cif",
+          "motif_cif_files/DT_4r45-assembly1_001.cif",
+          "motif_cif_files/DT_5hix-assembly1_001.cif",
+          "motif_cif_files/DT_5j6u-assembly1_001.cif",
+          "motif_cif_files/DT_6zx6-assembly1_001.cif",
+          "motif_cif_files/DT_9fta-assembly1_001.cif",
+          "motif_cif_files/DT_9uk8-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_2kqg-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1nzm-assembly1_000.cif",
+          "motif_cif_files/DT_2chk-assembly1_002.cif",
+          "motif_cif_files/DT_2kqg-assembly1_000.cif",
+          "motif_cif_files/DT_2kqh-assembly1_000.cif",
+          "motif_cif_files/DT_5dea-assembly2_000.cif",
+          "motif_cif_files/DT_6zl2-assembly1_000.cif",
+          "motif_cif_files/DT_7png-assembly1_000.cif",
+          "motif_cif_files/DT_7x2z-assembly1_001.cif",
+          "motif_cif_files/DT_7zj4-assembly1_000.cif",
+          "motif_cif_files/DT_8psb-assembly1_000.cif",
+          "motif_cif_files/DT_8r4w-assembly1_001.cif",
+          "motif_cif_files/DT_9imy-assembly1_000.cif",
+          "motif_cif_files/DT_9jo1-assembly1_000.cif",
+          "motif_cif_files/DT_9mmf-assembly1_006.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_4g0f-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_2le6-assembly1_000.cif",
+          "motif_cif_files/DT_3ugo-assembly2_000.cif",
+          "motif_cif_files/DT_3uyh-assembly1_001.cif",
+          "motif_cif_files/DT_4wo2-assembly1_001.cif",
+          "motif_cif_files/DT_5mvb-assembly1_001.cif",
+          "motif_cif_files/DT_5w77-assembly1_001.cif",
+          "motif_cif_files/DT_6h5r-assembly1_000.cif",
+          "motif_cif_files/DT_7ecf-assembly3_004.cif",
+          "motif_cif_files/DT_7oar-assembly1_001.cif",
+          "motif_cif_files/DT_7xhd-assembly1_000.cif",
+          "motif_cif_files/DT_7zem-assembly1_001.cif",
+          "motif_cif_files/DT_9i1p-assembly1_002.cif",
+          "motif_cif_files/DT_9i22-assembly1_001.cif",
+          "motif_cif_files/DT_9i22-assembly2_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6q6r-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_1o0k-assembly1_003.cif",
+          "motif_cif_files/DT_2m4p-assembly1_000.cif",
+          "motif_cif_files/DT_2mb2-assembly1_000.cif",
+          "motif_cif_files/DT_4da3-assembly1_000.cif",
+          "motif_cif_files/DT_4h29-assembly1_001.cif",
+          "motif_cif_files/DT_6h5r-assembly1_002.cif",
+          "motif_cif_files/DT_6q6r-assembly1_005.cif",
+          "motif_cif_files/DT_7ecf-assembly2_003.cif",
+          "motif_cif_files/DT_7ecg-assembly2_003.cif",
+          "motif_cif_files/DT_8eyw-assembly1_000.cif",
+          "motif_cif_files/DT_8f0n-assembly1_000.cif",
+          "motif_cif_files/DT_8utg-assembly2_000.cif",
+          "motif_cif_files/DT_8x0s-assembly1_005.cif",
+          "motif_cif_files/DT_9uk6-assembly1_002.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7kbv-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_1s47-assembly3_001.cif",
+          "motif_cif_files/DT_1y8d-assembly1_000.cif",
+          "motif_cif_files/DT_2jsq-assembly1_001.cif",
+          "motif_cif_files/DT_3sc8-assembly1_000.cif",
+          "motif_cif_files/DT_6jji-assembly1_002.cif",
+          "motif_cif_files/DT_6kvb-assembly1_002.cif",
+          "motif_cif_files/DT_6zl9-assembly1_000.cif",
+          "motif_cif_files/DT_6zrm-assembly1_001.cif",
+          "motif_cif_files/DT_7kbw-assembly1_000.cif",
+          "motif_cif_files/DT_7kbw-assembly1_001.cif",
+          "motif_cif_files/DT_7kbx-assembly1_000.cif",
+          "motif_cif_files/DT_7zek-assembly1_001.cif",
+          "motif_cif_files/DT_8jfq-assembly1_001.cif",
+          "motif_cif_files/DT_9i1p-assembly2_002.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8aad-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1o0k-assembly1_001.cif",
+          "motif_cif_files/DT_3cdm-assembly1_001.cif",
+          "motif_cif_files/DT_3r6r-assembly1_001.cif",
+          "motif_cif_files/DT_3sc8-assembly1_001.cif",
+          "motif_cif_files/DT_6isw-assembly1_000.cif",
+          "motif_cif_files/DT_6isw-assembly1_001.cif",
+          "motif_cif_files/DT_6pnk-assembly1_001.cif",
+          "motif_cif_files/DT_6pnk-assembly2_001.cif",
+          "motif_cif_files/DT_6rnl-assembly1_000.cif",
+          "motif_cif_files/DT_6s15-assembly1_001.cif",
+          "motif_cif_files/DT_7zur-assembly1_001.cif",
+          "motif_cif_files/DT_8d78-assembly1_001.cif",
+          "motif_cif_files/DT_9cb5-assembly1_000.cif",
+          "motif_cif_files/DT_9uk6-assembly1_005.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_9i1p-assembly2_001.cif",
+        "members": [
+          "motif_cif_files/DT_2kzd-assembly1_001.cif",
+          "motif_cif_files/DT_2l7v-assembly1_001.cif",
+          "motif_cif_files/DT_2lk7-assembly1_000.cif",
+          "motif_cif_files/DT_2lk7-assembly1_001.cif",
+          "motif_cif_files/DT_2m18-assembly1_001.cif",
+          "motif_cif_files/DT_6e8t-assembly1_000.cif",
+          "motif_cif_files/DT_6kn4-assembly1_000.cif",
+          "motif_cif_files/DT_6neb-assembly1_000.cif",
+          "motif_cif_files/DT_6yy4-assembly1_001.cif",
+          "motif_cif_files/DT_6zl9-assembly1_001.cif",
+          "motif_cif_files/DT_8r4e-assembly1_000.cif",
+          "motif_cif_files/DT_9e2w-assembly1_001.cif",
+          "motif_cif_files/DT_9e2x-assembly1_001.cif",
+          "motif_cif_files/DT_9kg8-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_9jo1-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_2chj-assembly1_000.cif",
+          "motif_cif_files/DT_2chk-assembly1_000.cif",
+          "motif_cif_files/DT_2chk-assembly1_001.cif",
+          "motif_cif_files/DT_2m27-assembly1_001.cif",
+          "motif_cif_files/DT_5dea-assembly1_000.cif",
+          "motif_cif_files/DT_5nys-assembly1_001.cif",
+          "motif_cif_files/DT_5nyu-assembly1_000.cif",
+          "motif_cif_files/DT_5o4d-assembly1_001.cif",
+          "motif_cif_files/DT_7pne-assembly1_000.cif",
+          "motif_cif_files/DT_7pne-assembly1_001.cif",
+          "motif_cif_files/DT_8fyh-assembly1_001.cif",
+          "motif_cif_files/DT_9i23-assembly2_001.cif",
+          "motif_cif_files/DT_9tnq-assembly1_001.cif",
+          "motif_cif_files/DT_9u89-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_9o70-assembly4_001.cif",
+        "members": [
+          "motif_cif_files/DT_2mcc-assembly1_000.cif",
+          "motif_cif_files/DT_4u5m-assembly1_001.cif",
+          "motif_cif_files/DT_6gz6-assembly1_001.cif",
+          "motif_cif_files/DT_6jjh-assembly1_001.cif",
+          "motif_cif_files/DT_6xrq-assembly1_001.cif",
+          "motif_cif_files/DT_7d5d-assembly1_001.cif",
+          "motif_cif_files/DT_7dfy-assembly1_004.cif",
+          "motif_cif_files/DT_9c46-assembly1_001.cif",
+          "motif_cif_files/DT_9mxo-assembly2_001.cif",
+          "motif_cif_files/DT_9mxo-assembly3_001.cif",
+          "motif_cif_files/DT_9mxo-assembly4_001.cif",
+          "motif_cif_files/DT_9o70-assembly2_001.cif",
+          "motif_cif_files/DT_9o70-assembly3_001.cif",
+          "motif_cif_files/DT_9o70-assembly5_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_3ce5-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_1s47-assembly3_002.cif",
+          "motif_cif_files/DT_2ms6-assembly1_000.cif",
+          "motif_cif_files/DT_3ce5-assembly1_000.cif",
+          "motif_cif_files/DT_3ce5-assembly2_001.cif",
+          "motif_cif_files/DT_3ugp-assembly2_000.cif",
+          "motif_cif_files/DT_6rs3-assembly1_001.cif",
+          "motif_cif_files/DT_6v0l-assembly1_001.cif",
+          "motif_cif_files/DT_7v6v-assembly1_000.cif",
+          "motif_cif_files/DT_7v6v-assembly1_001.cif",
+          "motif_cif_files/DT_7wgw-assembly1_001.cif",
+          "motif_cif_files/DT_8s1w-assembly1_001.cif",
+          "motif_cif_files/DT_8wa4-assembly1_001.cif",
+          "motif_cif_files/DT_9ji9-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6c65-assembly3_000.cif",
+        "members": [
+          "motif_cif_files/DT_1evo-assembly1_003.cif",
+          "motif_cif_files/DT_1myq-assembly1_001.cif",
+          "motif_cif_files/DT_2m93-assembly1_000.cif",
+          "motif_cif_files/DT_2m93-assembly1_001.cif",
+          "motif_cif_files/DT_2rqj-assembly1_001.cif",
+          "motif_cif_files/DT_6c63-assembly1_000.cif",
+          "motif_cif_files/DT_6c63-assembly3_000.cif",
+          "motif_cif_files/DT_6c64-assembly1_000.cif",
+          "motif_cif_files/DT_6c64-assembly3_000.cif",
+          "motif_cif_files/DT_6c65-assembly1_000.cif",
+          "motif_cif_files/DT_6suu-assembly1_000.cif",
+          "motif_cif_files/DT_7euc-assembly1_002.cif",
+          "motif_cif_files/DT_8vx1-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7kbv-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_2chj-assembly1_002.cif",
+          "motif_cif_files/DT_2kqh-assembly1_001.cif",
+          "motif_cif_files/DT_2le6-assembly1_003.cif",
+          "motif_cif_files/DT_2lxq-assembly1_001.cif",
+          "motif_cif_files/DT_2lxv-assembly1_003.cif",
+          "motif_cif_files/DT_2ru7-assembly1_001.cif",
+          "motif_cif_files/DT_6t2g-assembly1_000.cif",
+          "motif_cif_files/DT_7el7-assembly1_001.cif",
+          "motif_cif_files/DT_7zeo-assembly1_000.cif",
+          "motif_cif_files/DT_8psb-assembly1_001.cif",
+          "motif_cif_files/DT_8y2r-assembly1_000.cif",
+          "motif_cif_files/DT_9mmf-assembly1_007.cif",
+          "motif_cif_files/DT_9va0-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7xdh-assembly1_003.cif",
+        "members": [
+          "motif_cif_files/DT_2m90-assembly1_000.cif",
+          "motif_cif_files/DT_2o3m-assembly1_001.cif",
+          "motif_cif_files/DT_5i2v-assembly1_000.cif",
+          "motif_cif_files/DT_5ua3-assembly1_001.cif",
+          "motif_cif_files/DT_6pnk-assembly1_000.cif",
+          "motif_cif_files/DT_6pnk-assembly2_000.cif",
+          "motif_cif_files/DT_6t51-assembly1_001.cif",
+          "motif_cif_files/DT_6w9p-assembly1_000.cif",
+          "motif_cif_files/DT_6xt7-assembly1_004.cif",
+          "motif_cif_files/DT_6xt7-assembly1_010.cif",
+          "motif_cif_files/DT_7xdh-assembly2_003.cif",
+          "motif_cif_files/DT_7xie-assembly1_003.cif",
+          "motif_cif_files/DT_9c73-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7xdh-assembly2_001.cif",
+        "members": [
+          "motif_cif_files/DT_2m4p-assembly1_001.cif",
+          "motif_cif_files/DT_2m92-assembly1_001.cif",
+          "motif_cif_files/DT_4p1d-assembly1_000.cif",
+          "motif_cif_files/DT_6au4-assembly1_000.cif",
+          "motif_cif_files/DT_7ech-assembly2_003.cif",
+          "motif_cif_files/DT_7x7g-assembly1_003.cif",
+          "motif_cif_files/DT_7xdh-assembly1_001.cif",
+          "motif_cif_files/DT_7xh9-assembly1_001.cif",
+          "motif_cif_files/DT_7xhd-assembly1_001.cif",
+          "motif_cif_files/DT_7xie-assembly1_001.cif",
+          "motif_cif_files/DT_8ebo-assembly1_000.cif",
+          "motif_cif_files/DT_8taa-assembly1_002.cif",
+          "motif_cif_files/DT_9e2z-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8u5t-assembly2_000.cif",
+        "members": [
+          "motif_cif_files/DT_6k84-assembly1_000.cif",
+          "motif_cif_files/DT_6qjo-assembly4_000.cif",
+          "motif_cif_files/DT_8u5k-assembly2_000.cif",
+          "motif_cif_files/DT_8u5p-assembly2_000.cif",
+          "motif_cif_files/DT_8u5r-assembly2_000.cif",
+          "motif_cif_files/DT_8u5z-assembly2_000.cif",
+          "motif_cif_files/DT_8u60-assembly2_000.cif",
+          "motif_cif_files/DT_8vxx-assembly1_003.cif",
+          "motif_cif_files/DT_8vxz-assembly1_002.cif",
+          "motif_cif_files/DT_8vxz-assembly2_001.cif",
+          "motif_cif_files/DT_8vy0-assembly1_003.cif",
+          "motif_cif_files/DT_8vy1-assembly1_003.cif",
+          "motif_cif_files/DT_9i22-assembly2_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8yu3-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_2awe-assembly1_002.cif",
+          "motif_cif_files/DT_2m91-assembly1_000.cif",
+          "motif_cif_files/DT_2may-assembly1_000.cif",
+          "motif_cif_files/DT_2mbj-assembly1_001.cif",
+          "motif_cif_files/DT_5z8f-assembly1_003.cif",
+          "motif_cif_files/DT_6ac7-assembly1_000.cif",
+          "motif_cif_files/DT_6jcd-assembly1_000.cif",
+          "motif_cif_files/DT_6jwe-assembly1_000.cif",
+          "motif_cif_files/DT_6kfi-assembly1_000.cif",
+          "motif_cif_files/DT_6kvb-assembly1_001.cif",
+          "motif_cif_files/DT_6l92-assembly1_000.cif",
+          "motif_cif_files/DT_7do1-assembly1_000.cif",
+          "motif_cif_files/DT_9b6z-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8zve-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_2hy9-assembly1_001.cif",
+          "motif_cif_files/DT_2mft-assembly1_001.cif",
+          "motif_cif_files/DT_2mwz-assembly1_001.cif",
+          "motif_cif_files/DT_6ffr-assembly1_001.cif",
+          "motif_cif_files/DT_6ia0-assembly1_001.cif",
+          "motif_cif_files/DT_6syk-assembly1_000.cif",
+          "motif_cif_files/DT_8k7w-assembly1_000.cif",
+          "motif_cif_files/DT_8psi-assembly1_001.cif",
+          "motif_cif_files/DT_8rzx-assembly1_000.cif",
+          "motif_cif_files/DT_8yu3-assembly1_001.cif",
+          "motif_cif_files/DT_9b6z-assembly1_001.cif",
+          "motif_cif_files/DT_9e2z-assembly1_001.cif",
+          "motif_cif_files/DT_9i23-assembly2_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_2gwe-assembly3_002.cif",
+        "members": [
+          "motif_cif_files/DT_1jrn-assembly2_000.cif",
+          "motif_cif_files/DT_2avj-assembly2_002.cif",
+          "motif_cif_files/DT_2avj-assembly3_000.cif",
+          "motif_cif_files/DT_2gku-assembly1_000.cif",
+          "motif_cif_files/DT_2jsm-assembly1_000.cif",
+          "motif_cif_files/DT_3em2-assembly1_000.cif",
+          "motif_cif_files/DT_3es0-assembly1_000.cif",
+          "motif_cif_files/DT_3nyp-assembly1_000.cif",
+          "motif_cif_files/DT_5j4p-assembly1_000.cif",
+          "motif_cif_files/DT_7zkn-assembly1_001.cif",
+          "motif_cif_files/DT_8c7a-assembly1_000.cif",
+          "motif_cif_files/DT_8kfl-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_4rne-assembly2_002.cif",
+        "members": [
+          "motif_cif_files/DT_1j8g-assembly2_002.cif",
+          "motif_cif_files/DT_1s47-assembly2_000.cif",
+          "motif_cif_files/DT_4rj1-assembly1_002.cif",
+          "motif_cif_files/DT_4rj1-assembly1_005.cif",
+          "motif_cif_files/DT_4rkv-assembly1_002.cif",
+          "motif_cif_files/DT_4rne-assembly1_000.cif",
+          "motif_cif_files/DT_4rne-assembly1_002.cif",
+          "motif_cif_files/DT_4rne-assembly2_000.cif",
+          "motif_cif_files/DT_5de5-assembly1_000.cif",
+          "motif_cif_files/DT_6e8s-assembly2_000.cif",
+          "motif_cif_files/DT_6e8t-assembly4_000.cif",
+          "motif_cif_files/DT_6pq7-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6q6r-assembly1_003.cif",
+        "members": [
+          "motif_cif_files/DT_2jt7-assembly1_000.cif",
+          "motif_cif_files/DT_2kyo-assembly1_003.cif",
+          "motif_cif_files/DT_4da3-assembly1_001.cif",
+          "motif_cif_files/DT_6q6r-assembly1_004.cif",
+          "motif_cif_files/DT_7alu-assembly1_001.cif",
+          "motif_cif_files/DT_7otb-assembly1_001.cif",
+          "motif_cif_files/DT_7x8m-assembly1_000.cif",
+          "motif_cif_files/DT_7x8n-assembly1_000.cif",
+          "motif_cif_files/DT_8zw3-assembly1_000.cif",
+          "motif_cif_files/DT_9i23-assembly1_001.cif",
+          "motif_cif_files/DT_9uk6-assembly1_000.cif",
+          "motif_cif_files/DT_9uk6-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7ech-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1np9-assembly1_000.cif",
+          "motif_cif_files/DT_2kaz-assembly1_000.cif",
+          "motif_cif_files/DT_2o4f-assembly2_000.cif",
+          "motif_cif_files/DT_3cdm-assembly2_000.cif",
+          "motif_cif_files/DT_4fxm-assembly1_000.cif",
+          "motif_cif_files/DT_5dww-assembly4_000.cif",
+          "motif_cif_files/DT_7ecg-assembly1_001.cif",
+          "motif_cif_files/DT_7ecg-assembly2_001.cif",
+          "motif_cif_files/DT_7ech-assembly1_004.cif",
+          "motif_cif_files/DT_8kf9-assembly1_001.cif",
+          "motif_cif_files/DT_9cb5-assembly2_000.cif",
+          "motif_cif_files/DT_9nap-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7msv-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_2chj-assembly1_001.cif",
+          "motif_cif_files/DT_2grb-assembly2_001.cif",
+          "motif_cif_files/DT_2kyo-assembly1_001.cif",
+          "motif_cif_files/DT_2la5-assembly1_000.cif",
+          "motif_cif_files/DT_2lxq-assembly1_000.cif",
+          "motif_cif_files/DT_2m18-assembly1_003.cif",
+          "motif_cif_files/DT_5bjo-assembly1_001.cif",
+          "motif_cif_files/DT_5de8-assembly1_000.cif",
+          "motif_cif_files/DT_6lnz-assembly1_001.cif",
+          "motif_cif_files/DT_7qa2-assembly1_000.cif",
+          "motif_cif_files/DT_7ys5-assembly1_001.cif",
+          "motif_cif_files/DT_8abd-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7xh9-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_1a8n-assembly1_000.cif",
+          "motif_cif_files/DT_1jjp-assembly1_001.cif",
+          "motif_cif_files/DT_1y8d-assembly1_002.cif",
+          "motif_cif_files/DT_2jsq-assembly1_000.cif",
+          "motif_cif_files/DT_3eui-assembly2_002.cif",
+          "motif_cif_files/DT_6gh0-assembly1_000.cif",
+          "motif_cif_files/DT_7cv4-assembly1_000.cif",
+          "motif_cif_files/DT_7xdh-assembly1_002.cif",
+          "motif_cif_files/DT_7xhd-assembly1_002.cif",
+          "motif_cif_files/DT_7xie-assembly1_002.cif",
+          "motif_cif_files/DT_7ys7-assembly1_000.cif",
+          "motif_cif_files/DT_9i5s-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7zkl-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_1fqp-assembly1_000.cif",
+          "motif_cif_files/DT_2lyg-assembly1_000.cif",
+          "motif_cif_files/DT_2mwz-assembly1_000.cif",
+          "motif_cif_files/DT_4dii-assembly1_000.cif",
+          "motif_cif_files/DT_5lqh-assembly1_000.cif",
+          "motif_cif_files/DT_5oph-assembly1_002.cif",
+          "motif_cif_files/DT_6ftu-assembly4_002.cif",
+          "motif_cif_files/DT_6gzn-assembly1_000.cif",
+          "motif_cif_files/DT_6zx6-assembly1_000.cif",
+          "motif_cif_files/DT_7zkn-assembly1_000.cif",
+          "motif_cif_files/DT_8jih-assembly1_000.cif",
+          "motif_cif_files/DT_9jx5-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8eyv-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1evo-assembly1_001.cif",
+          "motif_cif_files/DT_1xav-assembly1_000.cif",
+          "motif_cif_files/DT_2a5p-assembly1_001.cif",
+          "motif_cif_files/DT_2n4y-assembly1_000.cif",
+          "motif_cif_files/DT_4l0a-assembly2_001.cif",
+          "motif_cif_files/DT_6e8s-assembly1_000.cif",
+          "motif_cif_files/DT_6up0-assembly2_000.cif",
+          "motif_cif_files/DT_6v9d-assembly1_000.cif",
+          "motif_cif_files/DT_6v9d-assembly1_002.cif",
+          "motif_cif_files/DT_8u5j-assembly1_000.cif",
+          "motif_cif_files/DT_8vx8-assembly1_001.cif",
+          "motif_cif_files/DT_9vmz-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_9dqe-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1y8d-assembly1_004.cif",
+          "motif_cif_files/DT_2lee-assembly1_000.cif",
+          "motif_cif_files/DT_2lxv-assembly1_000.cif",
+          "motif_cif_files/DT_2lxv-assembly1_001.cif",
+          "motif_cif_files/DT_2mb3-assembly1_001.cif",
+          "motif_cif_files/DT_5de5-assembly2_000.cif",
+          "motif_cif_files/DT_6e8t-assembly2_000.cif",
+          "motif_cif_files/DT_6r9k-assembly1_000.cif",
+          "motif_cif_files/DT_6r9k-assembly1_001.cif",
+          "motif_cif_files/DT_6zte-assembly1_001.cif",
+          "motif_cif_files/DT_7zem-assembly1_000.cif",
+          "motif_cif_files/DT_9dqe-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1jpq-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_1u64-assembly1_000.cif",
+          "motif_cif_files/DT_230d-assembly1_002.cif",
+          "motif_cif_files/DT_2gwe-assembly4_002.cif",
+          "motif_cif_files/DT_2gwq-assembly1_000.cif",
+          "motif_cif_files/DT_2gwq-assembly4_000.cif",
+          "motif_cif_files/DT_2hbn-assembly2_000.cif",
+          "motif_cif_files/DT_2hy9-assembly1_000.cif",
+          "motif_cif_files/DT_2jsk-assembly1_000.cif",
+          "motif_cif_files/DT_6ftu-assembly1_000.cif",
+          "motif_cif_files/DT_6ftu-assembly5_002.cif",
+          "motif_cif_files/DT_8jic-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1jrn-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_2gwe-assembly1_002.cif",
+          "motif_cif_files/DT_2gwq-assembly2_000.cif",
+          "motif_cif_files/DT_2gwq-assembly3_000.cif",
+          "motif_cif_files/DT_2hbn-assembly1_000.cif",
+          "motif_cif_files/DT_2m6w-assembly1_000.cif",
+          "motif_cif_files/DT_2m8z-assembly1_000.cif",
+          "motif_cif_files/DT_5j4w-assembly1_000.cif",
+          "motif_cif_files/DT_5mvb-assembly1_000.cif",
+          "motif_cif_files/DT_5z8f-assembly1_000.cif",
+          "motif_cif_files/DT_6xt7-assembly1_008.cif",
+          "motif_cif_files/DT_8ht7-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_2n3m-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_139d-assembly1_002.cif",
+          "motif_cif_files/DT_1xce-assembly1_001.cif",
+          "motif_cif_files/DT_2ld8-assembly1_000.cif",
+          "motif_cif_files/DT_2m1g-assembly1_000.cif",
+          "motif_cif_files/DT_5ew2-assembly1_000.cif",
+          "motif_cif_files/DT_6ia0-assembly1_000.cif",
+          "motif_cif_files/DT_8d79-assembly1_001.cif",
+          "motif_cif_files/DT_8rzx-assembly1_001.cif",
+          "motif_cif_files/DT_8vx1-assembly1_003.cif",
+          "motif_cif_files/DT_8xak-assembly1_001.cif",
+          "motif_cif_files/DT_8xak-assembly2_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_3eqw-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_2awe-assembly1_000.cif",
+          "motif_cif_files/DT_2mft-assembly1_000.cif",
+          "motif_cif_files/DT_4r45-assembly1_000.cif",
+          "motif_cif_files/DT_4r47-assembly1_002.cif",
+          "motif_cif_files/DT_5z80-assembly1_000.cif",
+          "motif_cif_files/DT_6kfj-assembly1_000.cif",
+          "motif_cif_files/DT_6rs3-assembly1_000.cif",
+          "motif_cif_files/DT_6ycv-assembly1_000.cif",
+          "motif_cif_files/DT_7el7-assembly1_000.cif",
+          "motif_cif_files/DT_8ijc-assembly1_000.cif",
+          "motif_cif_files/DT_8r4e-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_3eum-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_156d-assembly1_001.cif",
+          "motif_cif_files/DT_1k4x-assembly1_000.cif",
+          "motif_cif_files/DT_1lvs-assembly1_000.cif",
+          "motif_cif_files/DT_1ph2-assembly1_001.cif",
+          "motif_cif_files/DT_2avj-assembly2_001.cif",
+          "motif_cif_files/DT_2wcn-assembly1_001.cif",
+          "motif_cif_files/DT_3eui-assembly2_001.cif",
+          "motif_cif_files/DT_4r47-assembly1_001.cif",
+          "motif_cif_files/DT_6ftu-assembly4_001.cif",
+          "motif_cif_files/DT_6ftu-assembly6_001.cif",
+          "motif_cif_files/DT_9uk8-assembly4_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_4u92-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_2jwq-assembly1_000.cif",
+          "motif_cif_files/DT_2jwq-assembly1_001.cif",
+          "motif_cif_files/DT_4l0a-assembly1_001.cif",
+          "motif_cif_files/DT_4u92-assembly1_003.cif",
+          "motif_cif_files/DT_4xk0-assembly1_004.cif",
+          "motif_cif_files/DT_6lnz-assembly1_000.cif",
+          "motif_cif_files/DT_7msv-assembly1_000.cif",
+          "motif_cif_files/DT_8eyu-assembly1_001.cif",
+          "motif_cif_files/DT_8gp7-assembly1_001.cif",
+          "motif_cif_files/DT_8r6g-assembly1_001.cif",
+          "motif_cif_files/DT_8rw2-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8pse-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_2ms6-assembly1_001.cif",
+          "motif_cif_files/DT_2o3m-assembly1_000.cif",
+          "motif_cif_files/DT_5lig-assembly1_001.cif",
+          "motif_cif_files/DT_5z80-assembly1_001.cif",
+          "motif_cif_files/DT_5z8f-assembly1_001.cif",
+          "motif_cif_files/DT_6jwe-assembly1_001.cif",
+          "motif_cif_files/DT_6kfi-assembly1_001.cif",
+          "motif_cif_files/DT_6suu-assembly1_001.cif",
+          "motif_cif_files/DT_6syk-assembly1_001.cif",
+          "motif_cif_files/DT_7cps-assembly1_002.cif",
+          "motif_cif_files/DT_9ji9-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8r6h-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_2lod-assembly1_000.cif",
+          "motif_cif_files/DT_4lz1-assembly1_000.cif",
+          "motif_cif_files/DT_6h1k-assembly1_000.cif",
+          "motif_cif_files/DT_6jkn-assembly1_000.cif",
+          "motif_cif_files/DT_7ntu-assembly1_000.cif",
+          "motif_cif_files/DT_7v3t-assembly1_000.cif",
+          "motif_cif_files/DT_7vf1-assembly1_000.cif",
+          "motif_cif_files/DT_7zek-assembly1_000.cif",
+          "motif_cif_files/DT_8psi-assembly1_000.cif",
+          "motif_cif_files/DT_8r6d-assembly1_000.cif",
+          "motif_cif_files/DT_8s1w-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_9o70-assembly2_002.cif",
+        "members": [
+          "motif_cif_files/DT_6fq2-assembly1_000.cif",
+          "motif_cif_files/DT_6qjo-assembly2_002.cif",
+          "motif_cif_files/DT_7d5d-assembly1_002.cif",
+          "motif_cif_files/DT_7d5e-assembly1_002.cif",
+          "motif_cif_files/DT_7dfy-assembly1_000.cif",
+          "motif_cif_files/DT_9mxo-assembly1_000.cif",
+          "motif_cif_files/DT_9mxo-assembly2_002.cif",
+          "motif_cif_files/DT_9mxo-assembly4_002.cif",
+          "motif_cif_files/DT_9o70-assembly3_002.cif",
+          "motif_cif_files/DT_9o70-assembly4_000.cif",
+          "motif_cif_files/DT_9o70-assembly5_002.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1s9l-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_1s9l-assembly1_001.cif",
+          "motif_cif_files/DT_2lby-assembly1_001.cif",
+          "motif_cif_files/DT_4xk0-assembly1_003.cif",
+          "motif_cif_files/DT_5mbr-assembly1_000.cif",
+          "motif_cif_files/DT_5mbr-assembly1_001.cif",
+          "motif_cif_files/DT_5nys-assembly1_000.cif",
+          "motif_cif_files/DT_7q48-assembly1_001.cif",
+          "motif_cif_files/DT_8abd-assembly1_000.cif",
+          "motif_cif_files/DT_8x0s-assembly1_003.cif",
+          "motif_cif_files/DT_9l4e-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_352d-assembly3_001.cif",
+        "members": [
+          "motif_cif_files/DT_1evm-assembly1_001.cif",
+          "motif_cif_files/DT_1evn-assembly1_001.cif",
+          "motif_cif_files/DT_244d-assembly2_001.cif",
+          "motif_cif_files/DT_244d-assembly3_001.cif",
+          "motif_cif_files/DT_2gw0-assembly2_002.cif",
+          "motif_cif_files/DT_2o4f-assembly1_002.cif",
+          "motif_cif_files/DT_352d-assembly3_002.cif",
+          "motif_cif_files/DT_4r44-assembly2_001.cif",
+          "motif_cif_files/DT_5dww-assembly2_001.cif",
+          "motif_cif_files/DT_8aad-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7d33-assembly2_000.cif",
+        "members": [
+          "motif_cif_files/DT_6jjf-assembly1_000.cif",
+          "motif_cif_files/DT_6tzr-assembly1_000.cif",
+          "motif_cif_files/DT_6xt7-assembly1_011.cif",
+          "motif_cif_files/DT_7d31-assembly1_000.cif",
+          "motif_cif_files/DT_7d31-assembly1_001.cif",
+          "motif_cif_files/DT_7d32-assembly1_000.cif",
+          "motif_cif_files/DT_7d32-assembly3_001.cif",
+          "motif_cif_files/DT_7mkt-assembly1_000.cif",
+          "motif_cif_files/DT_8fi2-assembly1_000.cif",
+          "motif_cif_files/DT_9tnr-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7n7d-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_2grb-assembly1_001.cif",
+          "motif_cif_files/DT_3mij-assembly1_000.cif",
+          "motif_cif_files/DT_4l0a-assembly2_000.cif",
+          "motif_cif_files/DT_5bjp-assembly1_000.cif",
+          "motif_cif_files/DT_6e80-assembly1_000.cif",
+          "motif_cif_files/DT_6e84-assembly1_000.cif",
+          "motif_cif_files/DT_6v9b-assembly1_000.cif",
+          "motif_cif_files/DT_7q6l-assembly1_000.cif",
+          "motif_cif_files/DT_8x0s-assembly1_002.cif",
+          "motif_cif_files/DT_8x1v-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7png-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_186d-assembly1_001.cif",
+          "motif_cif_files/DT_2kyp-assembly1_001.cif",
+          "motif_cif_files/DT_5ls8-assembly1_000.cif",
+          "motif_cif_files/DT_6b3k-assembly1_000.cif",
+          "motif_cif_files/DT_6ccw-assembly1_001.cif",
+          "motif_cif_files/DT_6ia4-assembly1_001.cif",
+          "motif_cif_files/DT_7e5p-assembly1_000.cif",
+          "motif_cif_files/DT_8c7b-assembly1_002.cif",
+          "motif_cif_files/DT_9k70-assembly1_001.cif",
+          "motif_cif_files/DT_9tnr-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8psc-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_2aqy-assembly1_001.cif",
+          "motif_cif_files/DT_2l88-assembly1_001.cif",
+          "motif_cif_files/DT_2mbj-assembly1_000.cif",
+          "motif_cif_files/DT_2n6c-assembly1_000.cif",
+          "motif_cif_files/DT_5mta-assembly1_001.cif",
+          "motif_cif_files/DT_5mtg-assembly1_001.cif",
+          "motif_cif_files/DT_5nyt-assembly1_001.cif",
+          "motif_cif_files/DT_6b14-assembly1_000.cif",
+          "motif_cif_files/DT_8wa4-assembly1_000.cif",
+          "motif_cif_files/DT_9e2w-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1ph5-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_1pa6-assembly1_000.cif",
+          "motif_cif_files/DT_1ph2-assembly1_000.cif",
+          "motif_cif_files/DT_1ph4-assembly1_000.cif",
+          "motif_cif_files/DT_1ph8-assembly1_000.cif",
+          "motif_cif_files/DT_1ph9-assembly1_000.cif",
+          "motif_cif_files/DT_201d-assembly1_000.cif",
+          "motif_cif_files/DT_5j6u-assembly1_000.cif",
+          "motif_cif_files/DT_9kcq-assembly1_001.cif",
+          "motif_cif_files/DT_9u83-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_2o4f-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_244d-assembly1_000.cif",
+          "motif_cif_files/DT_244d-assembly4_000.cif",
+          "motif_cif_files/DT_2gw0-assembly1_000.cif",
+          "motif_cif_files/DT_352d-assembly1_000.cif",
+          "motif_cif_files/DT_352d-assembly4_000.cif",
+          "motif_cif_files/DT_4r44-assembly1_001.cif",
+          "motif_cif_files/DT_4r44-assembly1_004.cif",
+          "motif_cif_files/DT_4r44-assembly2_000.cif",
+          "motif_cif_files/DT_6ldm-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_3et8-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1l1h-assembly1_001.cif",
+          "motif_cif_files/DT_3em2-assembly1_001.cif",
+          "motif_cif_files/DT_3es0-assembly1_001.cif",
+          "motif_cif_files/DT_3nyp-assembly1_001.cif",
+          "motif_cif_files/DT_3nz7-assembly1_001.cif",
+          "motif_cif_files/DT_5oph-assembly1_001.cif",
+          "motif_cif_files/DT_6ftu-assembly3_001.cif",
+          "motif_cif_files/DT_6ftu-assembly5_001.cif",
+          "motif_cif_files/DT_6zx7-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_3nz7-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_1l1h-assembly1_000.cif",
+          "motif_cif_files/DT_1ph1-assembly1_002.cif",
+          "motif_cif_files/DT_230d-assembly1_000.cif",
+          "motif_cif_files/DT_2avh-assembly1_002.cif",
+          "motif_cif_files/DT_3et8-assembly1_000.cif",
+          "motif_cif_files/DT_3eui-assembly2_000.cif",
+          "motif_cif_files/DT_3eum-assembly1_000.cif",
+          "motif_cif_files/DT_8r4w-assembly1_000.cif",
+          "motif_cif_files/DT_8rw2-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6xcl-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_2lee-assembly1_001.cif",
+          "motif_cif_files/DT_2m18-assembly1_000.cif",
+          "motif_cif_files/DT_2ru7-assembly1_000.cif",
+          "motif_cif_files/DT_3ce5-assembly1_001.cif",
+          "motif_cif_files/DT_4wo2-assembly1_002.cif",
+          "motif_cif_files/DT_5ccw-assembly1_000.cif",
+          "motif_cif_files/DT_6k3x-assembly1_000.cif",
+          "motif_cif_files/DT_6xcl-assembly1_000.cif",
+          "motif_cif_files/DT_7zeo-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6zte-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_2wcn-assembly1_000.cif",
+          "motif_cif_files/DT_5nyu-assembly1_001.cif",
+          "motif_cif_files/DT_6e80-assembly1_001.cif",
+          "motif_cif_files/DT_6kvb-assembly1_000.cif",
+          "motif_cif_files/DT_6sx6-assembly1_000.cif",
+          "motif_cif_files/DT_6sx6-assembly1_001.cif",
+          "motif_cif_files/DT_8f0n-assembly1_002.cif",
+          "motif_cif_files/DT_8r6h-assembly1_001.cif",
+          "motif_cif_files/DT_8xak-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7dfy-assembly1_005.cif",
+        "members": [
+          "motif_cif_files/DT_4u5m-assembly1_000.cif",
+          "motif_cif_files/DT_6gz6-assembly1_000.cif",
+          "motif_cif_files/DT_6gz6-assembly1_002.cif",
+          "motif_cif_files/DT_7dfy-assembly1_002.cif",
+          "motif_cif_files/DT_9c46-assembly1_000.cif",
+          "motif_cif_files/DT_9ciy-assembly1_000.cif",
+          "motif_cif_files/DT_9mxo-assembly1_002.cif",
+          "motif_cif_files/DT_9mxo-assembly4_000.cif",
+          "motif_cif_files/DT_9o70-assembly5_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8eyu-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_1emq-assembly1_000.cif",
+          "motif_cif_files/DT_1u64-assembly1_001.cif",
+          "motif_cif_files/DT_2grb-assembly2_000.cif",
+          "motif_cif_files/DT_2n60-assembly1_000.cif",
+          "motif_cif_files/DT_6e84-assembly1_001.cif",
+          "motif_cif_files/DT_7q48-assembly1_000.cif",
+          "motif_cif_files/DT_8eyw-assembly1_002.cif",
+          "motif_cif_files/DT_8vx8-assembly1_002.cif",
+          "motif_cif_files/DT_9l4e-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8eyv-assembly1_003.cif",
+        "members": [
+          "motif_cif_files/DT_244d-assembly2_000.cif",
+          "motif_cif_files/DT_244d-assembly3_000.cif",
+          "motif_cif_files/DT_2gw0-assembly2_000.cif",
+          "motif_cif_files/DT_352d-assembly3_000.cif",
+          "motif_cif_files/DT_3qxr-assembly2_001.cif",
+          "motif_cif_files/DT_7ecf-assembly2_002.cif",
+          "motif_cif_files/DT_8eyu-assembly1_003.cif",
+          "motif_cif_files/DT_8eyw-assembly1_003.cif",
+          "motif_cif_files/DT_8f0n-assembly1_003.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8twh-assembly2_001.cif",
+        "members": [
+          "motif_cif_files/DT_1fqp-assembly1_001.cif",
+          "motif_cif_files/DT_2grb-assembly1_002.cif",
+          "motif_cif_files/DT_2m1g-assembly1_001.cif",
+          "motif_cif_files/DT_2m27-assembly1_000.cif",
+          "motif_cif_files/DT_3qcr-assembly1_000.cif",
+          "motif_cif_files/DT_5nyt-assembly1_000.cif",
+          "motif_cif_files/DT_8dut-assembly1_000.cif",
+          "motif_cif_files/DT_8twh-assembly5_001.cif",
+          "motif_cif_files/DT_8vx8-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8twh-assembly6_000.cif",
+        "members": [
+          "motif_cif_files/DT_1nyd-assembly1_000.cif",
+          "motif_cif_files/DT_2a5r-assembly1_001.cif",
+          "motif_cif_files/DT_5v3f-assembly1_001.cif",
+          "motif_cif_files/DT_5v3f-assembly1_002.cif",
+          "motif_cif_files/DT_7ecg-assembly2_002.cif",
+          "motif_cif_files/DT_8f0n-assembly1_001.cif",
+          "motif_cif_files/DT_8vjt-assembly2_000.cif",
+          "motif_cif_files/DT_9i1p-assembly2_000.cif",
+          "motif_cif_files/DT_9i1p-assembly2_003.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1ph4-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_1jb7-assembly1_002.cif",
+          "motif_cif_files/DT_1ph3-assembly1_002.cif",
+          "motif_cif_files/DT_1ph5-assembly1_002.cif",
+          "motif_cif_files/DT_1ph6-assembly1_002.cif",
+          "motif_cif_files/DT_1ph7-assembly1_002.cif",
+          "motif_cif_files/DT_1phj-assembly1_002.cif",
+          "motif_cif_files/DT_2n2d-assembly1_002.cif",
+          "motif_cif_files/DT_5o4d-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_2gwe-assembly5_000.cif",
+        "members": [
+          "motif_cif_files/DT_2akg-assembly1_002.cif",
+          "motif_cif_files/DT_2gwe-assembly2_000.cif",
+          "motif_cif_files/DT_2gwq-assembly2_002.cif",
+          "motif_cif_files/DT_2hbn-assembly1_002.cif",
+          "motif_cif_files/DT_3eru-assembly1_002.cif",
+          "motif_cif_files/DT_3tvb-assembly1_003.cif",
+          "motif_cif_files/DT_6ftu-assembly6_000.cif",
+          "motif_cif_files/DT_9fta-assembly1_005.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_2gwq-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_1jrn-assembly2_002.cif",
+          "motif_cif_files/DT_2gwe-assembly3_000.cif",
+          "motif_cif_files/DT_2gwe-assembly4_000.cif",
+          "motif_cif_files/DT_2gwe-assembly5_002.cif",
+          "motif_cif_files/DT_2gwq-assembly4_002.cif",
+          "motif_cif_files/DT_2hbn-assembly2_002.cif",
+          "motif_cif_files/DT_2kf8-assembly1_000.cif",
+          "motif_cif_files/DT_2km3-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_3tvb-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_1evm-assembly1_000.cif",
+          "motif_cif_files/DT_1evn-assembly1_000.cif",
+          "motif_cif_files/DT_1nzm-assembly1_001.cif",
+          "motif_cif_files/DT_2led-assembly1_000.cif",
+          "motif_cif_files/DT_2led-assembly1_004.cif",
+          "motif_cif_files/DT_4r44-assembly2_005.cif",
+          "motif_cif_files/DT_6a85-assembly1_000.cif",
+          "motif_cif_files/DT_8twh-assembly4_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_4h29-assembly1_003.cif",
+        "members": [
+          "motif_cif_files/DT_2jpz-assembly1_001.cif",
+          "motif_cif_files/DT_6q6r-assembly1_000.cif",
+          "motif_cif_files/DT_6q6r-assembly1_007.cif",
+          "motif_cif_files/DT_7ecf-assembly3_001.cif",
+          "motif_cif_files/DT_7ecg-assembly1_004.cif",
+          "motif_cif_files/DT_7kbx-assembly1_001.cif",
+          "motif_cif_files/DT_9uk6-assembly1_004.cif",
+          "motif_cif_files/DT_9va3-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_5lqg-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_2m6v-assembly1_000.cif",
+          "motif_cif_files/DT_5mta-assembly1_000.cif",
+          "motif_cif_files/DT_5mtg-assembly1_000.cif",
+          "motif_cif_files/DT_7z9l-assembly1_001.cif",
+          "motif_cif_files/DT_8c7b-assembly1_000.cif",
+          "motif_cif_files/DT_8tns-assembly1_000.cif",
+          "motif_cif_files/DT_8xgp-assembly1_000.cif",
+          "motif_cif_files/DT_9tnq-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7x7g-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_1i34-assembly1_000.cif",
+          "motif_cif_files/DT_2mfu-assembly1_000.cif",
+          "motif_cif_files/DT_4h29-assembly1_000.cif",
+          "motif_cif_files/DT_6fc9-assembly1_000.cif",
+          "motif_cif_files/DT_6ftu-assembly3_000.cif",
+          "motif_cif_files/DT_6xt7-assembly1_005.cif",
+          "motif_cif_files/DT_7xdh-assembly2_002.cif",
+          "motif_cif_files/DT_9mmf-assembly1_004.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8fhx-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_143d-assembly1_001.cif",
+          "motif_cif_files/DT_7d32-assembly1_001.cif",
+          "motif_cif_files/DT_7d32-assembly3_000.cif",
+          "motif_cif_files/DT_7zkn-assembly2_001.cif",
+          "motif_cif_files/DT_7zko-assembly1_000.cif",
+          "motif_cif_files/DT_8fhz-assembly1_000.cif",
+          "motif_cif_files/DT_9ehb-assembly1_000.cif",
+          "motif_cif_files/DT_9ehc-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8twh-assembly7_001.cif",
+        "members": [
+          "motif_cif_files/DT_2kvy-assembly1_001.cif",
+          "motif_cif_files/DT_3cco-assembly1_001.cif",
+          "motif_cif_files/DT_3mij-assembly1_001.cif",
+          "motif_cif_files/DT_5z8f-assembly1_002.cif",
+          "motif_cif_files/DT_7ntu-assembly1_001.cif",
+          "motif_cif_files/DT_8tqs-assembly1_000.cif",
+          "motif_cif_files/DT_8twh-assembly10_001.cif",
+          "motif_cif_files/DT_8x0s-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8xak-assembly2_002.cif",
+        "members": [
+          "motif_cif_files/DT_1oz8-assembly1_001.cif",
+          "motif_cif_files/DT_2f8u-assembly1_001.cif",
+          "motif_cif_files/DT_2lby-assembly1_000.cif",
+          "motif_cif_files/DT_2mgn-assembly1_001.cif",
+          "motif_cif_files/DT_5bjp-assembly1_001.cif",
+          "motif_cif_files/DT_5ob3-assembly1_000.cif",
+          "motif_cif_files/DT_7l0z-assembly1_000.cif",
+          "motif_cif_files/DT_8xak-assembly1_002.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_9hrd-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1eeg-assembly1_000.cif",
+          "motif_cif_files/DT_1s47-assembly1_001.cif",
+          "motif_cif_files/DT_2may-assembly1_001.cif",
+          "motif_cif_files/DT_6erl-assembly1_001.cif",
+          "motif_cif_files/DT_7cv3-assembly1_001.cif",
+          "motif_cif_files/DT_9hrd-assembly2_000.cif",
+          "motif_cif_files/DT_9hrg-assembly1_001.cif",
+          "motif_cif_files/DT_9hrg-assembly2_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_9o70-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_6fq2-assembly1_001.cif",
+          "motif_cif_files/DT_6qjo-assembly1_002.cif",
+          "motif_cif_files/DT_7d5f-assembly1_002.cif",
+          "motif_cif_files/DT_7dfy-assembly1_003.cif",
+          "motif_cif_files/DT_8taa-assembly1_000.cif",
+          "motif_cif_files/DT_9mxo-assembly3_002.cif",
+          "motif_cif_files/DT_9o70-assembly1_002.cif",
+          "motif_cif_files/DT_9o70-assembly3_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_9u3i-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_148d-assembly1_000.cif",
+          "motif_cif_files/DT_1d6d-assembly1_000.cif",
+          "motif_cif_files/DT_1hut-assembly1_000.cif",
+          "motif_cif_files/DT_4ni7-assembly1_000.cif",
+          "motif_cif_files/DT_5ew2-assembly1_001.cif",
+          "motif_cif_files/DT_5j05-assembly1_000.cif",
+          "motif_cif_files/DT_6gn7-assembly1_000.cif",
+          "motif_cif_files/DT_8bw5-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1jb7-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_1ph1-assembly1_000.cif",
+          "motif_cif_files/DT_1ph3-assembly1_000.cif",
+          "motif_cif_files/DT_1ph6-assembly1_000.cif",
+          "motif_cif_files/DT_1phj-assembly1_000.cif",
+          "motif_cif_files/DT_1qdi-assembly1_002.cif",
+          "motif_cif_files/DT_1qdk-assembly1_002.cif",
+          "motif_cif_files/DT_2akg-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1jrn-assembly2_001.cif",
+        "members": [
+          "motif_cif_files/DT_1qdi-assembly1_001.cif",
+          "motif_cif_files/DT_201d-assembly1_001.cif",
+          "motif_cif_files/DT_2gwe-assembly4_001.cif",
+          "motif_cif_files/DT_2gwq-assembly1_001.cif",
+          "motif_cif_files/DT_2hbn-assembly2_001.cif",
+          "motif_cif_files/DT_6ftu-assembly1_001.cif",
+          "motif_cif_files/DT_6ftu-assembly2_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1ph7-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_2aqy-assembly1_000.cif",
+          "motif_cif_files/DT_2e4i-assembly1_000.cif",
+          "motif_cif_files/DT_2f8u-assembly1_000.cif",
+          "motif_cif_files/DT_2mco-assembly1_001.cif",
+          "motif_cif_files/DT_6ftu-assembly4_000.cif",
+          "motif_cif_files/DT_6m05-assembly1_000.cif",
+          "motif_cif_files/DT_8pse-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_2avj-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_2akg-assembly1_001.cif",
+          "motif_cif_files/DT_2gwe-assembly2_001.cif",
+          "motif_cif_files/DT_2gwe-assembly6_001.cif",
+          "motif_cif_files/DT_3eqw-assembly1_001.cif",
+          "motif_cif_files/DT_6ftu-assembly7_001.cif",
+          "motif_cif_files/DT_9uk8-assembly2_001.cif",
+          "motif_cif_files/DT_9uk8-assembly3_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_4rkv-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_1j6s-assembly1_000.cif",
+          "motif_cif_files/DT_1j8g-assembly3_000.cif",
+          "motif_cif_files/DT_1s45-assembly1_000.cif",
+          "motif_cif_files/DT_2gku-assembly1_001.cif",
+          "motif_cif_files/DT_7jku-assembly1_001.cif",
+          "motif_cif_files/DT_7ll0-assembly1_001.cif",
+          "motif_cif_files/DT_8vx8-assembly1_003.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6c65-assembly2_000.cif",
+        "members": [
+          "motif_cif_files/DT_1my9-assembly1_000.cif",
+          "motif_cif_files/DT_1myq-assembly1_000.cif",
+          "motif_cif_files/DT_2rqj-assembly1_000.cif",
+          "motif_cif_files/DT_6c63-assembly2_000.cif",
+          "motif_cif_files/DT_6c64-assembly2_000.cif",
+          "motif_cif_files/DT_8d79-assembly1_000.cif",
+          "motif_cif_files/DT_8xak-assembly2_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6jj0-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1rau-assembly1_002.cif",
+          "motif_cif_files/DT_2kbp-assembly1_001.cif",
+          "motif_cif_files/DT_6kfj-assembly1_001.cif",
+          "motif_cif_files/DT_6l92-assembly1_001.cif",
+          "motif_cif_files/DT_6o2l-assembly1_001.cif",
+          "motif_cif_files/DT_7do1-assembly1_001.cif",
+          "motif_cif_files/DT_7euc-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8fhv-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_8fi0-assembly1_000.cif",
+          "motif_cif_files/DT_8fi1-assembly1_000.cif",
+          "motif_cif_files/DT_8fi7-assembly1_000.cif",
+          "motif_cif_files/DT_8fi8-assembly1_000.cif",
+          "motif_cif_files/DT_8g2n-assembly1_002.cif",
+          "motif_cif_files/DT_8t8t-assembly2_002.cif",
+          "motif_cif_files/DT_9ehe-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_9gvi-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_1d59-assembly1_002.cif",
+          "motif_cif_files/DT_26jr-assembly1_000.cif",
+          "motif_cif_files/DT_2kka-assembly1_000.cif",
+          "motif_cif_files/DT_6ia4-assembly1_000.cif",
+          "motif_cif_files/DT_6r9l-assembly1_001.cif",
+          "motif_cif_files/DT_7alu-assembly1_000.cif",
+          "motif_cif_files/DT_7oqt-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_2gwq-assembly3_002.cif",
+        "members": [
+          "motif_cif_files/DT_1jrn-assembly1_002.cif",
+          "motif_cif_files/DT_2gwe-assembly1_000.cif",
+          "motif_cif_files/DT_2gwe-assembly6_002.cif",
+          "motif_cif_files/DT_4r45-assembly1_002.cif",
+          "motif_cif_files/DT_5j6u-assembly1_002.cif",
+          "motif_cif_files/DT_6ftu-assembly2_002.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_2jpz-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_156d-assembly1_000.cif",
+          "motif_cif_files/DT_26jt-assembly1_000.cif",
+          "motif_cif_files/DT_5zev-assembly1_000.cif",
+          "motif_cif_files/DT_7cv3-assembly1_000.cif",
+          "motif_cif_files/DT_7x2z-assembly1_000.cif",
+          "motif_cif_files/DT_7x3a-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_2jsk-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_2jsm-assembly1_001.cif",
+          "motif_cif_files/DT_2kyp-assembly1_000.cif",
+          "motif_cif_files/DT_6a7y-assembly1_001.cif",
+          "motif_cif_files/DT_6tcg-assembly1_001.cif",
+          "motif_cif_files/DT_8c7b-assembly1_001.cif",
+          "motif_cif_files/DT_8x1v-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_4rne-assembly2_004.cif",
+        "members": [
+          "motif_cif_files/DT_1j8g-assembly4_001.cif",
+          "motif_cif_files/DT_3qsc-assembly1_000.cif",
+          "motif_cif_files/DT_4rj1-assembly1_001.cif",
+          "motif_cif_files/DT_4rne-assembly1_004.cif",
+          "motif_cif_files/DT_4xk0-assembly1_002.cif",
+          "motif_cif_files/DT_6jjh-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6qjo-assembly4_002.cif",
+        "members": [
+          "motif_cif_files/DT_6jce-assembly1_002.cif",
+          "motif_cif_files/DT_6qjo-assembly3_002.cif",
+          "motif_cif_files/DT_7d5e-assembly1_000.cif",
+          "motif_cif_files/DT_7d5e-assembly2_002.cif",
+          "motif_cif_files/DT_7d5f-assembly1_000.cif",
+          "motif_cif_files/DT_9o70-assembly2_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6tcg-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_5mcr-assembly1_000.cif",
+          "motif_cif_files/DT_6k84-assembly1_002.cif",
+          "motif_cif_files/DT_6zl2-assembly1_001.cif",
+          "motif_cif_files/DT_7atz-assembly1_001.cif",
+          "motif_cif_files/DT_7x3a-assembly1_001.cif",
+          "motif_cif_files/DT_8q4o-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8zve-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_2hri-assembly1_000.cif",
+          "motif_cif_files/DT_5lig-assembly1_000.cif",
+          "motif_cif_files/DT_7n7d-assembly1_001.cif",
+          "motif_cif_files/DT_7w0x-assembly1_001.cif",
+          "motif_cif_files/DT_7ys7-assembly1_001.cif",
+          "motif_cif_files/DT_8p6b-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1ph4-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1pa6-assembly1_001.cif",
+          "motif_cif_files/DT_1ph3-assembly1_001.cif",
+          "motif_cif_files/DT_1ph5-assembly1_001.cif",
+          "motif_cif_files/DT_1ph7-assembly1_001.cif",
+          "motif_cif_files/DT_1ph9-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_2gwe-assembly5_001.cif",
+        "members": [
+          "motif_cif_files/DT_1qdk-assembly1_001.cif",
+          "motif_cif_files/DT_2avj-assembly3_001.cif",
+          "motif_cif_files/DT_2gwe-assembly3_001.cif",
+          "motif_cif_files/DT_2gwq-assembly4_001.cif",
+          "motif_cif_files/DT_9fta-assembly1_004.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_5bjo-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_2grb-assembly1_000.cif",
+          "motif_cif_files/DT_2n3m-assembly1_000.cif",
+          "motif_cif_files/DT_4l0a-assembly1_000.cif",
+          "motif_cif_files/DT_6e81-assembly1_000.cif",
+          "motif_cif_files/DT_9vmz-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6kfl-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_21cc-assembly1_000.cif",
+          "motif_cif_files/DT_4wb3-assembly3_000.cif",
+          "motif_cif_files/DT_6jjf-assembly1_001.cif",
+          "motif_cif_files/DT_6jjg-assembly1_001.cif",
+          "motif_cif_files/DT_8vjt-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6l8m-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_2kze-assembly1_001.cif",
+          "motif_cif_files/DT_2lpw-assembly1_001.cif",
+          "motif_cif_files/DT_2n21-assembly1_000.cif",
+          "motif_cif_files/DT_6ac7-assembly1_001.cif",
+          "motif_cif_files/DT_6l8m-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6v9b-assembly1_003.cif",
+        "members": [
+          "motif_cif_files/DT_1d59-assembly1_001.cif",
+          "motif_cif_files/DT_5v3f-assembly1_000.cif",
+          "motif_cif_files/DT_5v3f-assembly1_003.cif",
+          "motif_cif_files/DT_6v9b-assembly1_001.cif",
+          "motif_cif_files/DT_6v9d-assembly1_003.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7d5e-assembly2_000.cif",
+        "members": [
+          "motif_cif_files/DT_21cc-assembly1_001.cif",
+          "motif_cif_files/DT_2awe-assembly1_001.cif",
+          "motif_cif_files/DT_2ms9-assembly1_000.cif",
+          "motif_cif_files/DT_4wb2-assembly1_000.cif",
+          "motif_cif_files/DT_7d5d-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7oaw-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_7oa3-assembly2_000.cif",
+          "motif_cif_files/DT_7oaw-assembly1_000.cif",
+          "motif_cif_files/DT_7oaw-assembly1_001.cif",
+          "motif_cif_files/DT_7oax-assembly1_000.cif",
+          "motif_cif_files/DT_7oax-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8ht7-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_26jr-assembly1_001.cif",
+          "motif_cif_files/DT_26jt-assembly1_001.cif",
+          "motif_cif_files/DT_2lpw-assembly1_000.cif",
+          "motif_cif_files/DT_7cps-assembly1_000.cif",
+          "motif_cif_files/DT_7xfv-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8k85-assembly3_000.cif",
+        "members": [
+          "motif_cif_files/DT_5zev-assembly1_001.cif",
+          "motif_cif_files/DT_8k7w-assembly1_001.cif",
+          "motif_cif_files/DT_8k85-assembly1_000.cif",
+          "motif_cif_files/DT_8k85-assembly2_000.cif",
+          "motif_cif_files/DT_8k85-assembly2_007.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8y2r-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_2lod-assembly1_001.cif",
+          "motif_cif_files/DT_8q4o-assembly1_001.cif",
+          "motif_cif_files/DT_8zw3-assembly1_001.cif",
+          "motif_cif_files/DT_9kg4-assembly1_001.cif",
+          "motif_cif_files/DT_9pa0-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_9mxo-assembly3_000.cif",
+        "members": [
+          "motif_cif_files/DT_2awe-assembly1_003.cif",
+          "motif_cif_files/DT_4wb3-assembly1_000.cif",
+          "motif_cif_files/DT_9mxo-assembly2_000.cif",
+          "motif_cif_files/DT_9o70-assembly4_002.cif",
+          "motif_cif_files/DT_9p3a-assembly1_002.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1jb7-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1ph1-assembly1_001.cif",
+          "motif_cif_files/DT_1ph6-assembly1_001.cif",
+          "motif_cif_files/DT_1ph8-assembly1_001.cif",
+          "motif_cif_files/DT_1phj-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_2jsl-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_2kvy-assembly1_000.cif",
+          "motif_cif_files/DT_5mcr-assembly1_001.cif",
+          "motif_cif_files/DT_7cps-assembly1_001.cif",
+          "motif_cif_files/DT_9kg4-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_2kf7-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_1d59-assembly1_000.cif",
+          "motif_cif_files/DT_1d59-assembly2_000.cif",
+          "motif_cif_files/DT_2kow-assembly1_000.cif",
+          "motif_cif_files/DT_6a7y-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_4q9r-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_2m53-assembly1_001.cif",
+          "motif_cif_files/DT_4q9q-assembly1_000.cif",
+          "motif_cif_files/DT_9gvv-assembly1_001.cif",
+          "motif_cif_files/DT_9u83-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8k85-assembly2_005.cif",
+        "members": [
+          "motif_cif_files/DT_2mgn-assembly1_000.cif",
+          "motif_cif_files/DT_8k85-assembly1_001.cif",
+          "motif_cif_files/DT_8k85-assembly2_002.cif",
+          "motif_cif_files/DT_8k85-assembly3_002.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8k85-assembly2_006.cif",
+        "members": [
+          "motif_cif_files/DT_4ts2-assembly1_000.cif",
+          "motif_cif_files/DT_7zj5-assembly1_000.cif",
+          "motif_cif_files/DT_8k85-assembly2_001.cif",
+          "motif_cif_files/DT_8k85-assembly3_003.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8taa-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_6jji-assembly1_001.cif",
+          "motif_cif_files/DT_7dfy-assembly1_001.cif",
+          "motif_cif_files/DT_9ciy-assembly1_001.cif",
+          "motif_cif_files/DT_9p3a-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1pa6-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_1ph2-assembly1_002.cif",
+          "motif_cif_files/DT_1ph8-assembly1_002.cif",
+          "motif_cif_files/DT_1ph9-assembly1_002.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_4kzd-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_4kzd-assembly3_000.cif",
+          "motif_cif_files/DT_4kzd-assembly4_000.cif",
+          "motif_cif_files/DT_6t2g-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6zrm-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_8c7a-assembly1_001.cif",
+          "motif_cif_files/DT_8ijc-assembly1_001.cif",
+          "motif_cif_files/DT_9gvi-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7d5e-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_6jce-assembly1_001.cif",
+          "motif_cif_files/DT_7d5e-assembly2_001.cif",
+          "motif_cif_files/DT_7d5f-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7oav-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_7oav-assembly1_000.cif",
+          "motif_cif_files/DT_7oav-assembly1_002.cif",
+          "motif_cif_files/DT_7oav-assembly1_003.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7xfv-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1nyd-assembly1_001.cif",
+          "motif_cif_files/DT_6jwd-assembly1_001.cif",
+          "motif_cif_files/DT_7xfv-assembly1_002.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_9o70-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_1oz8-assembly1_000.cif",
+          "motif_cif_files/DT_2ms9-assembly1_001.cif",
+          "motif_cif_files/DT_9mxo-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_9p3a-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_3tvb-assembly1_001.cif",
+          "motif_cif_files/DT_6jji-assembly1_000.cif",
+          "motif_cif_files/DT_6ycv-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1qdf-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_2m6w-assembly1_002.cif",
+          "motif_cif_files/DT_4ni9-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_3eui-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_143d-assembly1_000.cif",
+          "motif_cif_files/DT_2n2d-assembly1_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_4u92-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_7csk-assembly1_000.cif",
+          "motif_cif_files/DT_7ps8-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_5dea-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_2la5-assembly1_001.cif",
+          "motif_cif_files/DT_6qjo-assembly2_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_5dea-assembly2_001.cif",
+        "members": [
+          "motif_cif_files/DT_5de5-assembly1_001.cif",
+          "motif_cif_files/DT_5de5-assembly2_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_7oax-assembly1_003.cif",
+        "members": [
+          "motif_cif_files/DT_7oa3-assembly1_000.cif",
+          "motif_cif_files/DT_7oax-assembly1_002.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8k85-assembly2_003.cif",
+        "members": [
+          "motif_cif_files/DT_8k85-assembly2_004.cif",
+          "motif_cif_files/DT_8k85-assembly3_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1qdh-assembly1_000.cif",
+        "members": [
+          "motif_cif_files/DT_1bub-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_2m6w-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_9kcq-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_4kze-assembly3_000.cif",
+        "members": [
+          "motif_cif_files/DT_4kze-assembly4_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_4u5m-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_2ms9-assembly1_002.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_4u92-assembly1_005.cif",
+        "members": [
+          "motif_cif_files/DT_7z9l-assembly1_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6a85-assembly1_002.cif",
+        "members": [
+          "motif_cif_files/DT_1d59-assembly2_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6jje-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_4wb2-assembly3_000.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_6qjo-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_6qjo-assembly3_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_8t8t-assembly1_001.cif",
+        "members": [
+          "motif_cif_files/DT_8t8t-assembly2_001.cif"
+        ]
+      },
+      {
+        "representative": "motif_cif_files/DT_1c32-assembly1_000.cif",
+        "members": []
+      },
+      {
+        "representative": "motif_cif_files/DT_1c35-assembly1_000.cif",
+        "members": []
+      },
+      {
+        "representative": "motif_cif_files/DT_1evo-assembly1_002.cif",
+        "members": []
+      },
+      {
+        "representative": "motif_cif_files/DT_1qdi-assembly1_000.cif",
+        "members": []
+      },
+      {
+        "representative": "motif_cif_files/DT_1qdk-assembly1_000.cif",
+        "members": []
+      },
+      {
+        "representative": "motif_cif_files/DT_2rsk-assembly1_000.cif",
+        "members": []
+      },
+      {
+        "representative": "motif_cif_files/DT_2rsk-assembly1_001.cif",
+        "members": []
+      },
+      {
+        "representative": "motif_cif_files/DT_4kze-assembly1_000.cif",
+        "members": []
+      },
+      {
+        "representative": "motif_cif_files/DT_5de8-assembly1_001.cif",
+        "members": []
+      },
+      {
+        "representative": "motif_cif_files/DT_5de8-assembly2_001.cif",
+        "members": []
+      },
+      {
+        "representative": "motif_cif_files/DT_5dww-assembly1_000.cif",
+        "members": []
+      },
+      {
+        "representative": "motif_cif_files/DT_5ew1-assembly1_000.cif",
+        "members": []
+      },
+      {
+        "representative": "motif_cif_files/DT_6qjo-assembly4_001.cif",
+        "members": []
+      },
+      {
+        "representative": "motif_cif_files/DT_7ntu-assembly2_001.cif",
+        "members": []
+      },
+      {
+        "representative": "motif_cif_files/DT_7oaw-assembly1_003.cif",
+        "members": []
+      },
+      {
+        "representative": "motif_cif_files/DT_8g2n-assembly1_001.cif",
+        "members": []
+      }
+    ]
+  }
+}
