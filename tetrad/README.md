@@ -87,6 +87,34 @@ The same `canonicalize` is used for positives (step 02), negatives (step 03)
 and inference candidates (step 06), so any given tetrad geometry always
 yields the same feature vector.
 
+## Negative generation: tuple-level exclusion (partial-ignore)
+
+A G-quadruplex structure typically contains **all** of its guanines in some
+annotated tetrad.  A naïve residue-level exclusion (drop any candidate
+containing *any* residue from *any* tetrad) therefore eliminates every
+4-guanine tuple from the negative set — including "chimeras" that mix
+guanines from two different stacking levels (e.g. G2, G2, G5, G5).  These
+chimeras have nearly-identical C1' geometry to real tetrads (same square
+arrangement, same ~11.5 Å side, ~16 Å diagonal, coplanar) yet are *not*
+tetrads.  Without them as hard negatives, the model cannot learn to
+distinguish them and produces false positives at inference time.
+
+Step 03 instead uses **tuple-level exclusion** with a partial-ignore rule,
+directly analogous to "ignore regions" in object detection (YOLO, Faster
+R-CNN), where ambiguous overlap cases are discarded rather than forced into
+positive or negative:
+
+| Candidate shares with any annotated tetrad | Treatment | Rationale |
+|----------------------------------------------|-----------|-----------|
+| 4 / 4 residues | **ignore** (it is the positive itself) | already in the positive set |
+| 3 / 4 residues | **ignore** (ambiguous, "almost a tetrad") | forcing it negative would be methodologically questionable; a reviewer could argue it is a borderline case |
+| 0 – 2 / 4 residues | **negative** | includes 2+2 chimeras (two residues from one tetrad level, two from another) — the hardest negatives, and the ones the model must learn to reject |
+
+The threshold (`--max-shared-with-tetrad`, default 2) is configurable.  This
+keeps the negative set free of both positives and ambiguous near-positives,
+while retaining the informative hard negatives that a residue-level exclusion
+would have discarded.
+
 ## Pipeline steps
 
 | Step | Script | Output | Description |
@@ -94,7 +122,7 @@ yields the same feature vector.
 | 01 | `01-extract-g4-tetrads.py` | `tetrad_motifs_by_pdb.json`, `tetrad_exclusion_sets.json` | Filter ElTetrado JSON for G-tetrads (G + DG), apply blacklist, emit per-(pdb,assembly) motif list + exclusion residue sets. |
 | 02 | `02-generate-positive.py` | `motif_cif_files/G4_*.cif` | For each annotated tetrad, open the assembly mmCIF, locate the four guanines, canonicalise their order, write one CIF per tetrad. |
 | —  | `distiller` (external, run by user) + `strip-distiller-json.py` | `approximate-*.json` (×3 methods, slim) | Cluster the 2541 positive CIFs by geometric redundancy (PCA-based approximate mode), then strip diagnostics so only `clustering.clusters` remains (a few hundred KB total). Same JSON shape as the GNRA clustering. The `exact` mode is omitted because all-vs-all nRMSD over 2541 structures is computationally infeasible; the approximate mode is sufficient for redundancy removal. |
-| 03 | `03-generate-negative.py` | `negative_cif_files/NEG_*.cif` | For each stem, KD-tree over all nucleotide C1' atoms, enumerate spatially close 4-tuples (radius 18 Å), exclude tuples touching annotated tetrad residues, prune by coplanarity & max distance, sample `K × #positives` per file. |
+| 03 | `03-generate-negative.py` | `negative_cif_files/NEG_*.cif` | For each stem, KD-tree over all nucleotide C1' atoms, enumerate spatially close 4-tuples (radius 18 Å), prune by coplanarity & max distance, apply **tuple-level exclusion** (ignore candidates sharing >2 residues with any annotated tetrad — see below), sample `K × #positives` per file. |
 | 04 | `04-generate-csv.py` | `geometric_features.csv` | Compute the 16 geometric features + `source_file` + `tetrad` label for every positive and negative CIF. |
 | 05 | `05-cluster-and-train.ipynb` | `*.pkl` (15 bundles) | Load the CSV, drop raw angle columns, build train/test splits per clustering variant, train 5 classifiers × 3 splits, pickle each as a self-contained bundle. |
 | 06 | `06-run-inference.py` | `*-predictions.csv` (+ optional PNG) | On an arbitrary structure: collect guanines, KD-tree enumerate tetrad-shaped 4-tuples, canonicalise, featurise, classify, emit CSV with predictions + probabilities + residue metadata. |
@@ -175,6 +203,9 @@ defaults reflect this:
   best-fit plane (real tetrads are ~0; this is generous to accommodate
   imperfect crystallographic planarity).
 * `--k 5` — negatives multiplier (per file: `5 × #positive tetrads` sampled).
+* `--max-shared-with-tetrad 2` — tuple-level exclusion threshold: a candidate
+  sharing more than this many residues with any annotated tetrad is ignored
+  (4/4 = positive, 3/4 = ambiguous, 0–2/4 = negative).
 
 All are CLI-overridable.
 
@@ -187,7 +218,7 @@ All are CLI-overridable.
 | Annotation source | FR3D atlas (`hl_3.97.json`) | ElTetrado / OnQuadro (`json/*.json`) |
 | Molecule type | RNA only | RNA + DNA |
 | Positive ordering | Sequence order | Geometric canonisation (PCA + cyclic + handedness) |
-| Negative generation | Structural elements (stems/loops/hairpins) | KD-tree spatial neighbourhoods (exclusion-set + coplanarity pruning) |
+| Negative generation | Structural elements (stems/loops/hairpins) | KD-tree spatial neighbourhoods + **tuple-level partial-ignore exclusion** (hard 2+2 chimeras kept) |
 | Inference candidates | 8-nt sliding sequence window | KD-tree 4-tuples over guanines (pruned) |
 | Clustering | `distiller` external (exact + approximate) | `distiller` external, **approximate only** (exact infeasible at 2541 structures) |
 | Training notebook | `10-remove-redundancy-and-train-models.ipynb` | `05-cluster-and-train.ipynb` (N=4, label `tetrad`) |

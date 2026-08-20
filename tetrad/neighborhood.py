@@ -65,6 +65,8 @@ def enumerate_tuples(
     max_distance: Optional[float] = None,
     coplanarity_rmsd: Optional[float] = None,
     dedup: bool = True,
+    tuple_exclusion: Optional[Sequence[frozenset]] = None,
+    max_shared_with_tetrad: int = 2,
 ) -> List[Tuple[Tuple[int, ...], Tuple[Point, ...]]]:
     """Enumerate N-tuples of nearby points.
 
@@ -77,12 +79,13 @@ def enumerate_tuples(
     radius
         Neighbourhood radius for the KD-tree query (Å).
     seed_exclusion
-        Residue IDs that must not appear in any returned tuple (e.g. residues
-        that belong to annotated tetrads when generating negatives).  Must be
-        paired with ``residue_ids``.  May be ``None`` to disable exclusion.
+        Residue IDs that must not appear in any returned tuple.  Legacy
+        residue-level exclusion — when set, *any* tuple containing one of these
+        residues is dropped.  Prefer ``tuple_exclusion`` for tetrad-aware
+        exclusion (see below).  May be ``None``.
     residue_ids
-        Residue IDs parallel to ``coords``; required when ``seed_exclusion`` is
-        given or when ``dedup`` is ``True``.
+        Residue IDs parallel to ``coords``; required when ``seed_exclusion`` or
+        ``tuple_exclusion`` is given or when ``dedup`` is ``True``.
     max_distance
         If set, drop tuples whose maximum pairwise C1' distance exceeds this
         value (Å).  Cheap geometric pruning.
@@ -92,6 +95,20 @@ def enumerate_tuples(
     dedup
         If ``True``, remove tuples that are permutations of each other (same
         set of residues), keeping the canonical-order representative.
+    tuple_exclusion
+        Set of ``frozenset`` objects, each containing the residue IDs of one
+        annotated motif (tetrad).  Used for *tuple-level* exclusion: a
+        candidate tuple is dropped only if it shares more than
+        ``max_shared_with_tetrad`` residues with *any* annotated motif.  This
+        keeps ``4/4``-shared tuples (the motif itself) and ``3/4``-shared
+        tuples (ambiguous, "almost a tetrad") out of the negatives, while
+        allowing ``0/4``–``2/4``-shared tuples (including 2+2 chimeras that
+        mix residues from two different tetrad levels) as hard negatives —
+        directly analogous to "ignore regions" in object detection.
+    max_shared_with_tetrad
+        Maximum number of residues a candidate may share with a single
+        annotated motif before being ignored.  Default ``2``: tuples sharing
+        3 or 4 residues with any tetrad are ignored; 0–2 are kept.
 
     Returns
     -------
@@ -107,6 +124,7 @@ def enumerate_tuples(
     nbrs = tree.query_ball_tree(tree, r=radius)
 
     exclusion_set = set(seed_exclusion) if seed_exclusion is not None else None
+    tuple_excl = list(tuple_exclusion) if tuple_exclusion is not None else []
     if residue_ids is None:
         residue_ids = [(f"c{i}", i, "") for i in range(len(pts))]
 
@@ -123,8 +141,18 @@ def enumerate_tuples(
         for combo in combinations(neigh, n):
             if i not in combo:
                 continue
+            combo_residue_ids = [residue_ids[j] for j in combo]
             if exclusion_set is not None:
-                if any(residue_ids[j] in exclusion_set for j in combo):
+                if any(rid in exclusion_set for rid in combo_residue_ids):
+                    continue
+            if tuple_excl:
+                candidate_set = frozenset(combo_residue_ids)
+                ignored = False
+                for tetrad_set in tuple_excl:
+                    if len(candidate_set & tetrad_set) > max_shared_with_tetrad:
+                        ignored = True
+                        break
+                if ignored:
                     continue
             if max_distance is not None:
                 sub = pts[list(combo)]
@@ -136,7 +164,7 @@ def enumerate_tuples(
                 if _plane_rmsd(sub) > coplanarity_rmsd:
                     continue
             if dedup:
-                key = frozenset(residue_ids[j] for j in combo)
+                key = frozenset(combo_residue_ids)
                 if key in seen_keys:
                     continue
                 seen_keys.add(key)
@@ -169,16 +197,19 @@ def sample_negatives(
     residue_ids: Sequence[ResidueId],
     n: int,
     radius: float,
-    exclusion: Sequence[ResidueId],
-    target_count: int,
-    rng: np.random.Generator,
+    exclusion: Optional[Sequence[ResidueId]] = None,
+    target_count: int = 0,
+    rng: Optional[np.random.Generator] = None,
     max_distance: Optional[float] = None,
+    tuple_exclusion: Optional[Sequence[frozenset]] = None,
+    max_shared_with_tetrad: int = 2,
 ) -> List[Tuple[Tuple[int, ...], Tuple[Point, ...]]]:
     """Sample up to ``target_count`` negative N-tuples.
 
-    Enumerates all candidate tuples (deduplicated, excluding ``exclusion``
-    residues) and then randomly samples ``target_count`` of them.  When the
-    candidate pool is smaller than ``target_count`` all of it is returned.
+    Enumerates all candidate tuples (deduplicated, with tuple-level exclusion
+    via ``tuple_exclusion`` when provided, otherwise legacy residue-level
+    ``exclusion``) and then randomly samples ``target_count`` of them.  When
+    the candidate pool is smaller than ``target_count`` all of it is returned.
     """
     candidates = enumerate_tuples(
         coords,
@@ -188,8 +219,12 @@ def sample_negatives(
         residue_ids=residue_ids,
         max_distance=max_distance,
         dedup=True,
+        tuple_exclusion=tuple_exclusion,
+        max_shared_with_tetrad=max_shared_with_tetrad,
     )
     if len(candidates) <= target_count:
         return candidates
+    if rng is None:
+        rng = np.random.default_rng()
     idx = rng.choice(len(candidates), size=target_count, replace=False)
     return [candidates[i] for i in idx]

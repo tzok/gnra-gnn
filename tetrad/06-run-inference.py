@@ -15,6 +15,12 @@ pickle produced by ``05-cluster-and-train.ipynb``, this script:
    bundled scaler + classifier, and writes a CSV with per-candidate
    prediction, positive-class probability and residue metadata.
 
+Predictions are derived from the positive-class probability at a 0.5
+threshold (rather than ``clf.predict``) so that the label and the reported
+probability are always consistent.  This avoids the known SVM Platt-scaling
+inconsistency where ``predict`` (sign of ``decision_function``) and
+``predict_proba`` (sigmoid calibration) can disagree near the boundary.
+
 This is the analogue of ``11-run-trained-model-on-structure.py`` from the
 GNRA pipeline.  The fundamental difference is that candidates are *not*
 produced by a sliding sequence window (a tetrad is non-contiguous and may
@@ -262,8 +268,16 @@ def main() -> None:
         raise ValueError("Feature matrix contains NaN values after reindexing; refusing to run inference.")
 
     transformed = scaler.transform(feature_matrix)
-    predictions = clf.predict(transformed)
     probabilities = positive_class_probabilities(clf, transformed, positive_label)
+    # Derive predictions from probabilities when available (threshold 0.5),
+    # so that the label and the reported probability are always consistent.
+    # This avoids the known SVM Platt-scaling inconsistency where predict()
+    # (sign of decision_function) and predict_proba() (sigmoid calibration)
+    # can disagree near the boundary.
+    if probabilities is not None:
+        predictions = probabilities >= 0.5
+    else:
+        predictions = clf.predict(transformed)
 
     results = pd.DataFrame(metadata_rows)
     results["prediction"] = predictions

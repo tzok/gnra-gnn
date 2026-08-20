@@ -51,6 +51,7 @@ DEFAULT_MAX_DISTANCE = 18.0
 DEFAULT_COPLANARITY_RMSD = 1.5
 DEFAULT_K = 5
 DEFAULT_SEED = 42
+DEFAULT_MAX_SHARED = 2
 
 
 def mmcif_path(stem: str, mirror_dir: str) -> str:
@@ -83,9 +84,32 @@ def collect_nucleotides(
     return residues, coords, ids
 
 
+def build_tuple_exclusion(
+    motifs: List[Dict[str, Any]],
+) -> List[frozenset]:
+    """Build the set of frozensets, one per annotated tetrad, for tuple-level exclusion.
+
+    Each frozenset contains the ``(chain_id, residue_number, insertion_code)``
+    tuples of the four residues of one tetrad.  ``enumerate_tuples`` will use
+    this to ignore candidate 4-tuples that share more than
+    ``max_shared_with_tetrad`` residues with any annotated tetrad.
+    """
+    excluded: List[frozenset] = []
+    for motif in motifs:
+        unit_ids = motif.get("unit_ids", [])
+        if len(unit_ids) != TETRAD_SIZE:
+            continue
+        rid_set = frozenset(
+            (u["chain_id"], u["residue_number"], u.get("insertion_code") or "")
+            for u in unit_ids
+        )
+        excluded.append(rid_set)
+    return excluded
+
+
 def process_one_stem(
     stem: str,
-    exclusion: List[Tuple[str, int, str]],
+    tuple_exclusion: List[frozenset],
     positive_count: int,
     mirror_dir: str,
     output_dir: str,
@@ -94,6 +118,7 @@ def process_one_stem(
     coplanarity_rmsd: Optional[float],
     k: int,
     seed: int,
+    max_shared_with_tetrad: int,
 ) -> Tuple[str, int, int]:
     """Generate negatives for one (pdb, assembly) stem.
 
@@ -116,17 +141,16 @@ def process_one_stem(
     if len(residues) < TETRAD_SIZE:
         return stem, 0, 0
 
-    exclusion_set = set(map(tuple, exclusion))
-
     candidates = enumerate_tuples(
         coords,
         n=TETRAD_SIZE,
         radius=radius,
-        seed_exclusion=exclusion_set,
         residue_ids=ids,
         max_distance=max_distance,
         coplanarity_rmsd=coplanarity_rmsd,
         dedup=True,
+        tuple_exclusion=tuple_exclusion,
+        max_shared_with_tetrad=max_shared_with_tetrad,
     )
 
     if not candidates:
@@ -171,12 +195,7 @@ def main() -> None:
     parser.add_argument(
         "--motifs",
         default=str(Path(__file__).parent / "tetrad_motifs_by_pdb.json"),
-        help="Path to tetrad_motifs_by_pdb.json (for positive counts per stem)",
-    )
-    parser.add_argument(
-        "--exclusion",
-        default=str(Path(__file__).parent / "tetrad_exclusion_sets.json"),
-        help="Path to tetrad_exclusion_sets.json",
+        help="Path to tetrad_motifs_by_pdb.json (positive annotations + tuple exclusion source)",
     )
     parser.add_argument(
         "--mirror",
@@ -193,6 +212,16 @@ def main() -> None:
     parser.add_argument("--coplanarity-rmsd", type=float, default=DEFAULT_COPLANARITY_RMSD)
     parser.add_argument("--k", type=int, default=DEFAULT_K)
     parser.add_argument("--seed", type=int, default=DEFAULT_SEED)
+    parser.add_argument(
+        "--max-shared-with-tetrad",
+        type=int,
+        default=DEFAULT_MAX_SHARED,
+        help=(
+            "Maximum residues a candidate may share with a single annotated "
+            "tetrad before being ignored (default: 2 → 3/4 and 4/4 shared "
+            "tuples are ignored, 0-2/4 are kept as hard negatives)"
+        ),
+    )
     parser.add_argument("--workers", type=int, default=os.cpu_count())
     args = parser.parse_args()
 
@@ -201,22 +230,21 @@ def main() -> None:
 
     with open(args.motifs) as f:
         motifs_by_pdb: Dict[str, List[Dict[str, Any]]] = json.load(f)
-    with open(args.exclusion) as f:
-        exclusion_by_pdb: Dict[str, List[List[Any]]] = json.load(f)
 
     print(f"Loaded {sum(len(v) for v in motifs_by_pdb.values())} positives across {len(motifs_by_pdb)} stems")
     print(
         f"Params: radius={args.radius} Å, max_distance={args.max_distance} Å, "
-        f"coplanarity_rmsd={args.coplanarity_rmsd} Å, K={args.k}, seed={args.seed}"
+        f"coplanarity_rmsd={args.coplanarity_rmsd} Å, K={args.k}, seed={args.seed}, "
+        f"max_shared_with_tetrad={args.max_shared_with_tetrad}"
     )
 
     tasks = []
     for stem, motifs in motifs_by_pdb.items():
-        exclusion = [tuple(e) for e in exclusion_by_pdb.get(stem, [])]
+        tuple_excl = build_tuple_exclusion(motifs)
         tasks.append(
             (
                 stem,
-                exclusion,
+                tuple_excl,
                 len(motifs),
                 args.mirror,
                 output_dir,
@@ -225,6 +253,7 @@ def main() -> None:
                 args.coplanarity_rmsd,
                 args.k,
                 args.seed + hash(stem) % (2**31),
+                args.max_shared_with_tetrad,
             )
         )
 
