@@ -115,6 +115,35 @@ keeps the negative set free of both positives and ambiguous near-positives,
 while retaining the informative hard negatives that a residue-level exclusion
 would have discarded.
 
+## Known limitation: geometric degeneracy of single-tetrad features
+
+Despite the partial-ignore exclusion strategy, the single-tetrad (N=4) model
+cannot reliably distinguish real G-tetrads from **chimera** tuples that mix
+guanines from two different stacking levels 3 levels apart (e.g. G2, G2, G5,
+G5).  This is an **information-theoretic limit** of the 4-point C1' feature
+space, not a training issue:
+
+* In-plane adjacent G-G distance (Hoogsteen geometry): **~11.3 Å**
+* Rise per tetrad level (base stacking): **~3.7 Å**
+* 3 levels × 3.7 ≈ 11.1 Å ≈ 11.3 Å
+
+A horizontal square (real tetrad) and a vertical rectangle (chimera) therefore
+have nearly identical side lengths and diagonals.  Because distances, planar
+angles, and torsion angles are all **rotation-invariant** by construction, the
+two configurations produce nearly identical 16-feature vectors (max difference
+~0.3 Å).  No classifier — regardless of training set size, negative quality,
+or algorithm — can learn to separate them.
+
+This was confirmed empirically: on structure 1j8g, the model produces false
+positives on 2+2 chimeras (levels 2 and 5) with probabilities ≥ 0.97,
+indistinguishable from real tetrads.
+
+**Resolution:** the `double_tetrad/` pipeline (N=8, two consecutive tetrads)
+addresses this by encoding the vertical stacking geometry.  With 8 C1' points
+the feature space is 280-dimensional, and real double tetrads vs chimeras
+differ by up to 6 Å in individual distances — easily distinguishable.  See
+`double_tetrad/README.md` for details.
+
 ## Pipeline steps
 
 | Step | Script | Output | Description |
