@@ -474,6 +474,7 @@ dependencies = [
     { name = "pandas" },
     { name = "rnapolis" },
     { name = "scikit-learn" },
+    { name = "scipy" },
 ]
 
 [package.metadata]
@@ -484,6 +485,7 @@ requires-dist = [
     { name = "pandas" },
     { name = "rnapolis" },
     { name = "scikit-learn" },
+    { name = "scipy" },
 ]
 
 [[package]]

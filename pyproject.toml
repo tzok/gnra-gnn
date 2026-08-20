@@ -11,4 +11,5 @@ dependencies = [
     "pandas",
     "rnapolis",
     "scikit-learn",
+    "scipy",
 ]
