@@ -13,3 +13,11 @@ dependencies = [
     "scikit-learn",
     "scipy",
 ]
+
+[project.optional-dependencies]
+gnn = [
+    "torch",
+    "torch-geometric",
+    "imbalanced-learn",
+    "optuna",
+]
