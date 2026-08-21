@@ -22,6 +22,12 @@ double_tetrad/json_files
 double_tetrad/nrmsd_cache.json
 double_tetrad/*.png
 
+# GNN pipeline
+gnn/*.pth
+gnn/*.png
+gnn/*.csv
+gnn/charts/
+
 # Devenv
 .devenv*
 devenv.local.nix
