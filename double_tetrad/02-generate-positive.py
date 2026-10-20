@@ -4,9 +4,16 @@
 
 Reads ``double_tetrad_motifs_by_pdb.json`` (produced by step 01), opens each
 assembly mmCIF, locates the eight guanine residues of every annotated
-consecutive tetrad pair, canonicalises their order via
-``canonical_order.canonicalize`` and writes a single CIF file per pair into
-``double_tetrad/motif_cif_files/``.
+consecutive tetrad pair, orders them **topologically** via
+``topological_order.topological_order_indices`` (column-major interleaved:
+``[lo_1, hi_1, lo_2, hi_2, lo_3, hi_3, lo_4, hi_4]``) and writes a single CIF
+file per pair into ``double_tetrad/motif_cif_files/``.
+
+The topological order replaces the old frame-dependent geometric canonization:
+it is a deterministic function of the annotated topology (ElTetrado's cyclic
+``nt1..nt4`` walk + stacking normal + residue-identifier tiebreak) and is
+invariant to rigid motion of the input structure, so ``d01`` etc. always refer
+to the same physical pair across all files.
 """
 
 from __future__ import annotations
@@ -23,7 +30,7 @@ import pandas as pd
 from rnapolis.parser_v2 import parse_cif_atoms, write_cif
 from rnapolis.tertiary_v2 import Residue, Structure
 
-from canonical_order import canonicalize
+from topological_order import tetrad_walk_stats, topological_order_indices
 
 DEFAULT_MIRROR = "/mnt/data-ssd/tzok/onquadro-main/mirror/data/assemblies/mmCIF/divided"
 DOUBLE_TETRAD_SIZE = 8
@@ -84,6 +91,7 @@ def process_one_stem(
 
     n_saved = 0
     n_skipped = 0
+    n_walk_warnings = 0
 
     for motif in motifs:
         motif_key = motif["motif_key"]
@@ -110,7 +118,18 @@ def process_one_stem(
             n_skipped += 1
             continue
 
-        perm, _ = canonicalize(coords)
+        # Sanity check: the ElTetrado nt1..nt4 walk must follow the tetrad
+        # perimeter (consecutive distance clearly below the diagonal).
+        for tetrad_coords in (coords[:4], coords[4:]):
+            consec, diag = tetrad_walk_stats(tetrad_coords)
+            if consec > 0.9 * diag:
+                n_walk_warnings += 1
+                print(
+                    f"    Warning: {motif_key} — suspicious tetrad walk "
+                    f"(consecutive {consec:.2f} A vs diagonal {diag:.2f} A)"
+                )
+
+        perm = topological_order_indices(unit_ids, coords)
         ordered_residues = [matched[i] for i in perm]
 
         try:
@@ -122,7 +141,7 @@ def process_one_stem(
             print(f"    Error saving {motif_key}: {e}")
             n_skipped += 1
 
-    return stem, n_saved, n_skipped
+    return stem, n_saved, n_skipped + n_walk_warnings
 
 
 def process_wrapper(args):
