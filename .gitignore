@@ -7,6 +7,7 @@ mmcif_files
 motif_cif_files
 negative_cif_files
 nrmsd_cache.json
+geometric_features.csv
 
 # Tetrad pipeline
 tetrad/motif_cif_files
